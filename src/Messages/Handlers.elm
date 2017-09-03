@@ -22,7 +22,7 @@ send model =
       (JE.object [ ( "user", JE.string "user" ), ( "body", JE.string model.newMessage ) ])
 
     push_ =
-      Phoenix.Push.init "new:msg" "rooms:lobby"
+      Phoenix.Push.init "new:msg" "chat:lobby"
           |> Phoenix.Push.withPayload payload
 
     ( phxSocket, phxCmd ) = Phoenix.Socket.push push_ model.phxSocket
