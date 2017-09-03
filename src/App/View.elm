@@ -65,6 +65,7 @@ channels model =
         , button [ onClick (LeaveChannel "chat:lobby") ] [ text "Leave channel Lobby" ]
         , button [ onClick (JoinChannel "chat:system") ] [ text "Join channel Secret" ]
         , button [ onClick (LeaveChannel "chat:system") ] [ text "Leave channel Secret" ]
+        , button [ onClick (Subscribe "new:msg" "chat:lobby" ReceiveChatMessage) ] [ text "Sub"]
         ]
       , channelsTable (Dict.values model.phxSocket.channels)
       , br [] []

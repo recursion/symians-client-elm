@@ -30,7 +30,6 @@ initSocket : Phoenix.Socket.Socket Msg
 initSocket =
     Phoenix.Socket.init socketServer
         |> Phoenix.Socket.withDebug
-        |> Phoenix.Socket.on "new:msg" "chat:lobby" ReceiveChatMessage
         |> Phoenix.Socket.on "connected" "chat:lobby" ReceiveJoinMessage
 
 

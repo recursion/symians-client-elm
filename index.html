@@ -9908,6 +9908,10 @@ var _user$project$App_Model$PhoenixMsg = function (a) {
 var _user$project$App_Model$SetNewMessage = function (a) {
 	return {ctor: 'SetNewMessage', _0: a};
 };
+var _user$project$App_Model$Subscribe = F3(
+	function (a, b, c) {
+		return {ctor: 'Subscribe', _0: a, _1: b, _2: c};
+	});
 var _user$project$App_Model$SendMessage = {ctor: 'SendMessage'};
 var _user$project$App_Channels$left = F2(
 	function (model, channel) {
@@ -10145,6 +10149,14 @@ var _user$project$App_Update$update = F2(
 				return A2(_user$project$App_Channels$joined, model, _p0._0);
 			case 'LeftChannel':
 				return A2(_user$project$App_Channels$left, model, _p0._0);
+			case 'Subscribe':
+				var socket = A4(_fbonetti$elm_phoenix_socket$Phoenix_Socket$on, _p0._0, _p0._1, _p0._2, model.phxSocket);
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{phxSocket: socket}),
+					{ctor: '[]'});
 			default:
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
@@ -10293,7 +10305,23 @@ var _user$project$App_View$channels = function (model) {
 											_0: _elm_lang$html$Html$text('Leave channel Secret'),
 											_1: {ctor: '[]'}
 										}),
-									_1: {ctor: '[]'}
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_elm_lang$html$Html$button,
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html_Events$onClick(
+													A3(_user$project$App_Model$Subscribe, 'new:msg', 'chat:lobby', _user$project$App_Model$ReceiveChatMessage)),
+												_1: {ctor: '[]'}
+											},
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html$text('Sub'),
+												_1: {ctor: '[]'}
+											}),
+										_1: {ctor: '[]'}
+									}
 								}
 							}
 						}
@@ -10466,13 +10494,8 @@ var _user$project$Main$initSocket = A4(
 	'connected',
 	'chat:lobby',
 	_user$project$App_Model$ReceiveJoinMessage,
-	A4(
-		_fbonetti$elm_phoenix_socket$Phoenix_Socket$on,
-		'new:msg',
-		'chat:lobby',
-		_user$project$App_Model$ReceiveChatMessage,
-		_fbonetti$elm_phoenix_socket$Phoenix_Socket$withDebug(
-			_fbonetti$elm_phoenix_socket$Phoenix_Socket$init(_user$project$Main$socketServer))));
+	_fbonetti$elm_phoenix_socket$Phoenix_Socket$withDebug(
+		_fbonetti$elm_phoenix_socket$Phoenix_Socket$init(_user$project$Main$socketServer)));
 var _user$project$Main$init = {
 	ctor: '_Tuple2',
 	_0: A4(

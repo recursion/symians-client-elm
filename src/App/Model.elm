@@ -7,6 +7,7 @@ import Json.Encode as JE
 
 type Msg
     = SendMessage
+    | Subscribe String String (JE.Value -> Msg)
     | SetNewMessage String
     | PhoenixMsg (Phoenix.Socket.Msg Msg)
     | ReceiveChatMessage JE.Value
