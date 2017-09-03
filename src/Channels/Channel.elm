@@ -1,20 +1,17 @@
 module Channels.Channel exposing (..)
 
-import App.Model exposing (Msg(..), Socket)
-import Json.Encode as JE
-import Phoenix.Push
 import Phoenix.Channel
 import Phoenix.Socket
+import App.Model exposing (Msg(..))
 
 
 init channel =
     -- We will need a port to communicate with location storage
     -- for the user tokens.
     Phoenix.Channel.init channel
-        --|> Phoenix.Channel.withPayload userData
+        -- |> Phoenix.Channel.withPayload userParams
         |> Phoenix.Channel.onJoin (always (JoinedChannel channel))
         |> Phoenix.Channel.onClose (always (LeftChannel channel))
-
 
 
 join model channel =
@@ -22,35 +19,16 @@ join model channel =
         ( phxSocket, phxCmd ) =
             Phoenix.Socket.join (init channel) model.phxSocket
     in
-        ( { model | phxSocket = phxSocket}, Cmd.map PhoenixMsg phxCmd )
+        ( { model | phxSocket = phxSocket }, Cmd.map PhoenixMsg phxCmd )
 
 
-on socket event channel handler =
-    socket
-      |> Phoenix.Socket.on event channel handler
-
-
-send model event channel message =
+subscribe event channel handler model =
     let
-        token =
-            Maybe.withDefault "" model.user.token
-
-        payload =
-            (JE.object [ ( "token", JE.string token ), message ])
-
-        push_ =
-            Phoenix.Push.init event channel
-                |> Phoenix.Push.withPayload payload
-
-        ( phxSocket, phxCmd ) =
-            Phoenix.Socket.push push_ model.phxSocket
-
-        nextModel =
-            { model | newMessage = "", phxSocket = phxSocket }
+      socket =
+         model.phxSocket
+          |> Phoenix.Socket.on event channel ReceiveChatMessage
     in
-        ( nextModel, Cmd.map PhoenixMsg phxCmd )
-
-
+      { model | phxSocket = socket } ! []
 
 leave model channel =
     let
