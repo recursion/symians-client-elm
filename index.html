@@ -9950,6 +9950,14 @@ var _user$project$App_Channels$leave = F2(
 			_1: A2(_elm_lang$core$Platform_Cmd$map, _user$project$App_Model$PhoenixMsg, phxCmd)
 		};
 	});
+var _user$project$App_Channels$subscribe = function (socket) {
+	return A4(
+		_fbonetti$elm_phoenix_socket$Phoenix_Socket$on,
+		'join',
+		'rooms:lobby',
+		_user$project$App_Model$ReceiveJoinMessage,
+		A4(_fbonetti$elm_phoenix_socket$Phoenix_Socket$on, 'new:msg', 'rooms:lobby', _user$project$App_Model$ReceiveChatMessage, socket));
+};
 var _user$project$App_Channels$userParams = _elm_lang$core$Json_Encode$object(
 	{
 		ctor: '::',
@@ -9986,7 +9994,9 @@ var _user$project$App_Channels$join = F2(
 			ctor: '_Tuple2',
 			_0: _elm_lang$core$Native_Utils.update(
 				model,
-				{phxSocket: phxSocket}),
+				{
+					phxSocket: _user$project$App_Channels$subscribe(phxSocket)
+				}),
 			_1: A2(_elm_lang$core$Platform_Cmd$map, _user$project$App_Model$PhoenixMsg, phxCmd)
 		};
 	});
@@ -10451,18 +10461,8 @@ var _user$project$Main$subscriptions = function (model) {
 		});
 };
 var _user$project$Main$socketServer = 'ws://localhost:4000/socket/websocket';
-var _user$project$Main$initSocket = A4(
-	_fbonetti$elm_phoenix_socket$Phoenix_Socket$on,
-	'join',
-	'rooms:lobby',
-	_user$project$App_Model$ReceiveJoinMessage,
-	A4(
-		_fbonetti$elm_phoenix_socket$Phoenix_Socket$on,
-		'new:msg',
-		'rooms:lobby',
-		_user$project$App_Model$ReceiveChatMessage,
-		_fbonetti$elm_phoenix_socket$Phoenix_Socket$withDebug(
-			_fbonetti$elm_phoenix_socket$Phoenix_Socket$init(_user$project$Main$socketServer))));
+var _user$project$Main$initSocket = _fbonetti$elm_phoenix_socket$Phoenix_Socket$withDebug(
+	_fbonetti$elm_phoenix_socket$Phoenix_Socket$init(_user$project$Main$socketServer));
 var _user$project$Main$init = {
 	ctor: '_Tuple2',
 	_0: A4(
