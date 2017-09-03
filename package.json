@@ -1,0 +1,20 @@
+{
+  "name": "symians-client-elm",
+  "version": "0.0.1",
+  "description": "A Symians client written in elm.",
+  "main": "index.js",
+  "license": "MIT",
+  "config": {
+    "src": "src/Main.elm",
+    "dist": "../symians_server/assets/js/elm.js"
+  },
+  "scripts": {
+    "build:dist": "elm-make $npm_package_config_src --output=$npm_package_config_dist",
+    "dev": "elm-live $npm_package_config_src --port=8080 --open",
+    "clean": "rm $npm_package_config_dist"
+  },
+  "dependencies": {
+    "elm": "^0.18.0",
+    "elm-live": "^2.7.5"
+  }
+}
