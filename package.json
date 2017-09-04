@@ -10,7 +10,7 @@
   },
   "scripts": {
     "build:dist": "elm-make $npm_package_config_src --output=$npm_package_config_dist",
-    "dev": "elm-live $npm_package_config_src --port=8080 --open",
+    "dev": "elm-live $npm_package_config_src --port=8080",
     "clean": "rm $npm_package_config_dist"
   },
   "dependencies": {
