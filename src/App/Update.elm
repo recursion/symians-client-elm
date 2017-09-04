@@ -2,7 +2,7 @@ module App.Update exposing (update)
 
 import App.Model exposing (..)
 import Messages.Handlers as Msgs
-import Channels.Channel as Channel
+import Sockets.Socket as Socket
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -21,22 +21,22 @@ update msg model =
             Msgs.phoenix model msg
 
         Subscribe event channel handler ->
-            Channel.subscribe event channel handler model
+            Socket.subscribe event channel handler model
 
         SendMessage ->
             Msgs.send model
 
         JoinChannel channel ->
-            Channel.join model channel
+            Socket.join model channel
 
         LeaveChannel channel ->
-            Channel.leave model channel
+            Socket.leave model channel
 
         JoinedChannel channelName ->
-            Channel.joined model channelName
+            Socket.joined model channelName
 
         LeftChannel channelName ->
-            Channel.left model channelName
+            Socket.left model channelName
 
         NoOp ->
             model ! []

@@ -3,7 +3,8 @@ import Html exposing (Html)
 import App.Model exposing (..)
 import App.View exposing (view)
 import App.Update exposing (update)
-import Phoenix.Socket
+import Sockets.Socket
+import Auth
 
 
 socketServer : String
@@ -18,22 +19,11 @@ main =
         { init = init
         , update = update
         , view = view
-        , subscriptions = subscriptions
+        , subscriptions = Sockets.Socket.subscriptions
         }
-
-subscriptions : Model -> Sub Msg
-subscriptions model =
-    Sub.batch [Phoenix.Socket.listen model.phxSocket PhoenixMsg]
-
-
-initSocket : Phoenix.Socket.Socket Msg
-initSocket =
-    Phoenix.Socket.init socketServer
-        |> Phoenix.Socket.withDebug
-        |> Phoenix.Socket.on "connected" "chat:lobby" ReceiveJoinMessage
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( Model "" [] initSocket (User Nothing Nothing ""), Cmd.none )
+    ( Model "" [] Sockets.Socket.init (Auth.Model Nothing Nothing ""), Cmd.none )
 

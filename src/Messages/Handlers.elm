@@ -11,22 +11,22 @@ import Phoenix.Push
 
 phoenix model msg =
   let
-    ( phxSocket, phxCmd ) = Phoenix.Socket.update msg model.phxSocket
+    ( socket, phxCmd ) = Phoenix.Socket.update msg model.socket
   in
-    ( { model | phxSocket = phxSocket } , Cmd.map PhoenixMsg phxCmd )
+    ( { model | socket = socket } , Cmd.map PhoenixMsg phxCmd )
 
 send model =
   let
     -- this is where we will need to attach the token
     payload =
-      (JE.object [ ( "user", JE.string "user" ), ( "body", JE.string model.newMessage ) ])
+      (JE.object [ ( "auth", JE.string "auth" ), ( "body", JE.string model.newMessage ) ])
 
     push_ =
       Phoenix.Push.init "new:msg" "chat:lobby"
           |> Phoenix.Push.withPayload payload
 
-    ( phxSocket, phxCmd ) = Phoenix.Socket.push push_ model.phxSocket
-    nextModel = { model | newMessage = "", phxSocket = phxSocket }
+    ( socket, phxCmd ) = Phoenix.Socket.push push_ model.socket
+    nextModel = { model | newMessage = "", socket = socket }
   in
     (nextModel,  Cmd.map PhoenixMsg phxCmd)
 
@@ -34,13 +34,13 @@ join model raw =
   case decodeJoinMessage raw of
     Ok joinMessage ->
       let
-        user = model.user
-        next_user = { user | id = joinMessage.id
+        auth = model.auth
+        next_auth = { auth | id = joinMessage.id
                     , token = joinMessage.token
                     , status = joinMessage.status
                     }
       in
-        {model | user = next_user} ! []
+        {model | auth = next_auth} ! []
 
     Err error ->
       model ! []

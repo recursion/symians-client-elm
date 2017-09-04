@@ -1,6 +1,7 @@
-module App.Model exposing (Msg(..), Model, User)
+module App.Model exposing (..)
 import Phoenix.Socket
 import Json.Encode as JE
+import Auth
 
 
 -- CONSTANTS
@@ -18,16 +19,9 @@ type Msg
     | LeftChannel String
     | NoOp
 
-
-type alias User =
-    { id : Maybe Int
-    , token : Maybe String
-    , status : String
-    }
-
 type alias Model =
     { newMessage : String
     , messages : List String
-    , phxSocket : Phoenix.Socket.Socket Msg
-    , user : User
+    , socket : Phoenix.Socket.Socket Msg
+    , auth : Auth.Model
     }

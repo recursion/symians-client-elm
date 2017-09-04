@@ -4,6 +4,7 @@ import Html.Attributes exposing (class, type_, value)
 import Html.Events exposing (onInput, onSubmit, onClick)
 import App.Model exposing (Msg(..), Model)
 import Phoenix.Channel
+import Auth
 import Dict
 
 -- VIEW
@@ -14,22 +15,7 @@ view model =
   div []
       [ channels model
       , messages model
-      , user model
-      ]
-
--- Users views 
-
-user : Model -> Html Msg
-user model =
-  let
-    id = (toString (Maybe.withDefault 0 model.user.id))
-    token = (Maybe.withDefault "" model.user.token)
-  in
-    div
-      [ class "user" ]
-      [ h3 [] [text id]
-      , h3 [] [text token]
-      , h3 [] [text model.user.status]
+      , Auth.view model.auth
       ]
 
 -- Messages Views
@@ -67,7 +53,7 @@ channels model =
         , button [ onClick (LeaveChannel "chat:system") ] [ text "Leave channel Secret" ]
         , button [ onClick (Subscribe "new:msg" "chat:lobby" ReceiveChatMessage) ] [ text "Sub"]
         ]
-      , channelsTable (Dict.values model.phxSocket.channels)
+      , channelsTable (Dict.values model.socket.channels)
       , br [] []
       ]
 
