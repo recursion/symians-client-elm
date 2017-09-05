@@ -1,29 +1,42 @@
-module Main exposing(..)
-import Html exposing (Html)
+module Main exposing (..)
+
+import Html exposing (..)
+import Chat.Chat as Chat
 import App.Model exposing (..)
-import App.View exposing (view)
 import App.Update exposing (update)
-import Sockets.Socket
+import Phoenix.Socket
+import Chat.View
 import Auth
 
 
-socketServer : String
-socketServer =
-    "ws://localhost:4000/socket/websocket"
-
--- Test
-
-main : Program Never Model Msg
 main =
     Html.program
         { init = init
-        , update = update
         , view = view
-        , subscriptions = Sockets.Socket.subscriptions
+        , update = update
+        , subscriptions = subscriptions
         }
 
+-- SUBSCRIPTIONS
 
-init : ( Model, Cmd Msg )
-init =
-    ( Model "" [] Sockets.Socket.init (Auth.Model Nothing Nothing ""), Cmd.none )
 
+subscriptions : Model -> Sub Msg
+subscriptions model =
+    let
+        -- Phoenix.Socket.listen model.socket PhoenixMsg
+        local =
+            Phoenix.Socket.listen model.socket PhoenixMsg
+    in
+        Sub.batch [ local, Sub.map ChatMsg (Chat.subscriptions model.chat) ]
+
+
+
+-- VIEW
+
+
+view : Model -> Html Msg
+view model =
+    div []
+        [ Html.map ChatMsg (Chat.View.view model.chat)
+        , Auth.view model.auth
+        ]
