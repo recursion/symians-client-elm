@@ -1,16 +1,36 @@
 .messagebox {
-    word-break: break-word;
+    position: relative;
+    height: 250px;
+    width: 100%;
 }
 .messages {
-    width: 100%;
+    position: absolute;
+    bottom: 0;
+    width: 98.7%;
     height: 250px;
     max-height: 250px;
+}
+.messages {
+    display: flex;
+    flex-direction: column-reverse;
+    flex-wrap: nowrap;
     overflow: hidden;
     overflow-y: scroll;
+    word-break: break-word;
+    padding: 0;
+    margin: 0;
 }
 .messageInput, .messageControls {
     width: 100%;
 }
+
 .chatMessage {
     display: block;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    word-break: break-word;
+}
+.block:not(:last-child) {
+    margin-bottom: 0;
 }

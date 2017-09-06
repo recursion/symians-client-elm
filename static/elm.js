@@ -10375,7 +10375,7 @@ var _user$project$Chat_View$renderMessage = function (str) {
 		_elm_lang$html$Html$li,
 		{
 			ctor: '::',
-			_0: _elm_lang$html$Html_Attributes$class('panel-block chatMessage'),
+			_0: _elm_lang$html$Html_Attributes$class('block chatMessage'),
 			_1: {ctor: '[]'}
 		},
 		{
@@ -10527,90 +10527,93 @@ var _user$project$Chat_View$channelsTable = function (channels) {
 			_1: {ctor: '[]'}
 		});
 };
+var _user$project$Chat_View$channelButton = F2(
+	function (name, action) {
+		return A2(
+			_elm_lang$html$Html$button,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('button isPrimary'),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$html$Html_Events$onClick(action),
+					_1: {ctor: '[]'}
+				}
+			},
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html$text(name),
+				_1: {ctor: '[]'}
+			});
+	});
+var _user$project$Chat_View$channelsButtons = A2(
+	_elm_lang$html$Html$div,
+	{
+		ctor: '::',
+		_0: _elm_lang$html$Html_Attributes$class('panel-block channel-buttons'),
+		_1: {ctor: '[]'}
+	},
+	{
+		ctor: '::',
+		_0: A2(
+			_elm_lang$html$Html$p,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('control'),
+				_1: {ctor: '[]'}
+			},
+			{
+				ctor: '::',
+				_0: A2(_user$project$Chat_View$channelButton, 'Join chat', _user$project$Chat_Model$JoinChannel),
+				_1: {
+					ctor: '::',
+					_0: A2(_user$project$Chat_View$channelButton, 'Leave chat', _user$project$Chat_Model$LeaveChannel),
+					_1: {ctor: '[]'}
+				}
+			}),
+		_1: {ctor: '[]'}
+	});
+var _user$project$Chat_View$messages = function (model) {
+	return A2(
+		_elm_lang$html$Html$ul,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('messages'),
+			_1: {ctor: '[]'}
+		},
+		A2(
+			_elm_lang$core$List$map,
+			_user$project$Chat_View$renderMessage,
+			_user$project$Chat_Channel$getCurrent(model).messages));
+};
 var _user$project$Chat_View$view = function (model) {
-	var currentChannel = _user$project$Chat_Channel$getCurrent(model);
 	return A2(
 		_elm_lang$html$Html$div,
 		{
 			ctor: '::',
-			_0: _elm_lang$html$Html_Attributes$class('panel messagebox'),
+			_0: _elm_lang$html$Html_Attributes$class('panel'),
 			_1: {ctor: '[]'}
 		},
 		{
 			ctor: '::',
 			_0: A2(
-				_elm_lang$html$Html$ul,
+				_elm_lang$html$Html$div,
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$class('messages'),
+					_0: _elm_lang$html$Html_Attributes$class('panel-block messagebox'),
 					_1: {ctor: '[]'}
 				},
-				function (_p2) {
-					return _elm_lang$core$List$reverse(
-						A2(_elm_lang$core$List$map, _user$project$Chat_View$renderMessage, _p2));
-				}(currentChannel.messages)),
+				{
+					ctor: '::',
+					_0: _user$project$Chat_View$messages(model),
+					_1: {ctor: '[]'}
+				}),
 			_1: {
 				ctor: '::',
 				_0: _user$project$Chat_View$newMessageForm(model),
 				_1: {
 					ctor: '::',
-					_0: A2(
-						_elm_lang$html$Html$div,
-						{
-							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$class('panel-block channel-buttons'),
-							_1: {ctor: '[]'}
-						},
-						{
-							ctor: '::',
-							_0: A2(
-								_elm_lang$html$Html$p,
-								{
-									ctor: '::',
-									_0: _elm_lang$html$Html_Attributes$class('control'),
-									_1: {ctor: '[]'}
-								},
-								{
-									ctor: '::',
-									_0: A2(
-										_elm_lang$html$Html$button,
-										{
-											ctor: '::',
-											_0: _elm_lang$html$Html_Attributes$class('button isPrimary'),
-											_1: {
-												ctor: '::',
-												_0: _elm_lang$html$Html_Events$onClick(_user$project$Chat_Model$JoinChannel),
-												_1: {ctor: '[]'}
-											}
-										},
-										{
-											ctor: '::',
-											_0: _elm_lang$html$Html$text('Join chat'),
-											_1: {ctor: '[]'}
-										}),
-									_1: {
-										ctor: '::',
-										_0: A2(
-											_elm_lang$html$Html$button,
-											{
-												ctor: '::',
-												_0: _elm_lang$html$Html_Attributes$class('button isPrimary'),
-												_1: {
-													ctor: '::',
-													_0: _elm_lang$html$Html_Events$onClick(_user$project$Chat_Model$LeaveChannel),
-													_1: {ctor: '[]'}
-												}
-											},
-											{
-												ctor: '::',
-												_0: _elm_lang$html$Html$text('Leave chat'),
-												_1: {ctor: '[]'}
-											}),
-										_1: {ctor: '[]'}
-									}
-								}),
-							_1: {ctor: '[]'}
-						}),
+					_0: _user$project$Chat_View$channelsButtons,
 					_1: {ctor: '[]'}
 				}
 			}

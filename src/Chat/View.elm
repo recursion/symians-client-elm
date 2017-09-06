@@ -14,26 +14,31 @@ import Phoenix.Channel
 
 view : Model -> Html Msg
 view model =
-    let
-        currentChannel =
-            Channel.getCurrent model
-    in
-        div [ class "panel messagebox" ]
-            -- [ h3 [] [ text "Channels:" ]
-            [ ul [ class "messages" ] ((List.reverse << List.map renderMessage) currentChannel.messages)
-            , newMessageForm model
-            , div [ class "panel-block channel-buttons" ]
-                [ p [class "control"]
-                    [ button [ class "button isPrimary", onClick JoinChannel ] [ text "Join chat" ]
-                    , button [ class "button isPrimary", onClick LeaveChannel ] [ text "Leave chat" ]
-                    ]
-                ]
+    div [class "panel"]
+      [ div [ class "panel-block messagebox" ]
+          [ messages model
+          ]
+      , newMessageForm model
+      , channelsButtons
+      -- , channelsTable (Dict.values model.phxSocket.channels)
+      ]
 
 
-            -- , channelsTable (Dict.values model.phxSocket.channels)
-            -- , h3 [] [ text "Messages:" ]
+messages model =
+    ul [ class "messages" ]
+        ((List.map renderMessage) (Channel.getCurrent model).messages)
+
+
+channelsButtons =
+    div [ class "panel-block channel-buttons" ]
+        [ p [ class "control" ]
+            [ channelButton "Join chat" JoinChannel
+            , channelButton "Leave chat" LeaveChannel
             ]
+        ]
 
+channelButton name action =
+        button [ class "button isPrimary", onClick action] [ text name ]
 
 channelsTable : List (Phoenix.Channel.Channel Msg) -> Html Msg
 channelsTable channels =
@@ -53,18 +58,18 @@ channelRow channel =
 
 newMessageForm : Model -> Html Msg
 newMessageForm model =
-    div [class "panel-block"]
+    div [ class "panel-block" ]
         [ form [ class "field has-addons messageControls", onSubmit SendMessage ]
-            [ p [class "control"]
-                  [ button [ class "button isStatic" ] [ text "Send" ]
-                  ]
-            , p [ class "control messageInput"]
-                  [ input [ class "input large", type_ "text", value model.newMessage, onInput SetNewMessage ] []
-                  ]
+            [ p [ class "control" ]
+                [ button [ class "button isStatic" ] [ text "Send" ]
+                ]
+            , p [ class "control messageInput" ]
+                [ input [ class "input large", type_ "text", value model.newMessage, onInput SetNewMessage ] []
+                ]
             ]
         ]
 
 
 renderMessage : String -> Html Msg
 renderMessage str =
-    li [ class "panel-block chatMessage" ] [ text str ]
+    li [ class "block chatMessage" ] [ text str ]
