@@ -7,7 +7,7 @@ import App.Update exposing (update)
 import App.Config exposing (init)
 import Phoenix.Socket
 import Chat.View
-import Auth
+-- import Auth
 
 
 main =
@@ -34,7 +34,5 @@ subscriptions model =
 
 view : Model -> Html Msg
 view model =
-    div []
-        [ Html.map ChatMsg (Chat.View.view model.chat)
-        , Auth.view model.auth
-        ]
+        Html.map ChatMsg (Chat.View.view model.chat)
+        -- for debug only, Auth.view model.auth

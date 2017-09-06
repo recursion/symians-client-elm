@@ -1,9 +1,8 @@
 module Chat.Update exposing (update)
 
-import Chat.Chat as Chat
 import Chat.Model exposing (..)
 import Chat.Channel as Channel
-import Dict exposing (Dict)
+import Phoenix.Socket
 import Auth
 
 
@@ -14,10 +13,10 @@ update msg model auth =
             { model | newMessage = str } ! []
 
         PhoenixMsg msg ->
-            Chat.processPhoenixMsg msg model
+            processPhoenixMsg msg model
 
         ReceiveChatMessage raw ->
-            Chat.processChatMessage raw model
+            Channel.processChatMessage raw model
 
         SendMessage ->
             Channel.send auth model
@@ -36,3 +35,14 @@ update msg model auth =
 
         NoOp ->
             ( model, Cmd.none )
+
+
+
+processPhoenixMsg msg model =
+    let
+        ( phxSocket, phxCmd ) =
+            Phoenix.Socket.update msg model.phxSocket
+    in
+        ( { model | phxSocket = phxSocket }
+        , Cmd.map PhoenixMsg phxCmd
+        )

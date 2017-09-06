@@ -42,7 +42,7 @@ init =
 initPhxSocket : Phoenix.Socket.Socket Msg
 initPhxSocket =
     Phoenix.Socket.init socketServer
-        |> Phoenix.Socket.withDebug
+        -- |> Phoenix.Socket.withDebug
         |> Phoenix.Socket.on authDataEvent systemChannel ReceiveToken
 
 

@@ -88,3 +88,21 @@ showLeftMessage channelName model =
       ( { model | channels = nextChannels  }
       , Cmd.none
       )
+
+
+processChatMessage raw model =
+    case decodeChatMessage raw of
+        Ok chatMessage ->
+            let
+                currentChannel = Maybe.withDefault (Channel []) (Dict.get model.currentChannel model.channels)
+                nextMessages = (chatMessage.user ++ ": " ++ chatMessage.body) :: currentChannel.messages
+                nextChannels = Dict.insert model.currentChannel (Channel nextMessages) model.channels
+            in
+
+            ( { model | channels = nextChannels }
+            , Cmd.none
+            )
+
+        Err error ->
+            ( model, Cmd.none )
+

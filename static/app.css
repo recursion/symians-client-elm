@@ -1,0 +1,16 @@
+.messagebox {
+    word-break: break-word;
+}
+.messages {
+    width: 100%;
+    height: 250px;
+    max-height: 250px;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+.messageInput, .messageControls {
+    width: 100%;
+}
+.chatMessage {
+    display: block;
+}

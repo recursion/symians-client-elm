@@ -53,7 +53,7 @@ type alias ChatMessage =
 initPhxSocket : String -> Phoenix.Socket.Socket Msg
 initPhxSocket channelName =
     Phoenix.Socket.init socketServer
-        |> Phoenix.Socket.withDebug
+        -- |> Phoenix.Socket.withDebug
         |> Phoenix.Socket.on newChatMsgEvent channelName ReceiveChatMessage
 
 
