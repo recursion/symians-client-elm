@@ -2,10 +2,9 @@ module App.Update exposing (update)
 
 import App.Model exposing (..)
 import Chat.Chat as Chat
+import Chat.Update
 import Phoenix.Socket
-import App.Decoders exposing (decodeTokenMessage)
-
-
+import App.JsonHelpers exposing (decodeTokenMessage)
 
 
 -- UPDATE
@@ -17,7 +16,7 @@ update msg model =
         ChatMsg message ->
             let
                 ( chatModel, chatCommand ) =
-                    Chat.update message model.chat
+                    Chat.Update.update message model.chat model.auth
             in
                 ( { model | chat = chatModel }, Cmd.map ChatMsg chatCommand )
 
@@ -39,3 +38,9 @@ update msg model =
 
                 Err error ->
                     ( model, Cmd.none )
+
+        Connected ->
+            model ! []
+
+        Disconnected ->
+            model ! []

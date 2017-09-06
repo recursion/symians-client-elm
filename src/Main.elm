@@ -4,6 +4,7 @@ import Html exposing (..)
 import Chat.Chat as Chat
 import App.Model exposing (..)
 import App.Update exposing (update)
+import App.Config exposing (init)
 import Phoenix.Socket
 import Chat.View
 import Auth
@@ -22,12 +23,9 @@ main =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    let
-        -- Phoenix.Socket.listen model.socket PhoenixMsg
-        local =
-            Phoenix.Socket.listen model.socket PhoenixMsg
-    in
-        Sub.batch [ local, Sub.map ChatMsg (Chat.subscriptions model.chat) ]
+        Sub.batch [ Phoenix.Socket.listen model.socket PhoenixMsg
+                  , Sub.map ChatMsg (Chat.subscriptions model.chat)
+                  ]
 
 
 

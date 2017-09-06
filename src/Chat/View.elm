@@ -4,10 +4,9 @@ import Html exposing (Html, h3, div, text, ul, li, input, form, button, br, tabl
 import Html.Attributes exposing (type_, value)
 import Html.Events exposing (onInput, onSubmit, onClick)
 import Chat.Model exposing (..)
+import Chat.Channel as Channel
 import Phoenix.Channel
 import Dict exposing (Dict)
-
-
 
 
 -- VIEW
@@ -15,19 +14,23 @@ import Dict exposing (Dict)
 
 view : Model -> Html Msg
 view model =
-    div []
-        [ h3 [] [ text "Channels:" ]
-        , div
-            []
-            [ button [ onClick JoinChannel ] [ text "Join channel" ]
-            , button [ onClick LeaveChannel ] [ text "Leave channel" ]
+    let
+        currentChannel =
+            Channel.getCurrent model
+    in
+        div []
+            [ h3 [] [ text "Channels:" ]
+            , div
+                []
+                [ button [ onClick JoinChannel ] [ text "Join channel" ]
+                , button [ onClick LeaveChannel ] [ text "Leave channel" ]
+                ]
+            , channelsTable (Dict.values model.phxSocket.channels)
+            , br [] []
+            , h3 [] [ text "Messages:" ]
+            , newMessageForm model
+            , ul [] ((List.reverse << List.map renderMessage) currentChannel.messages)
             ]
-        , channelsTable (Dict.values model.phxSocket.channels)
-        , br [] []
-        , h3 [] [ text "Messages:" ]
-        , newMessageForm model
-        , ul [] ((List.reverse << List.map renderMessage) model.messages)
-        ]
 
 
 channelsTable : List (Phoenix.Channel.Channel Msg) -> Html Msg
