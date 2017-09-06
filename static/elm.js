@@ -10033,10 +10033,19 @@ var _user$project$Auth$Model = F3(
 	});
 var _user$project$Auth$init = A3(_user$project$Auth$Model, _elm_lang$core$Maybe$Nothing, _elm_lang$core$Maybe$Nothing, '');
 
-var _user$project$App_Model$Model = F3(
-	function (a, b, c) {
-		return {socket: a, chat: b, auth: c};
+var _user$project$App_Model$UI = function (a) {
+	return {viewing: a};
+};
+var _user$project$App_Model$Model = F4(
+	function (a, b, c, d) {
+		return {socket: a, chat: b, auth: c, ui: d};
 	});
+var _user$project$App_Model$World = {ctor: 'World'};
+var _user$project$App_Model$initUI = {viewing: _user$project$App_Model$World};
+var _user$project$App_Model$Chat = {ctor: 'Chat'};
+var _user$project$App_Model$ChangeView = function (a) {
+	return {ctor: 'ChangeView', _0: a};
+};
 var _user$project$App_Model$Disconnected = {ctor: 'Disconnected'};
 var _user$project$App_Model$Connected = {ctor: 'Connected'};
 var _user$project$App_Model$ReceiveToken = function (a) {
@@ -10082,7 +10091,7 @@ var _user$project$App_Config$initPhxSocket = A4(
 var _user$project$App_Config$init = function () {
 	var chatModel = _user$project$Chat_Model$initModel(_user$project$App_Config$chatChannel);
 	var socket = _user$project$App_Config$initPhxSocket;
-	var model = A3(_user$project$App_Model$Model, socket, chatModel, _user$project$Auth$init);
+	var model = A4(_user$project$App_Model$Model, socket, chatModel, _user$project$Auth$init, _user$project$App_Model$initUI);
 	return A2(_user$project$App_Config$connectTo, _user$project$App_Config$systemChannel, model);
 }();
 
@@ -10362,10 +10371,21 @@ var _user$project$App_Update$update = F2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					model,
 					{ctor: '[]'});
-			default:
+			case 'Disconnected':
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					model,
+					{ctor: '[]'});
+			default:
+				var ui = model.ui;
+				var nextUI = _elm_lang$core$Native_Utils.update(
+					ui,
+					{viewing: _p0._0});
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{ui: nextUI}),
 					{ctor: '[]'});
 		}
 	});
@@ -10620,11 +10640,100 @@ var _user$project$Chat_View$view = function (model) {
 		});
 };
 
-var _user$project$Main$view = function (model) {
+var _user$project$World_View$view = function (model) {
 	return A2(
-		_elm_lang$html$Html$map,
-		_user$project$App_Model$ChatMsg,
-		_user$project$Chat_View$view(model.chat));
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('world'),
+			_1: {ctor: '[]'}
+		},
+		{ctor: '[]'});
+};
+
+var _user$project$Main$navButton = F2(
+	function (txt, action) {
+		return A2(
+			_elm_lang$html$Html$button,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('navbar-item button'),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$html$Html_Events$onClick(action),
+					_1: {ctor: '[]'}
+				}
+			},
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html$text(txt),
+				_1: {ctor: '[]'}
+			});
+	});
+var _user$project$Main$navView = A2(
+	_elm_lang$html$Html$nav,
+	{
+		ctor: '::',
+		_0: _elm_lang$html$Html_Attributes$class('navbar'),
+		_1: {ctor: '[]'}
+	},
+	{
+		ctor: '::',
+		_0: A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('navbar-brand'),
+				_1: {ctor: '[]'}
+			},
+			{
+				ctor: '::',
+				_0: A2(
+					_user$project$Main$navButton,
+					'Symians',
+					_user$project$App_Model$ChangeView(_user$project$App_Model$World)),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_user$project$Main$navButton,
+						'World',
+						_user$project$App_Model$ChangeView(_user$project$App_Model$World)),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_user$project$Main$navButton,
+							'Chat',
+							_user$project$App_Model$ChangeView(_user$project$App_Model$Chat)),
+						_1: {ctor: '[]'}
+					}
+				}
+			}),
+		_1: {ctor: '[]'}
+	});
+var _user$project$Main$view = function (model) {
+	var mainView = function () {
+		var _p0 = model.ui.viewing;
+		if (_p0.ctor === 'Chat') {
+			return A2(
+				_elm_lang$html$Html$map,
+				_user$project$App_Model$ChatMsg,
+				_user$project$Chat_View$view(model.chat));
+		} else {
+			return _user$project$World_View$view(model);
+		}
+	}();
+	return A2(
+		_elm_lang$html$Html$div,
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: _user$project$Main$navView,
+			_1: {
+				ctor: '::',
+				_0: mainView,
+				_1: {ctor: '[]'}
+			}
+		});
 };
 var _user$project$Main$subscriptions = function (model) {
 	return _elm_lang$core$Platform_Sub$batch(

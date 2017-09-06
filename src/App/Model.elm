@@ -7,11 +7,19 @@ import Auth
 
 -- MODEL
 
+type View
+    = Chat
+    | World
+
+type alias UI =
+    { viewing: View
+    }
 
 type alias Model =
     { socket : Phoenix.Socket.Socket Msg
     , chat : Chat.Model.Model
     , auth : Auth.Model
+    , ui: UI
     }
 
 
@@ -21,3 +29,7 @@ type Msg
     | ReceiveToken JE.Value
     | Connected
     | Disconnected
+    | ChangeView View
+
+initUI =
+    { viewing = World }

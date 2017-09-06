@@ -16,6 +16,7 @@ updateMessages messages channelName model =
     Dict.insert channelName (Channel messages) model.channels
 
 
+
 join model =
     let
         channel =

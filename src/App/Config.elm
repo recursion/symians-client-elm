@@ -34,7 +34,7 @@ init =
             Chat.Model.initModel chatChannel
 
         model =
-            Model socket chatModel Auth.init
+            Model socket chatModel Auth.init initUI
     in
         connectTo systemChannel model
 

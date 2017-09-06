@@ -44,3 +44,10 @@ update msg model =
 
         Disconnected ->
             model ! []
+
+        ChangeView view ->
+            let
+                ui = model.ui
+                nextUI = { ui | viewing = view }
+            in
+              { model | ui = nextUI } ! []
