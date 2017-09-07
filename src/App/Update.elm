@@ -4,7 +4,7 @@ import App.Model exposing (..)
 import Chat.Chat as Chat
 import Chat.Update
 import Phoenix.Socket
-import App.JsonHelpers exposing (decodeTokenMessage)
+import App.JsonHelpers exposing (decodeTokenMessage, decodeWorldData)
 
 
 -- UPDATE
@@ -35,6 +35,14 @@ update msg model =
                     ( { model | auth = token }
                     , Cmd.none
                     )
+
+                Err error ->
+                    ( model, Cmd.none )
+
+        ReceiveWorldData raw ->
+            case decodeWorldData raw of
+                Ok world ->
+                    {model | world = world} ! []
 
                 Err error ->
                     ( model, Cmd.none )
