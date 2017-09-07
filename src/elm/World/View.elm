@@ -9,30 +9,68 @@ import Svg.Attributes exposing (..)
 
 
 baseSize =
-    "15"
+    "63"
+overlayTileSize =
+    "64"
 
 
 view model =
     let
         locations =
             (Dict.toList model.world.locations)
-            |> List.filter onZLevel
-            |> (List.map (\loc -> renderLocation loc model) )
+                |> List.filter onZLevel
+                |> (List.map (\loc -> renderLocation loc model))
     in
-      svg
-          [ viewBox "0 0 390 390"
-          , class "world level"
-          ]
-          locations
-        
-onZLevel (coords, loc) =
+        svg
+            [ viewBox "0 0 1366 768"
+            , class "world level"
+            ]
+            [g [ ] locations
+            ]
+
+
+renderLocation ( coords, loc ) model =
     let
-      (x, y, z) = extractCoords coords
+        ( getX, getY, getZ ) =
+            extractCoords coords
+
+        ( positionx, positiony ) =
+            positionFromCoords ( getX, getY )
+    in
+        createLocation positionx positiony
+
+
+createLocation positionx positiony =
+    g [] 
+      [ use
+        [ xlinkHref "#grass"
+        , x positionx
+        , y positiony
+        , width baseSize
+        , height baseSize
+        , transform "translate(-528, -10)"
+        ]
+        []
+      , rect [ fill "rgba(0, 255, 0, 0.2)"
+             , x positionx
+             , y positiony
+             , class "location"
+             , width overlayTileSize
+             , height overlayTileSize
+             ] []
+      ]
+
+onZLevel ( coords, loc ) =
+    let
+        ( x, y, z ) =
+            extractCoords coords
     in
         case z of
-            "0" -> True
-            _ -> False
+            "0" ->
+                True
 
+            _ ->
+                False
 
 
 extractCoords asString =
@@ -65,28 +103,3 @@ positionFromCoords ( getX, getY ) =
     in
         ( positionx, positiony )
 
-
-renderLocation ( coords, loc ) model =
-    let
-        ( getX, getY, getZ ) =
-            extractCoords coords
-
-        ( positionx, positiony ) =
-            positionFromCoords ( getX, getY )
-    in
-        createLocation positionx positiony
-
-
-createLocation positionx positiony =
-    rect
-        [ fill "#338844"
-        , x positionx
-        , y positiony
-        , width (baseSize ++ "px")
-        , height (baseSize ++ "px")
-        , class "location"
-        , stroke "#000"
-        , strokeOpacity "0.5"
-        , strokeWidth "0.5"
-        ]
-        []

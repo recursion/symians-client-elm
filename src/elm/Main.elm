@@ -42,45 +42,63 @@ subscriptions model =
 
 view : Model -> Html Msg
 view model =
+    div []
+        [ navView model.ui.nav
+        , mainView model
+        ]
+
+
+mainView model =
+    case model.ui.viewing of
+        Chat ->
+            Html.map ChatMsg (Chat.View.view model.chat)
+
+        World ->
+            World.view model
+
+
+navView model =
     let
-        mainView =
-            case model.ui.viewing of
-                Chat ->
-                    Html.map ChatMsg (Chat.View.view model.chat)
-
-                World ->
-                    World.view model
+        active =
+            if model.isActive then
+                " is-active"
+            else
+                ""
     in
-        div []
-            [ navView
-            , mainView
+        nav [ class "navbar" ]
+            [ navBrand model
+            , navMenu active
             ]
 
 
-navView =
-    nav [ class "navbar" ]
-        [ div [ class "navbar-brand", attribute "data-target" "navMenubd" ]
-            [ div [class "navbar-burger burger"]
-                  [ span [] []
-                  , span [] []
-                  , span [] []
-                  ]
-            ]
-        , div [ id "navMenubd", class "navbar-menu" ]
-            [ div [class "navbar-start"]
-                  [ div [ class "navbar-item"] 
-                        [ navButton "Symians" (ChangeView World)
-                        , navButton "World" (ChangeView World)
-                        , navButton "Chat" (ChangeView Chat)
-                        ]
-                  ]
+navBrand model =
+    let
+        active = case model.isActive of
+                     True -> " is-active"
+                     False -> ""
+    in
+      div [ onClick ActivateNav, class "navbar-brand", attribute "data-target" "navMenubd" ]
+          [ div [ class "navbar-item logo" ]
+                [ text "Symians" ]
+          , div [ class ("navbar-burger burger" ++ active) ]
+              [ span [] []
+              , span [] []
+              , span [] []
+              ]
+          ]
+
+navMenu active =
+    div [ id "navMenubd", class ("navbar-menu" ++ active) ]
+        [ div [ class "navbar-start" ]
+            [ div [ class "navbar-item" ]
+                [ navButton "World" (ChangeView World)
+                , navButton "Chat" (ChangeView Chat)
+                ]
             ]
         ]
 
 
 
-
-
 navButton txt action =
-    button [ class "navbar-link button", onClick action ]
+    button [ class "button nav-button", onClick action ]
         [ text txt ]

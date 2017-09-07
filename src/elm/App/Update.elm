@@ -47,6 +47,15 @@ update msg model =
                 Err error ->
                     ( model, Cmd.none )
 
+        ActivateNav ->
+            let
+                ui = model.ui
+                nav = ui.nav
+                nextNav = { nav | isActive = not nav.isActive }
+                nextUI = { ui | nav = nextNav }
+            in
+                { model | ui = nextUI } ! []
+
         Connected ->
             model ! []
 

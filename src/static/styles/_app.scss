@@ -1,51 +1,22 @@
-.messagebox {
-    position: relative;
-    height: 250px;
+#navMenubd > div > div > button {
+    margin: 0 auto;
+    margin-left: 0.25em;
+    font-weight: bold;
+    font-size: 1.25em;
+}
+.logo {
+    line-height: 1em;
+    letter-spacing: 1em;
+    font-weight: bold;
+    font-size: 2em;
+}
+.nav-button {
+    margin-left: 0.8em;
+}
+#svg2 {
+    display: none;
+}
+.app {
     width: 100%;
-}
-.messages {
-    position: absolute;
-    bottom: 0;
-    width: 98.7%;
-    height: 250px;
-    max-height: 250px;
-}
-.messages {
-    display: flex;
-    flex-direction: column-reverse;
-    flex-wrap: nowrap;
-    overflow: hidden;
-    word-break: break-word;
-    padding: 0;
-    margin: 0;
-}
-.messages:hover {
-    overflow-y: scroll;
-}
-.messageInput, .messageControls {
-    width: 100%;
-}
-
-.chatMessage {
-    display: block;
-    width: 100%;
-    padding: 0;
-    margin: 0;
-    word-break: break-word;
-}
-.block:not(:last-child) {
-    margin-bottom: 0;
-}
-.world {
-    border: 1px solid black;
-    width: 100%;
-    height: auto;
-}
-.location:hover {
-    fill: red;
-    stroke: white;
-}
-.location:active {
-    stroke: red;
-    fill: white;
+    height: 100%;
 }

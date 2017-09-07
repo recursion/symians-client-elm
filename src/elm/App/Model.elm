@@ -14,6 +14,7 @@ type View
 
 type alias UI =
     { viewing: View
+    , nav : {isActive: Bool}
     }
 
 type alias Model =
@@ -33,6 +34,7 @@ type Msg
     | Connected
     | Disconnected
     | ChangeView View
+    | ActivateNav
 
 type alias WorldData =
     { locations : Locations
@@ -56,7 +58,9 @@ type alias Location =
 type alias Locations = Dict String Location
 
 initUI =
-    { viewing = World }
+    { viewing = World
+    , nav = { isActive = False }
+    }
 
 initWorldData =
     { locations = Dict.empty

@@ -5,6 +5,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var autoprefixer = require('autoprefixer');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
+const HtmlWebpackInlineSVGPlugin = require('html-webpack-inline-svg-plugin');
 
 
 const prod = 'production';
@@ -29,7 +30,7 @@ var commonConfig = {
         filename: `static/js/${outputFilename}`,
     },
     resolve: {
-        extensions: ['.js', '.elm'],
+        extensions: ['.js', '.elm', '.svg'],
         modules: ['node_modules']
     },
     module: {
@@ -37,7 +38,8 @@ var commonConfig = {
         rules: [{
             test: /\.(eot|ttf|woff|woff2|svg)$/,
             use: 'file-loader?publicPath=../../&name=static/css/[hash].[ext]'
-        }]
+        }
+        ]
     },
     plugins: [
         new webpack.LoaderOptionsPlugin({
@@ -49,7 +51,8 @@ var commonConfig = {
             template: 'src/static/index.html',
             inject: 'body',
             filename: 'index.html'
-        })
+        }),
+        new HtmlWebpackInlineSVGPlugin()
     ]
 }
 
@@ -57,7 +60,7 @@ var commonConfig = {
 if (isDev === true) {
     module.exports = merge(commonConfig, {
         entry: [
-            'webpack-dev-server/client?http://localhost:8080',
+            'webpack-dev-server/client?http://localhost:8181',
             entryPath
         ],
         devServer: {

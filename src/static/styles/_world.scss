@@ -1,0 +1,13 @@
+.world {
+    border: 1px solid black;
+    width: 100%;
+    height: 100%;
+}
+.location:hover {
+    fill: rgba(255, 0, 0, 0.2);
+    stroke: rbga(255, 255, 255, 0.2);
+}
+.location:active {
+    stroke: rgba(255, 0, 0, 0.5);
+    fill: rbga(255, 255, 255, 0.5);
+}
