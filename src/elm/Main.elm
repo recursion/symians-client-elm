@@ -1,7 +1,7 @@
 module Main exposing (..)
 
-import Html exposing (Html, div, nav, a, button, text)
-import Html.Attributes exposing (class, href)
+import Html exposing (Html, div, nav, a, button, text, span)
+import Html.Attributes exposing (id, class, attribute, href)
 import Html.Events exposing (onClick)
 import Chat.Chat as Chat
 import App.Model exposing (..)
@@ -59,14 +59,28 @@ view model =
 
 navView =
     nav [ class "navbar" ]
-        [ div [ class "navbar-brand" ]
-            [ navButton "Symians" (ChangeView World)
-            , navButton "World" (ChangeView World)
-            , navButton "Chat" (ChangeView Chat)
+        [ div [ class "navbar-brand", attribute "data-target" "navMenubd" ]
+            [ div [class "navbar-burger burger"]
+                  [ span [] []
+                  , span [] []
+                  , span [] []
+                  ]
+            ]
+        , div [ id "navMenubd", class "navbar-menu" ]
+            [ div [class "navbar-start"]
+                  [ div [ class "navbar-item"] 
+                        [ navButton "Symians" (ChangeView World)
+                        , navButton "World" (ChangeView World)
+                        , navButton "Chat" (ChangeView Chat)
+                        ]
+                  ]
             ]
         ]
 
 
+
+
+
 navButton txt action =
-    button [ class "navbar-item button", onClick action ]
+    button [ class "navbar-link button", onClick action ]
         [ text txt ]
