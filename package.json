@@ -9,13 +9,14 @@
     "url": "https://github.com/recursion/symians"
   },
   "scripts": {
-    "start": "webpack-dev-server --port 8181 --hot --inline",
+    "start": "webpack-dev-server --host 0.0.0.0 --port 8181 --hot --inline",
     "prebuild": "rimraf dist",
     "build": "webpack",
     "reinstall": "npm i rimraf && rimraf node_modules && npm uninstall -g elm && npm i -g elm && npm i && elm package install"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.7",
+    "bulma": "^0.5.1",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.27.3",
     "elm": "^0.18.0",

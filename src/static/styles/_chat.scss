@@ -1,14 +1,12 @@
 .messagebox {
     position: relative;
-    height: 250px;
+    min-height: 250px;
     width: 100%;
 }
 .messages {
     position: absolute;
     bottom: 0;
     width: 98.7%;
-    height: 250px;
-    max-height: 250px;
 }
 .messages {
     display: flex;

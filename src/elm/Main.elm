@@ -100,5 +100,5 @@ navMenu active =
 
 
 navButton txt action =
-    button [ class "button nav-button", onClick action ]
+    button [ class "button nav-button is-primary", onClick action ]
         [ text txt ]

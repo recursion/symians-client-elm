@@ -11,7 +11,7 @@ import Svg.Attributes exposing (..)
 baseSize =
     "63"
 overlayTileSize =
-    "64"
+    "62"
 
 
 view model =
@@ -25,8 +25,7 @@ view model =
             [ viewBox "0 0 1366 768"
             , class "world level"
             ]
-            [g [ ] locations
-            ]
+            locations
 
 
 renderLocation ( coords, loc ) model =
@@ -41,20 +40,17 @@ renderLocation ( coords, loc ) model =
 
 
 createLocation positionx positiony =
-    g [] 
+    g []
       [ use
         [ xlinkHref "#grass"
         , x positionx
         , y positiony
-        , width baseSize
-        , height baseSize
-        , transform "translate(-528, -10)"
-        ]
-        []
-      , rect [ fill "rgba(0, 255, 0, 0.2)"
+        , class "location"
+        ] []
+      , rect [ class "location"
+             , fill "rgba(255, 255, 255, 0.01)"
              , x positionx
              , y positiony
-             , class "location"
              , width overlayTileSize
              , height overlayTileSize
              ] []

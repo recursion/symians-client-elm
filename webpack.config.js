@@ -5,7 +5,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var autoprefixer = require('autoprefixer');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
-const HtmlWebpackInlineSVGPlugin = require('html-webpack-inline-svg-plugin');
+// const HtmlWebpackInlineSVGPlugin = require('html-webpack-inline-svg-plugin');
 
 
 const prod = 'production';
@@ -19,7 +19,7 @@ const isProd = TARGET_ENV == prod;
 // entry and output path/filename variables
 const entryPath = path.join(__dirname, 'src/static/index.js');
 const outputPath = path.join(__dirname, 'dist');
-const outputFilename = isProd ? '[name]-[hash].js' : '[name].js'
+const outputFilename = isProd ? '[name]-[hash].js' : '[name].js';
 
 console.log('WEBPACK GO! Building for ' + TARGET_ENV);
 
@@ -27,18 +27,19 @@ console.log('WEBPACK GO! Building for ' + TARGET_ENV);
 var commonConfig = {
     output: {
         path: outputPath,
-        filename: `static/js/${outputFilename}`,
+        filename: `static/js/${outputFilename}`
     },
     resolve: {
-        extensions: ['.js', '.elm', '.svg'],
+        extensions: ['.js', '.elm'],
         modules: ['node_modules']
     },
     module: {
         noParse: /\.elm$/,
-        rules: [{
-            test: /\.(eot|ttf|woff|woff2|svg)$/,
-            use: 'file-loader?publicPath=../../&name=static/css/[hash].[ext]'
-        }
+        rules: [
+            {
+                test: /\.(eot|ttf|woff|woff2|svg)$/,
+                use: 'file-loader?publicPath=../../&name=static/css/[hash].[ext]'
+            }
         ]
     },
     plugins: [
@@ -52,7 +53,7 @@ var commonConfig = {
             inject: 'body',
             filename: 'index.html'
         }),
-        new HtmlWebpackInlineSVGPlugin()
+        // new HtmlWebpackInlineSVGPlugin()
     ]
 }
 
@@ -60,7 +61,7 @@ var commonConfig = {
 if (isDev === true) {
     module.exports = merge(commonConfig, {
         entry: [
-            'webpack-dev-server/client?http://localhost:8181',
+            'webpack-dev-server/client?http://0.0.0.0:8181',
             entryPath
         ],
         devServer: {
@@ -109,7 +110,7 @@ if (isProd === true) {
         plugins: [
             new ExtractTextPlugin({
                 filename: 'static/css/[name]-[hash].css',
-                allChunks: true,
+                allChunks: true
             }),
             new CopyWebpackPlugin([{
                 from: 'src/static/img/',

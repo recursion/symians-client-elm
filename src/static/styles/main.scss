@@ -3,6 +3,32 @@
 // @import '~bootstrap-sass/assets/stylesheets/_bootstrap.scss';
 
 // can add Boostrap overrides, additional Sass/CSS below...
+// Import the initial variables
+
+// Set your own initial variables
+// Update blue
+@import "~bulma/sass/utilities/initial-variables";
+
+$blue: #72d0eb;
+// Add pink and its invert
+$pink: #ffb3b3;
+$pink-invert: #fff;
+$green: #339955;
+$green-invert: #00FF95;
+// Add a serif family
+$family-serif: "Merriweather", "Georgia", serif;
+
+// Set the derived variables
+// Use the new pink as the primary color
+$primary: $green;
+$primary-invert: $green-invert;
+// Use the existing orange as the danger color
+$danger: $orange;
+// Use the new serif family
+$family-primary: $family-serif;
+
+@import "~bulma";
+
 @import 'app';
 @import 'world';
 @import 'chat'
