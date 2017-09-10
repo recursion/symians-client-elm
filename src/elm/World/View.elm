@@ -1,25 +1,28 @@
 module World.View exposing (view)
 
+import App.Model exposing (Model, Msg, Location)
+import Svg.Attributes exposing (..)
+import Html exposing (Html)
 import Dict exposing (Dict)
 import Svg exposing (..)
-import Svg.Attributes exposing (..)
 
 
--- import Html.Events exposing (onClick)
-
-
+baseSize : String
 baseSize =
     "63"
+
+
+overlayTileSize : String
 overlayTileSize =
     "62"
 
 
+view : Model -> Html Msg
 view model =
     let
         locations =
             (Dict.toList model.world.locations)
-                |> List.filter onZLevel
-                |> (List.map (\loc -> renderLocation loc model))
+                |> (List.map (\loc -> renderLocation loc))
     in
         svg
             [ viewBox "0 0 1366 768"
@@ -28,34 +31,41 @@ view model =
             locations
 
 
-renderLocation ( coords, loc ) model =
+renderLocation : ( String, Location ) -> Html Msg
+renderLocation ( coords, loc ) =
     let
-        ( getX, getY, getZ ) =
+        ( x, y, z ) =
             extractCoords coords
 
         ( positionx, positiony ) =
-            positionFromCoords ( getX, getY )
+            positionFromCoords ( x, y )
     in
         createLocation positionx positiony
 
 
+createLocation : String -> String -> Html Msg
 createLocation positionx positiony =
     g []
-      [ use
-        [ xlinkHref "#grass"
-        , x positionx
-        , y positiony
-        , class "location"
-        ] []
-      , rect [ class "location"
-             , fill "rgba(255, 255, 255, 0.01)"
-             , x positionx
-             , y positiony
-             , width overlayTileSize
-             , height overlayTileSize
-             ] []
-      ]
+        [ use
+            [ xlinkHref "#grass"
+            , x positionx
+            , y positiony
+            , class "location"
+            ]
+            []
+        , rect
+            [ class "location"
+            , fill "rgba(255, 255, 255, 0.01)"
+            , x positionx
+            , y positiony
+            , width overlayTileSize
+            , height overlayTileSize
+            ]
+            []
+        ]
 
+
+onZLevel : ( String, Location ) -> Bool
 onZLevel ( coords, loc ) =
     let
         ( x, y, z ) =
@@ -69,6 +79,7 @@ onZLevel ( coords, loc ) =
                 False
 
 
+extractCoords : String -> ( String, String, String )
 extractCoords asString =
     let
         coords_ =
@@ -86,6 +97,7 @@ extractCoords asString =
         ( x, y, z )
 
 
+positionFromCoords : ( String, String ) -> ( String, String )
 positionFromCoords ( getX, getY ) =
     let
         asNumber =
@@ -98,4 +110,3 @@ positionFromCoords ( getX, getY ) =
             toString ((asNumber getY) * (asNumber baseSize))
     in
         ( positionx, positiony )
-
