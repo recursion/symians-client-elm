@@ -14,21 +14,24 @@ import Phoenix.Channel
 
 view : Model -> Html Msg
 view model =
-    div [class "panel"]
-      [ div [ class "panel-block messagebox" ]
-          [ messages model
-          ]
-      , newMessageForm model
-      , channelsButtons
-      -- , channelsTable (Dict.values model.phxSocket.channels)
-      ]
+    div [ class "panel" ]
+        [ div [ class "panel-block messagebox" ]
+            [ messages model
+            ]
+        , newMessageForm model
+        , channelsButtons
+
+        -- , channelsTable (Dict.values model.phxSocket.channels)
+        ]
 
 
+messages : Model -> Html Msg
 messages model =
     ul [ class "messages" ]
         ((List.map renderMessage) (Channel.getCurrent model).messages)
 
 
+channelsButtons : Html Msg
 channelsButtons =
     div [ class "panel-block channel-buttons" ]
         [ p [ class "control" ]
@@ -37,8 +40,11 @@ channelsButtons =
             ]
         ]
 
+
+channelButton : String -> Msg -> Html Msg
 channelButton name action =
-        button [ class "button isPrimary", onClick action] [ text name ]
+    button [ class "button isPrimary", onClick action ] [ text name ]
+
 
 channelsTable : List (Phoenix.Channel.Channel Msg) -> Html Msg
 channelsTable channels =

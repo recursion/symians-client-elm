@@ -11,16 +11,18 @@ socketServer : String
 socketServer =
     "ws:/localhost:4000/socket/websocket"
 
+worldDataEvent : String
 worldDataEvent = "world"
 
+authDataEvent : String
 authDataEvent =
     "token"
 
-
+systemChannel : String
 systemChannel =
     "system:"
 
-
+chatChannel : String
 chatChannel =
     "system:chat"
 
@@ -31,11 +33,11 @@ init =
         socket =
             initPhxSocket
 
-        chatModel =
-            Chat.Model.initModel chatChannel
+        (chatModel, nextSocket) =
+            Chat.Model.initWithSocket "new:msg" chatChannel ChatMsg socket
 
         model =
-            Model socket chatModel Auth.init initUI initWorldData
+            Model nextSocket chatModel Auth.init initUI initWorldData
     in
         connectTo systemChannel model
 
@@ -47,7 +49,7 @@ initPhxSocket =
         |> Phoenix.Socket.on authDataEvent systemChannel ReceiveToken
         |> Phoenix.Socket.on worldDataEvent systemChannel ReceiveWorldData
 
-
+connectTo : String -> Model -> (Model, Cmd Msg)
 connectTo channelName model =
     let
         channel =

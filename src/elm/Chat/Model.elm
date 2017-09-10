@@ -5,13 +5,8 @@ import Json.Encode as JE
 import Dict exposing (Dict)
 
 
--- CONSTANTS
 
-
-socketServer : String
-socketServer =
-    "ws:/localhost:4000/socket/websocket"
-
+newChatMsgEvent : String
 newChatMsgEvent = "new:msg"
 
 
@@ -20,7 +15,6 @@ newChatMsgEvent = "new:msg"
 type Msg
     = SendMessage
     | SetNewMessage String
-    | PhoenixMsg (Phoenix.Socket.Msg Msg)
     | ReceiveChatMessage JE.Value
     | JoinChannel
     | LeaveChannel
@@ -35,50 +29,18 @@ type alias Model =
     { newMessage : String
     , currentChannel : String
     , channels : Channels
-    , phxSocket : Phoenix.Socket.Socket Msg
     }
-
 
 type alias ChatMessage =
     { user : String
     , body : String
     }
 
-
-
-
--- Used when initializing as standalone app
-
-
-initPhxSocket : String -> Phoenix.Socket.Socket Msg
-initPhxSocket channelName =
-    Phoenix.Socket.init socketServer
-        -- |> Phoenix.Socket.withDebug
-        |> Phoenix.Socket.on newChatMsgEvent channelName ReceiveChatMessage
-
-
-
--- used when initializing as a module in a larger app
-
-
-initWithSocket : String -> String -> Phoenix.Socket.Socket Msg -> Model
-initWithSocket event channelName socket =
+initWithSocket event channelName parentMsg socket =
     let
         channels = Dict.insert channelName (Channel []) Dict.empty
         socketWithChatEvent =
             socket
-                |> Phoenix.Socket.on event channelName ReceiveChatMessage
+                |> Phoenix.Socket.on event channelName (parentMsg << ReceiveChatMessage)
     in
-        Model "" channelName channels socketWithChatEvent
-
-
-
--- Used when initializing as standalone app
-
-
-initModel : String -> Model
-initModel name =
-    let
-        channels = Dict.insert name (Channel []) Dict.empty
-    in
-      Model "" name channels (initPhxSocket name)
+        (Model "" channelName channels, socketWithChatEvent)

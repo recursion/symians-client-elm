@@ -3,46 +3,37 @@ module Chat.Update exposing (update)
 import Chat.Model exposing (..)
 import Chat.Channel as Channel
 import Phoenix.Socket
+import App.Model
 import Auth
 
 
-update : Msg -> Model -> Auth.Model -> ( Model, Cmd Msg )
-update msg model auth =
+type alias UpdateReturn =
+    ( ( Model, Cmd App.Model.SocketMsg ), App.Model.Socket )
+
+
+update : Msg -> Auth.Model -> Phoenix.Socket.Socket App.Model.Msg -> Model -> UpdateReturn
+update msg auth socket model =
     case msg of
-        SetNewMessage str ->
-            { model | newMessage = str } ! []
-
-        PhoenixMsg msg ->
-            processPhoenixMsg msg model
-
-        ReceiveChatMessage raw ->
-            Channel.processChatMessage raw model
-
         SendMessage ->
-            Channel.send auth model
+            Channel.send auth socket model
 
         JoinChannel ->
-            Channel.join model
+            Channel.join socket model
 
         LeaveChannel ->
-            Channel.leave model
+            Channel.leave socket model
+
+        SetNewMessage str ->
+            ( ( { model | newMessage = str }, Cmd.none ), socket )
+
+        ReceiveChatMessage raw ->
+            ( ( Channel.processChatMessage raw model, Cmd.none ), socket )
 
         ShowJoinedMessage channelName ->
-            Channel.showJoinedMessage channelName model
+            ( ( Channel.showJoinedMessage channelName model, Cmd.none ), socket )
 
         ShowLeftMessage channelName ->
-            Channel.showLeftMessage channelName model
+            ( ( Channel.showLeftMessage channelName model, Cmd.none ), socket )
 
         NoOp ->
-            ( model, Cmd.none )
-
-
-
-processPhoenixMsg msg model =
-    let
-        ( phxSocket, phxCmd ) =
-            Phoenix.Socket.update msg model.phxSocket
-    in
-        ( { model | phxSocket = phxSocket }
-        , Cmd.map PhoenixMsg phxCmd
-        )
+            ( ( model, Cmd.none ), socket )

@@ -57,6 +57,10 @@ type alias Location =
     }
 type alias Locations = Dict String Location
 
+
+type alias Socket = Phoenix.Socket.Socket Msg
+type alias SocketMsg = Phoenix.Socket.Msg Msg
+
 initUI =
     { viewing = World
     , nav = { isActive = False }

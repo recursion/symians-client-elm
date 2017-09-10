@@ -1,11 +1,9 @@
 module App.Update exposing (update)
 
+import App.JsonHelpers exposing (decodeTokenMessage, decodeWorldData)
 import App.Model exposing (..)
-import Chat.Chat as Chat
-import Chat.Model
 import Chat.Update
 import Phoenix.Socket
-import App.JsonHelpers exposing (decodeTokenMessage, decodeWorldData)
 
 
 -- UPDATE
@@ -15,15 +13,13 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         ChatMsg message ->
-              case message of
-                  Chat.Model.NoOp ->
-                      model ! []
-                  _ ->
-                      let
-                          ( chatModel, chatCommand ) =
-                              Chat.Update.update message model.chat model.auth
-                      in
-                          ( { model | chat = chatModel }, Cmd.map ChatMsg chatCommand )
+            let
+                (( chatModel, chatCommand ), nextSocket) =
+                    Chat.Update.update message  model.auth model.socket model.chat
+
+                nextModel = { model | socket = nextSocket }
+            in
+                ( { nextModel | chat = chatModel }, Cmd.map PhoenixMsg chatCommand )
 
         PhoenixMsg msg ->
             let
