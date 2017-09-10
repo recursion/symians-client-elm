@@ -2,22 +2,20 @@
     position: relative;
     min-height: 250px;
     width: 100%;
+    overflow: hidden;
 }
 .messages {
     position: absolute;
     bottom: 0;
     width: 98.7%;
+    padding: 0;
+    margin: 0;
 }
 .messages {
     display: flex;
     flex-direction: column-reverse;
     flex-wrap: nowrap;
-    overflow: hidden;
     word-break: break-word;
-    padding: 0;
-    margin: 0;
-}
-.messages:hover {
     overflow-y: scroll;
 }
 .messageInput, .messageControls {

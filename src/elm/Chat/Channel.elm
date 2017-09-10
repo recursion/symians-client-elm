@@ -14,17 +14,19 @@ import Auth
 type alias UpdateReturn =
     ( ( Model, Cmd App.Model.SocketMsg ), App.Model.Socket )
 
-
+{- Get the current Channel -}
 getCurrent : Model -> Channel
 getCurrent model =
     Maybe.withDefault (Channel []) (Dict.get model.currentChannel model.channels)
 
-
+{- Update the messages in a channel -}
 updateMessages : List String -> String -> Model -> Channels
 updateMessages messages channelName model =
     Dict.insert channelName (Channel messages) model.channels
 
-
+{- Joins the current channel
+  TODO: Allow joining other channels
+-}
 join : Socket -> Model -> UpdateReturn
 join socket model =
     let
@@ -40,7 +42,8 @@ join socket model =
     in
         ( ( model, phxCmd ), phxSocket )
 
-
+{- Leave the current channel
+-}
 leave : Socket -> Model -> UpdateReturn
 leave socket model =
     let
@@ -49,7 +52,8 @@ leave socket model =
     in
         ( ( model, phxCmd ), phxSocket )
 
-
+{- Send a message over sockets
+-}
 send : Auth.Model -> Socket -> Model -> UpdateReturn
 send auth socket model =
     let
@@ -68,7 +72,8 @@ send auth socket model =
     in
         ( ( { model | newMessage = "" }, phxCmd ), phxSocket )
 
-
+{- Add a message to a channel
+-}
 addMessage : String -> String -> Model -> Channels
 addMessage msg channelName model =
     let
@@ -83,7 +88,8 @@ addMessage msg channelName model =
     in
         nextChannels
 
-
+{- Adds a joined message to the channel messages
+-}
 showJoinedMessage : String -> Model -> Model
 showJoinedMessage channelName model =
     let
@@ -92,7 +98,8 @@ showJoinedMessage channelName model =
     in
         { model | channels = nextChannels }
 
-
+{- Adds a left message to a channel
+-}
 showLeftMessage : String -> Model -> Model
 showLeftMessage channelName model =
     let
@@ -101,7 +108,8 @@ showLeftMessage channelName model =
     in
         { model | channels = nextChannels }
 
-
+{- We recieved a new chat message - decode it and add it to the current channels messages
+-}
 processChatMessage : Value -> Model -> Model
 processChatMessage raw model =
     case decodeChatMessage raw of
