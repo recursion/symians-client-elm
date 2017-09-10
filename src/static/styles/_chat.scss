@@ -10,18 +10,20 @@
     width: 98.7%;
     padding: 0;
     margin: 0;
+    height: 100%;
 }
 .messages {
     display: flex;
     flex-direction: column-reverse;
     flex-wrap: nowrap;
     word-break: break-word;
+}
+.messages:hover {
     overflow-y: scroll;
 }
 .messageInput, .messageControls {
     width: 100%;
 }
-
 .chatMessage {
     display: block;
     width: 100%;

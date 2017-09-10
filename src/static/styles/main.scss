@@ -29,6 +29,18 @@ $family-primary: $family-serif;
 
 @import "~bulma";
 
+body {
+  position: absolute;
+  height: 100%;
+  min-height: 100%;
+  width: 100%;
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
 @import 'app';
 @import 'world';
 @import 'chat'
