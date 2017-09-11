@@ -25,8 +25,7 @@ view model =
                 |> (List.map (\loc -> renderLocation loc))
     in
         svg
-            [ viewBox "0 0 1366 768"
-            , class "world level"
+            [ class "world level"
             ]
             locations
 

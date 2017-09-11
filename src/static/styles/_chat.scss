@@ -1,12 +1,17 @@
 .chat-container {
     position: relative;
-    top: -5.9rem;
     color: rgba(0, 0, 0, 0.5);
     display: inline-block;
+    width: 50%;
 }
 .controls {
-    display: inline-block;
-    position: relative;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+.chat-toggle {
+    position: absolute;
+    bottom: 0;
 }
 .messagebox {
     position: relative;
@@ -17,6 +22,7 @@
     position: absolute;
     bottom: 0;
     width: 98.7%;
+    height: 100%;
     padding: 0.2rem;
     margin: 0;
 }

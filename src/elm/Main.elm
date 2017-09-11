@@ -54,12 +54,12 @@ controlsView model =
         True ->
             div [ class "controls" ]
                 [ Html.map ChatMsg (Chat.View.view model.chat)
-                , button [ class "button is-small", onClick ToggleChatView ] [ text "X" ]
+                , button [ class "button is-small chat-toggle", onClick ToggleChatView ] [ text "X" ]
                 ]
 
         False ->
             div [ class "controls" ]
-                [ button [ class "button is-small", onClick ToggleChatView ] [ text "Chat" ]
+                [ button [ class "button is-small chat-toggle", onClick ToggleChatView ] [ text "Chat" ]
                 ]
 
 
