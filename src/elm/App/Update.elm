@@ -12,6 +12,13 @@ import Phoenix.Socket
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
+        ToggleChatView ->
+            let
+                ui = model.ui
+                nextUI = { ui | chatView = not ui.chatView }
+            in
+              { model | ui = nextUI } ! []
+
         ChatMsg message ->
             let
                 (( chatModel, chatCommand ), nextSocket) =
@@ -62,10 +69,3 @@ update msg model =
 
         Disconnected ->
             model ! []
-
-        ChangeView view ->
-            let
-                ui = model.ui
-                nextUI = { ui | viewing = view }
-            in
-              { model | ui = nextUI } ! []

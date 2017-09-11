@@ -8,12 +8,8 @@ import Dict exposing (Dict)
 
 -- MODEL
 
-type View
-    = Chat
-    | World
-
 type alias UI =
-    { viewing: View
+    { chatView : Bool
     , nav : {isActive: Bool}
     }
 
@@ -33,7 +29,7 @@ type Msg
     | ReceiveWorldData JE.Value
     | Connected
     | Disconnected
-    | ChangeView View
+    | ToggleChatView
     | ActivateNav
 
 type alias WorldData =
@@ -62,7 +58,7 @@ type alias Socket = Phoenix.Socket.Socket Msg
 type alias SocketMsg = Phoenix.Socket.Msg Msg
 
 initUI =
-    { viewing = World
+    { chatView = False
     , nav = { isActive = False }
     }
 

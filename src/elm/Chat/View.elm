@@ -14,12 +14,11 @@ import Phoenix.Channel
 
 view : Model -> Html Msg
 view model =
-    div [ class "panel" ]
-        [ div [ class "panel-block messagebox" ]
+    div [ class "chat-container" ]
+        [ div [ class "messagebox" ]
             [ messages model
             ]
         , newMessageForm model
-        , channelsButtons
 
         -- , channelsTable (Dict.values model.phxSocket.channels)
         ]
@@ -64,7 +63,7 @@ channelRow channel =
 
 newMessageForm : Model -> Html Msg
 newMessageForm model =
-    div [ class "panel-block" ]
+    div [ class "" ]
         [ form [ class "field has-addons messageControls", onSubmit SendMessage ]
             [ p [ class "control" ]
                 [ button [ class "button isStatic" ] [ text "Send" ]

@@ -1,16 +1,24 @@
+.chat-container {
+    position: relative;
+    top: -5.9rem;
+    color: rgba(0, 0, 0, 0.5);
+    display: inline-block;
+}
+.controls {
+    display: inline-block;
+    position: relative;
+}
 .messagebox {
     position: relative;
-    min-height: 250px;
-    width: 100%;
+    min-height: 95px;
     overflow: hidden;
 }
 .messages {
     position: absolute;
     bottom: 0;
     width: 98.7%;
-    padding: 0;
+    padding: 0.2rem;
     margin: 0;
-    height: 100%;
 }
 .messages {
     display: flex;

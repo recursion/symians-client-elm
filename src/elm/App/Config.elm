@@ -3,7 +3,7 @@ module App.Config exposing (..)
 import App.Model exposing (..)
 import Phoenix.Socket
 import Phoenix.Channel
-import Chat.Model
+import Chat.Channel
 import Auth
 
 
@@ -27,19 +27,20 @@ chatChannel =
     "system:chat"
 
 
-init : ( Model, Cmd Msg )
 init =
     let
         socket =
             initPhxSocket
 
-        (chatModel, nextSocket) =
-            Chat.Model.initWithSocket "new:msg" chatChannel ChatMsg socket
+        ((chatModel, chatCmd), nextSocket) =
+            Chat.Channel.initWithSocket "new:msg" chatChannel ChatMsg socket
 
         model =
             Model nextSocket chatModel Auth.init initUI initWorldData
+
+        (nextModel, nextCmd) = connectTo systemChannel model
     in
-        connectTo systemChannel model
+        (nextModel, Cmd.batch [Cmd.map PhoenixMsg chatCmd, nextCmd])
 
 
 initPhxSocket : Phoenix.Socket.Socket Msg

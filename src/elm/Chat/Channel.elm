@@ -24,6 +24,18 @@ updateMessages : List String -> String -> Model -> Channels
 updateMessages messages channelName model =
     Dict.insert channelName (Channel messages) model.channels
 
+
+initWithSocket event channelName parentMsg socket =
+    let
+        channels = Dict.insert channelName (Channel []) Dict.empty
+        socketWithChatEvent =
+            socket
+                |> Phoenix.Socket.on event channelName (parentMsg << ReceiveChatMessage)
+
+        model = Model "" channelName channels
+    in
+        join socketWithChatEvent model
+
 {- Joins the current channel
   TODO: Allow joining other channels
 -}

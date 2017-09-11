@@ -35,12 +35,3 @@ type alias ChatMessage =
     { user : String
     , body : String
     }
-
-initWithSocket event channelName parentMsg socket =
-    let
-        channels = Dict.insert channelName (Channel []) Dict.empty
-        socketWithChatEvent =
-            socket
-                |> Phoenix.Socket.on event channelName (parentMsg << ReceiveChatMessage)
-    in
-        (Model "" channelName channels, socketWithChatEvent)

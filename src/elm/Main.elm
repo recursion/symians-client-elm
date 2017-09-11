@@ -38,24 +38,29 @@ subscriptions model =
 
 
 -- VIEW
-
 -- TODO: move the navigation/main views out into its own module
+
+
 view : Model -> Html Msg
 view model =
     div []
-        [ navView model.ui
-        , mainView model
+        [ World.view model
+        , controlsView model
         ]
 
 
-mainView : Model -> Html Msg
-mainView model =
-    case model.ui.viewing of
-        Chat ->
-            Html.map ChatMsg (Chat.View.view model.chat)
+controlsView model =
+    case model.ui.chatView of
+        True ->
+            div [ class "controls" ]
+                [ Html.map ChatMsg (Chat.View.view model.chat)
+                , button [ class "button is-small", onClick ToggleChatView ] [ text "X" ]
+                ]
 
-        World ->
-            World.view model
+        False ->
+            div [ class "controls" ]
+                [ button [ class "button is-small", onClick ToggleChatView ] [ text "Chat" ]
+                ]
 
 
 navView : UI -> Html Msg
@@ -99,10 +104,7 @@ navMenu : String -> Html Msg
 navMenu active =
     div [ id "navMenubd", class ("navbar-menu" ++ active) ]
         [ div [ class "navbar-start" ]
-            [ div [ class "navbar-item" ]
-                [ navButton "World" (ChangeView World)
-                , navButton "Chat" (ChangeView Chat)
-                ]
+            [ div [ class "navbar-item" ] []
             ]
         ]
 
