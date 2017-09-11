@@ -1,6 +1,6 @@
 module Main exposing (..)
 
-import Html exposing (Html, div, nav, a, button, text, span)
+import Html exposing (Html, div, nav, a, button, text, span, p, label)
 import Html.Attributes exposing (id, class, attribute, href)
 import Html.Events exposing (onClick)
 import App.Model exposing (..)
@@ -46,20 +46,45 @@ view model =
     div []
         [ World.view model
         , controlsView model
+        , hudView model
         ]
 
+--TODO: divide the coordinates by the tilesize so we get raw coords?
+hudView : Model -> Html Msg
+hudView model =
+    div [ class "hud hud-tiledata" ]
+        [ renderTileData "type: " [ text model.tileData.loc.type_ ]
+        , renderTileData "x: " [ text model.tileData.x ]
+        , renderTileData "y: " [ text model.tileData.y ]
+        , renderTileData "entities" (List.map renderEntity model.tileData.loc.entities)
+        ]
 
+renderTileData : String -> List (Html Msg) -> Html Msg
+renderTileData key value =
+        label [ class "tilelabel" ]
+            [ text key
+            , span [ class "tiledata" ] value
+            ]
+renderEntity : String -> Html Msg
+renderEntity entity =
+    div [class "entity-data"] [ text entity ]
+
+controlsView : Model -> Html Msg
 controlsView model =
     case model.ui.chatView of
         True ->
             div [ class "controls" ]
                 [ Html.map ChatMsg (Chat.View.view model.chat)
-                , button [ class "button is-small chat-toggle", onClick ToggleChatView ] [ text "X" ]
+                , button [ class "button is-small chat-toggle hud"
+                         , onClick ToggleChatView
+                         ] [ text "X" ]
                 ]
 
         False ->
             div [ class "controls" ]
-                [ button [ class "button is-small chat-toggle", onClick ToggleChatView ] [ text "Chat" ]
+                [ button [ class "button is-small chat-toggle hud"
+                         , onClick ToggleChatView
+                         ] [ text "Chat" ]
                 ]
 
 

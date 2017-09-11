@@ -27,6 +27,9 @@ $danger: $orange;
 // Use the new serif family
 $family-primary: $family-serif;
 
+$hud-background: rgba(220, 220, 220, 0.5);
+$hud-border: 2px solid lightgrey;
+
 @import "~bulma";
 
 body {
@@ -47,4 +50,5 @@ body {
 }
 @import 'app';
 @import 'world';
-@import 'chat'
+@import 'chat';
+@import 'hud';

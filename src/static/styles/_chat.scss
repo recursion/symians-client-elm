@@ -7,16 +7,21 @@
 .controls {
     position: fixed;
     width: 100%;
-    bottom: 0;
+    bottom: 1px;
+    left: 1px;
 }
 .chat-toggle {
     position: absolute;
     bottom: 0;
+    letter-spacing: 0.2rem;
+    font-weight: bold;
 }
 .messagebox {
     position: relative;
     min-height: 95px;
     overflow: hidden;
+    border-radius: 0 5px 0 0;
+    font-size: 0.8rem;
 }
 .messages {
     position: absolute;

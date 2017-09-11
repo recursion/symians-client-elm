@@ -18,8 +18,8 @@ const isProd = TARGET_ENV == prod;
 
 // entry and output path/filename variables
 const entryPath = path.join(__dirname, 'src/static/index.js');
-const outputPath = path.join(__dirname, 'dist');
-const outputFilename = isProd ? '[name]-[hash].js' : '[name].js';
+const outputPath = path.join(__dirname, '../symians_server/assets/');
+const outputFilename = isProd ? '[name].js' : '[name].js';
 
 console.log('WEBPACK GO! Building for ' + TARGET_ENV);
 
@@ -27,7 +27,7 @@ console.log('WEBPACK GO! Building for ' + TARGET_ENV);
 var commonConfig = {
     output: {
         path: outputPath,
-        filename: `static/js/${outputFilename}`
+        filename: `js/${outputFilename}`
     },
     resolve: {
         extensions: ['.js', '.elm'],
@@ -109,14 +109,15 @@ if (isProd === true) {
         },
         plugins: [
             new ExtractTextPlugin({
-                filename: 'static/css/[name]-[hash].css',
+                filename: 'css/[name]-[hash].css',
                 allChunks: true
             }),
             new CopyWebpackPlugin([{
                 from: 'src/static/img/',
-                to: 'static/img/'
+                to: 'static/images/'
             }, {
-                from: 'src/static/img/favicon.ico'
+                from: 'src/static/img/favicon.ico',
+                to: 'static/'
             }]),
 
             // extract CSS into a separate file

@@ -14,17 +14,34 @@ update msg model =
     case msg of
         ToggleChatView ->
             let
-                ui = model.ui
-                nextUI = { ui | chatView = not ui.chatView }
+                ui =
+                    model.ui
+
+                nextUI =
+                    { ui | chatView = not ui.chatView }
             in
-              { model | ui = nextUI } ! []
+                { model | ui = nextUI } ! []
+
+        DisplayTile posX posY location ->
+            let
+                td =
+                    model.tileData
+
+                nextTileData =
+                    { td | x = posX, y = posY, loc = location }
+
+                nextModel =
+                    { model | tileData = nextTileData }
+            in
+                ( nextModel, Cmd.none )
 
         ChatMsg message ->
             let
-                (( chatModel, chatCommand ), nextSocket) =
-                    Chat.Update.update message  model.auth model.socket model.chat
+                ( ( chatModel, chatCommand ), nextSocket ) =
+                    Chat.Update.update message model.auth model.socket model.chat
 
-                nextModel = { model | socket = nextSocket }
+                nextModel =
+                    { model | socket = nextSocket }
             in
                 ( { nextModel | chat = chatModel }, Cmd.map PhoenixMsg chatCommand )
 
@@ -50,17 +67,24 @@ update msg model =
         ReceiveWorldData raw ->
             case decodeWorldData raw of
                 Ok world ->
-                    {model | world = world} ! []
+                    { model | world = world } ! []
 
                 Err error ->
                     ( model, Cmd.none )
 
         ActivateNav ->
             let
-                ui = model.ui
-                nav = ui.nav
-                nextNav = { nav | isActive = not nav.isActive }
-                nextUI = { ui | nav = nextNav }
+                ui =
+                    model.ui
+
+                nav =
+                    ui.nav
+
+                nextNav =
+                    { nav | isActive = not nav.isActive }
+
+                nextUI =
+                    { ui | nav = nextNav }
             in
                 { model | ui = nextUI } ! []
 

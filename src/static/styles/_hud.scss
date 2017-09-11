@@ -1,0 +1,18 @@
+.hud {
+    border: $hud-border;
+    background-color: $hud-background;
+}
+.hud-tiledata {
+    border-radius: 5px 0 5px 5px;
+    position: fixed;
+    top: 1px;
+    right: 1px;
+    width: 15%;
+    padding: 3px;
+
+    label {
+        display: block;
+        margin-right: 10px;
+    }
+    float: right;
+}

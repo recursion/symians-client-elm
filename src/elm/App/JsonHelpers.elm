@@ -28,7 +28,7 @@ locationDecoder : Decoder Location
 locationDecoder =
     JD.map2 Location
         (field "entities" (JD.list JD.string))
-        (field "type" JD.string)
+        (field "type_" JD.string)
 
 
 locationsDecoder : Decoder (Dict String Location)

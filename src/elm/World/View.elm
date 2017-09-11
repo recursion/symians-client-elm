@@ -1,10 +1,16 @@
 module World.View exposing (view)
 
-import App.Model exposing (Model, Msg, Location)
+import App.Model exposing (Model, Msg, Msg(DisplayTile), Location)
 import Svg.Attributes exposing (..)
+import Svg.Events exposing (onMouseOver)
 import Html exposing (Html)
 import Dict exposing (Dict)
 import Svg exposing (..)
+
+
+smallTile : String
+smallTile =
+    "32"
 
 
 baseSize : String
@@ -39,29 +45,30 @@ renderLocation ( coords, loc ) =
         ( positionx, positiony ) =
             positionFromCoords ( x, y )
     in
-        createLocation positionx positiony
+        createLocation positionx positiony loc
 
 
-createLocation : String -> String -> Html Msg
-createLocation positionx positiony =
-    g []
-        [ use
-            [ xlinkHref "#grass"
-            , x positionx
-            , y positiony
-            , class "location"
+createLocation : String -> String -> Location -> Html Msg
+createLocation posX posY loc =
+        g []
+            [ use
+                [ xlinkHref "#grass"
+                , x posX
+                , y posY
+                , class "location"
+                ]
+                []
+            , rect
+                [ class "location"
+                , fill "rgba(255, 255, 255, 0.01)"
+                , x posX
+                , y posY
+                , width overlayTileSize
+                , height overlayTileSize
+                , onMouseOver (DisplayTile posX posY loc)
+                ]
+                []
             ]
-            []
-        , rect
-            [ class "location"
-            , fill "rgba(255, 255, 255, 0.01)"
-            , x positionx
-            , y positiony
-            , width overlayTileSize
-            , height overlayTileSize
-            ]
-            []
-        ]
 
 
 onZLevel : ( String, Location ) -> Bool

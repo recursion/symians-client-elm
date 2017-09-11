@@ -33,12 +33,12 @@ init =
             initPhxSocket
 
         ((chatModel, chatCmd), nextSocket) =
-            Chat.Channel.initWithSocket "new:msg" chatChannel ChatMsg socket
+            Chat.Channel.initWithSocket "new:msg" chatChannel ChatMsg socket 
 
         model =
-            Model nextSocket chatModel Auth.init initUI initWorldData
+            Model nextSocket chatModel Auth.init initUI initWorldData initTileData
 
-        (nextModel, nextCmd) = connectTo systemChannel model
+        (nextModel, nextCmd) = connectTo systemChannel model 
     in
         (nextModel, Cmd.batch [Cmd.map PhoenixMsg chatCmd, nextCmd])
 

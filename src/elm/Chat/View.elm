@@ -8,7 +8,6 @@ import Chat.Channel as Channel
 import Phoenix.Channel
 
 
--- import Dict exposing (Dict)
 -- VIEW
 
 
@@ -24,10 +23,52 @@ view model =
         ]
 
 
+
+-- messages
+
+
 messages : Model -> Html Msg
 messages model =
-    ul [ class "messages" ]
+    ul [ class "messages hud" ]
         ((List.map renderMessage) (Channel.getCurrent model).messages)
+
+
+renderMessage : String -> Html Msg
+renderMessage str =
+    li [ class "block chatMessage" ] [ text str ]
+
+
+newMessageForm : Model -> Html Msg
+newMessageForm model =
+    div [ class "" ]
+        [ form [ class "field has-addons messageControls", onSubmit SendMessage ]
+            [ sendButton
+            , messageInput model
+            ]
+        ]
+
+sendButton : Html Msg
+sendButton =
+    p [ class "control" ]
+        [ button [ class "button isStatic is-small hud" ]
+              [ text "Send" ]
+        ]
+
+messageInput : Model -> Html Msg
+messageInput model =
+    p [ class "control messageInput" ]
+        [ input
+            [ class "input is-small hud"
+            , type_ "text"
+            , value model.newMessage
+            , onInput SetNewMessage
+            ]
+            []
+        ]
+
+
+
+-- Channels
 
 
 channelsButtons : Html Msg
@@ -59,22 +100,3 @@ channelRow channel =
         , td [] [ (text << toString) channel.payload ]
         , td [] [ (text << toString) channel.state ]
         ]
-
-
-newMessageForm : Model -> Html Msg
-newMessageForm model =
-    div [ class "" ]
-        [ form [ class "field has-addons messageControls", onSubmit SendMessage ]
-            [ p [ class "control" ]
-                [ button [ class "button isStatic is-small" ] [ text "Send" ]
-                ]
-            , p [ class "control messageInput" ]
-                [ input [ class "input is-small", type_ "text", value model.newMessage, onInput SetNewMessage ] []
-                ]
-            ]
-        ]
-
-
-renderMessage : String -> Html Msg
-renderMessage str =
-    li [ class "block chatMessage" ] [ text str ]
