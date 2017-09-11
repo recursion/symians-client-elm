@@ -9,7 +9,7 @@ import Auth
 
 socketServer : String
 socketServer =
-    "ws:/localhost:4000/socket/websocket"
+    "ws:/192.168.88.29:4000/socket/websocket"
 
 worldDataEvent : String
 worldDataEvent = "world"
