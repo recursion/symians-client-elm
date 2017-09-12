@@ -32,6 +32,7 @@ toggleChat : Model -> Model
 toggleChat model =
     { model | chatView = not model.chatView }
 
+toggleInfoView : Model -> Model
 toggleInfoView model =
     { model | viewInfo = not model.viewInfo }
 

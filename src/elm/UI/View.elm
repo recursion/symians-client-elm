@@ -15,7 +15,7 @@ hudView model =
         [ renderTileData "type: " [ text model.tileData.loc.type_ ]
         , renderTileData "x: " [ text model.tileData.x ]
         , renderTileData "y: " [ text model.tileData.y ]
-        , renderTileData "entities" (List.map renderEntity model.tileData.loc.entities)
+        , renderTileData "entities:" (List.map renderEntity model.tileData.loc.entities)
         ]
 
 
@@ -34,6 +34,7 @@ controlsView model =
             , hudButton "Info" ToggleInfo infoClass
             ]
 
+isActive : Bool -> String
 isActive setting =
       case setting of
           True ->
@@ -41,7 +42,7 @@ isActive setting =
           False ->
               ""
 
-
+hudButton : String -> msg -> String -> Html msg
 hudButton name action class_ =
     button
         [ class ("button is-small hud toggle " ++ class_)

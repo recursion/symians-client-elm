@@ -9,45 +9,44 @@ import Phoenix.Socket
 import Phoenix.Push
 import App.Auth as Auth
 
-{-
-holds the shape of updates return value
+
+{-| holds the shape of updates return value
 -}
 type alias UpdateReturn =
     ( ( Model, Cmd App.Model.SocketMsg ), App.Model.Socket )
 
-{-
-Initialize our default chat channel with an existing socket
+
+{-| Initialize our default chat channel with an existing socket
 -}
-initWithSocket : String
-               -> String
-               -> (Chat.Model.Msg -> App.Model.Msg)
-               -> Phoenix.Socket.Socket App.Model.Msg
-               -> UpdateReturn
+initWithSocket :
+    String
+    -> String
+    -> (Chat.Model.Msg -> App.Model.Msg)
+    -> Phoenix.Socket.Socket App.Model.Msg
+    -> UpdateReturn
 initWithSocket event channelName parentMsg socket =
     let
-        channels =
-            Dict.insert channelName (Channel []) Dict.empty
-
-        socketWithChatEvent =
+        nextSocket =
             socket
                 |> Phoenix.Socket.on event channelName (parentMsg << ReceiveChatMessage)
 
-        model =
-            Model "" channelName channels
+        channels =
+            Dict.insert channelName (Channel []) Dict.empty
     in
-        join socketWithChatEvent model
+        channels
+            |> Model "" channelName
+            |> join nextSocket
 
 
-
-{- Get the current Channel -}
+{-| Get the current Channel
+-}
 getCurrent : Model -> Channel
 getCurrent model =
     Maybe.withDefault (Channel []) (Dict.get model.currentChannel model.channels)
 
 
-
-{- Joins the current channel
-   TODO: Allow joining other channels
+{-| Joins the current channel
+TODO: Allow joining other channels
 -}
 join : Socket -> Model -> UpdateReturn
 join socket model =
@@ -65,10 +64,8 @@ join socket model =
         ( ( model, phxCmd ), phxSocket )
 
 
-
-{- Leave the current channel -}
-
-
+{-| Leave the current channel
+-}
 leave : Socket -> Model -> UpdateReturn
 leave socket model =
     let
@@ -78,10 +75,8 @@ leave socket model =
         ( ( model, phxCmd ), phxSocket )
 
 
-
-{- Send a message over sockets -}
-
-
+{-| Send a message over sockets
+-}
 send : Auth.Model -> Socket -> Model -> UpdateReturn
 send auth socket model =
     let

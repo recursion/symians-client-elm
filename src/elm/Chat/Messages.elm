@@ -1,32 +1,34 @@
 module Chat.Messages exposing (..)
+
+import Chat.Channel as Channel
 import Chat.Model exposing (..)
 import Dict exposing (Dict)
 import Json.Encode as JE
 import App.JsonHelpers exposing (decodeChatMessage)
 
-{- Update the messages in a channel -}
+
+{-| Update the messages in a channel
+-}
 update : List String -> String -> Model -> Channels
 update messages channelName model =
     Dict.insert channelName (Channel messages) model.channels
 
 
-{- Add a message to a channel
+{-| Add a message to a channel
 -}
 add : String -> String -> Model -> Channels
 add msg channelName model =
     let
         currentChannel =
-            Maybe.withDefault (Channel []) (Dict.get channelName model.channels)
+            Channel.getCurrent model
 
         nextMessages =
             msg :: currentChannel.messages
-
-        nextChannels =
-            update nextMessages channelName model
     in
-        nextChannels
+        update nextMessages channelName model
 
-{- Adds a joined message to the channel messages
+
+{-| Adds a joined message to the channel messages
 -}
 showJoined : String -> Model -> Model
 showJoined channelName model =
@@ -36,7 +38,8 @@ showJoined channelName model =
     in
         { model | channels = nextChannels }
 
-{- Adds a left message to a channel
+
+{-| Adds a left message to a channel
 -}
 showLeft : String -> Model -> Model
 showLeft channelName model =
@@ -46,23 +49,25 @@ showLeft channelName model =
     in
         { model | channels = nextChannels }
 
-{- We recieved a new chat message - decode it and add it to the current channels messages
+
+{-| We recieved a new chat message - decode it and add it to the current channels messages
 -}
 process : JE.Value -> Model -> Model
 process raw model =
     case decodeChatMessage raw of
         Ok chatMessage ->
             let
-                currentChannel =
-                    Maybe.withDefault (Channel []) (Dict.get model.currentChannel model.channels)
-
-                nextMessages =
-                    (chatMessage.user ++ ": " ++ chatMessage.body) :: currentChannel.messages
+                msg =
+                    (chatMessage.user ++ ": " ++ chatMessage.body)
 
                 nextChannels =
-                    Dict.insert model.currentChannel (Channel nextMessages) model.channels
+                    add msg model.currentChannel model
             in
                 { model | channels = nextChannels }
 
         Err error ->
-            model
+            let
+                _ =
+                    Debug.log "Error processing chat message." error
+            in
+                model
