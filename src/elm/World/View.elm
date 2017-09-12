@@ -52,10 +52,11 @@ createLocation : String -> String -> Location -> Html Msg
 createLocation posX posY loc =
         g []
             [ use
-                [ xlinkHref "#grass"
+                [ xlinkHref ("#" ++ loc.type_)
                 , x posX
                 , y posY
                 , class "location"
+                , stroke "#000"
                 ]
                 []
             , rect
