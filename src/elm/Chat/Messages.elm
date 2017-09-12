@@ -50,7 +50,8 @@ showLeft channelName model =
         { model | channels = nextChannels }
 
 
-{-| We recieved a new chat message - decode it and add it to the current channels messages
+{-|  decode an incoming new chat message
+and add it to the current channels messages
 -}
 process : JE.Value -> Model -> Model
 process raw model =

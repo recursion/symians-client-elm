@@ -37,11 +37,17 @@ moveDown camera =
 
 
 moveUp camera =
-    { camera | y = camera.y - 1 }
+    if camera.y - 1 < 0 then
+        camera
+    else
+      { camera | y = camera.y - 1 }
 
 
 moveLeft camera =
-    { camera | x = camera.x - 1 }
+    if camera.x - 1 < 0 then
+        camera
+    else
+      { camera | x = camera.x - 1 }
 
 
 moveRight camera =
@@ -94,6 +100,7 @@ renderLocation camera ( coords, loc ) =
                 , width <| toString overlayTileSize
                 , height <| toString overlayTileSize
                 , onMouseOver (DisplayTile ogX ogY loc)
+                , class "location"
                 ]
                 []
             ]

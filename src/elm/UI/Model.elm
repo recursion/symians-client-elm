@@ -14,6 +14,7 @@ type alias Camera =
     { x: Int
     , y: Int
     , z: Int
+    , size : (Int, Int)
     }
 
 type alias TileData =
@@ -26,6 +27,7 @@ initCamera =
     { x = 0
     , y = 0
     , z = 0
+    , size = (0, 0)
     }
 
 initTileData : TileData

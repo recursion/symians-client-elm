@@ -16,14 +16,17 @@ type alias UpdateReturn =
     ( ( Model, Cmd App.Model.SocketMsg ), App.Model.Socket )
 
 
+type alias ParentMsg =
+    Chat.Model.Msg -> App.Model.Msg
+
+
+type alias Socket =
+    Phoenix.Socket.Socket App.Model.Msg
+
+
 {-| Initialize our default chat channel with an existing socket
 -}
-initWithSocket :
-    String
-    -> String
-    -> (Chat.Model.Msg -> App.Model.Msg)
-    -> Phoenix.Socket.Socket App.Model.Msg
-    -> UpdateReturn
+initWithSocket : String -> String -> ParentMsg -> Socket -> UpdateReturn
 initWithSocket event channelName parentMsg socket =
     let
         nextSocket =
