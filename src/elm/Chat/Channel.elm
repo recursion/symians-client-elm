@@ -34,7 +34,7 @@ initWithSocket event channelName parentMsg socket =
             Dict.insert channelName (Channel []) Dict.empty
     in
         channels
-            |> Model "" channelName
+            |> Model "" False channelName
             |> join nextSocket
 
 

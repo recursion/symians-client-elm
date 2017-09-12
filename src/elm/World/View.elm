@@ -57,7 +57,6 @@ createLocation posX posY loc =
                 , x posX
                 , y posY
                 , class "location"
-                , stroke "#000"
                 ]
                 []
             , rect

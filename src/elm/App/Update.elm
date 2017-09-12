@@ -4,9 +4,11 @@ import App.JsonHelpers exposing (decodeTokenMessage, decodeWorldData)
 import App.Model exposing (..)
 import Json.Decode as JD
 import UI.Model as UI
+import Keyboard
 import Chat.Update
 import Chat.Model
 import App.Socket
+import UI.Camera as Camera
 
 
 -- UPDATE
@@ -36,11 +38,63 @@ update msg model =
         ReceiveWorldData raw ->
             processWorldData raw model
 
+        KeyMsg code ->
+            processKeypress code model ! []
+
         Connected ->
             model ! []
 
         Disconnected ->
             model ! []
+
+        NoOp ->
+            model ! []
+
+
+updateCamera action model =
+    let
+        ui =
+            model.ui
+
+        nextCamera =
+            action model.ui.camera
+
+        nextUI =
+            { ui | camera = nextCamera }
+    in
+        { model | ui = nextUI }
+
+
+processKeypress : Keyboard.KeyCode -> Model -> Model
+processKeypress code model =
+    let
+        nextModel =
+            if not model.chat.inputHasFocus then
+                case code of
+                    82 ->
+                        model
+
+                    70 ->
+                        model
+
+                    87 ->
+                        updateCamera Camera.moveUp model
+
+                    83 ->
+                        updateCamera Camera.moveDown model
+
+                    65 ->
+                        updateCamera Camera.moveLeft model
+
+                    68 ->
+                        updateCamera Camera.moveRight model
+
+                    _ ->
+                        model
+            else
+                model
+    in
+        nextModel
 
 
 processWorldData : JD.Value -> Model -> ( Model, Cmd Msg )

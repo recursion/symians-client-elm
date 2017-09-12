@@ -2,15 +2,15 @@ module Main exposing (..)
 
 import Html exposing (Html, div, text)
 import App.Socket exposing (initPhxSocket, chatEvent, connectTo, chatChannel, systemChannel)
-import App.Model exposing (Model, Msg, Msg(PhoenixMsg, ChatMsg), initModel)
+import App.Model exposing (Model, Msg, Msg(PhoenixMsg, ChatMsg, KeyMsg), initModel)
 import App.Update exposing (update)
-import World.View as World
+import UI.Camera exposing (render)
 import UI.View exposing (controlsView, hudView)
 import Phoenix.Socket
 import Chat.Channel
 import Chat.View
+import Keyboard
 
--- import Auth
 
 
 main : Program Never Model Msg
@@ -48,7 +48,7 @@ view model =
                     False -> text ""
         in
             div []
-                [ World.view model
+                [ UI.Camera.render model.world.locations model.ui.camera
                 , chat
                 , controlsView model
                 , info
@@ -59,4 +59,5 @@ subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.batch
         [ Phoenix.Socket.listen model.socket PhoenixMsg
+        , Keyboard.downs KeyMsg
         ]

@@ -6,6 +6,7 @@ import Json.Encode as JE
 import App.Auth as Auth
 import UI.Model as UI
 import World.Model exposing (WorldData, Location, initWorldData)
+import Keyboard
 
 
 -- MODEL
@@ -35,6 +36,8 @@ type Msg
     | Disconnected
     | ToggleChatView
     | ToggleInfo
+    | KeyMsg Keyboard.KeyCode
+    | NoOp
 
 
 type alias Socket =

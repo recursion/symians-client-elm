@@ -4,7 +4,9 @@ import Dict exposing (Dict)
 
 
 type alias Model =
-    {}
+    { dimensions: Dimensions
+    , worldData: WorldData
+    }
 
 
 type alias WorldData =

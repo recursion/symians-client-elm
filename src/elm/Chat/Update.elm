@@ -36,5 +36,8 @@ update msg auth socket model =
         ShowLeftMessage channelName ->
             ( ( Messages.showLeft channelName model, Cmd.none ), socket )
 
+        ToggleChatInputFocus ->
+            (({ model | inputHasFocus = not model.inputHasFocus }, Cmd.none), socket)
+
         NoOp ->
             ( ( model, Cmd.none ), socket )

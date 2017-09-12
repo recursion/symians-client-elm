@@ -2,7 +2,7 @@ module Chat.View exposing (view)
 
 import Html exposing (Html, h3, p, div, text, ul, li, input, form, button, br, table, tbody, tr, td)
 import Html.Attributes exposing (class, type_, value)
-import Html.Events exposing (onInput, onSubmit, onClick)
+import Html.Events exposing (onInput, onSubmit, onClick, onFocus, onBlur)
 import Chat.Model exposing (..)
 import Chat.Channel as Channel
 import Phoenix.Channel
@@ -62,6 +62,8 @@ messageInput model =
             , type_ "text"
             , value model.newMessage
             , onInput SetNewMessage
+            , onFocus ToggleChatInputFocus
+            , onBlur ToggleChatInputFocus
             ]
             []
         ]
