@@ -23,7 +23,7 @@ controlsView : Model -> Html Msg
 controlsView model =
     let
         chatClass =
-            isActive model.ui.chatView
+            isActive model.ui.viewChat
 
         infoClass =
             isActive model.ui.viewInfo

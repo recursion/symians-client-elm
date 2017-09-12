@@ -39,7 +39,7 @@ view : Model -> Html Msg
 view model =
         let
             chat = 
-                case model.ui.chatView of
+                case model.ui.viewChat of
                     True -> Html.map ChatMsg (Chat.View.view model.chat)
                     False -> text ""
             info =

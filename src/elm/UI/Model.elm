@@ -4,10 +4,16 @@ import World.Model exposing (Location, initLocation)
 
 
 type alias Model =
-    { chatView : Bool
+    { viewChat : Bool
     , viewInfo : Bool
     , nav : { isActive : Bool }
     , camera : Camera
+    }
+
+type alias TileData =
+    { x : String
+    , y : String
+    , loc : Location
     }
 
 type alias Camera =
@@ -15,12 +21,6 @@ type alias Camera =
     , y: Int
     , z: Int
     , size : (Int, Int)
-    }
-
-type alias TileData =
-    { x : String
-    , y : String
-    , loc : Location
     }
 
 initCamera =
@@ -36,7 +36,7 @@ initTileData = { x = "0", y = "0", loc = initLocation}
 
 init : Model
 init =
-    { chatView = False
+    { viewChat = False
     , viewInfo = False
     , nav = { isActive = False }
     , camera = initCamera
@@ -45,7 +45,7 @@ init =
 
 toggleChat : Model -> Model
 toggleChat model =
-    { model | chatView = not model.chatView }
+    { model | viewChat = not model.viewChat }
 
 toggleInfoView : Model -> Model
 toggleInfoView model =

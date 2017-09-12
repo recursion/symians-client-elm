@@ -29,6 +29,26 @@ overlayTileSize =
 
 
 
+-- Model
+
+
+type alias Camera =
+    { x : Int
+    , y : Int
+    , z : Int
+    , size : ( Int, Int )
+    }
+
+
+initCamera =
+    { x = 0
+    , y = 0
+    , z = 0
+    , size = ( 0, 0 )
+    }
+
+
+
 -- Camera controls
 
 
@@ -40,14 +60,14 @@ moveUp camera =
     if camera.y - 1 < 0 then
         camera
     else
-      { camera | y = camera.y - 1 }
+        { camera | y = camera.y - 1 }
 
 
 moveLeft camera =
     if camera.x - 1 < 0 then
         camera
     else
-      { camera | x = camera.x - 1 }
+        { camera | x = camera.x - 1 }
 
 
 moveRight camera =
@@ -61,13 +81,15 @@ moveRight camera =
 render : Dict String Location -> Camera -> Html Msg
 render locations camera =
     let
+        render =
+            (\loc -> renderLocation camera loc)
+
         locations_ =
             (Dict.toList locations)
-                |> (List.map (\loc -> renderLocation camera loc))
+                |> (List.map render)
     in
         svg
-            [ class "world level"
-            ]
+            [ class "world level" ]
             locations_
 
 
@@ -104,7 +126,6 @@ renderLocation camera ( coords, loc ) =
                 ]
                 []
             ]
-
 
 
 extractCoords : String -> ( Int, Int, Int )
