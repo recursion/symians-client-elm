@@ -7,11 +7,7 @@
     height: 100%;
     margin-bottom: 0 !important;
 }
-.location:hover {
-    fill: rgba(255, 0, 0, 0.2);
-    stroke: rbga(255, 255, 255, 0.2);
-}
 .location:active {
     stroke: rgba(255, 0, 0, 0.5);
-    fill: rbga(255, 255, 255, 0.5);
+    fill: rgba(255, 0, 0, 0.2);
 }

@@ -2,9 +2,10 @@ module Chat.Update exposing (update)
 
 import Chat.Model exposing (..)
 import Chat.Channel as Channel
+import Chat.Messages as Messages
 import Phoenix.Socket
 import App.Model
-import Auth
+import App.Auth as Auth
 
 
 type alias UpdateReturn =
@@ -27,13 +28,13 @@ update msg auth socket model =
             ( ( { model | newMessage = str }, Cmd.none ), socket )
 
         ReceiveChatMessage raw ->
-            ( ( Channel.processChatMessage raw model, Cmd.none ), socket )
+            ( ( Messages.process raw model, Cmd.none ), socket )
 
         ShowJoinedMessage channelName ->
-            ( ( Channel.showJoinedMessage channelName model, Cmd.none ), socket )
+            ( ( Messages.showJoined channelName model, Cmd.none ), socket )
 
         ShowLeftMessage channelName ->
-            ( ( Channel.showLeftMessage channelName model, Cmd.none ), socket )
+            ( ( Messages.showLeft channelName model, Cmd.none ), socket )
 
         NoOp ->
             ( ( model, Cmd.none ), socket )

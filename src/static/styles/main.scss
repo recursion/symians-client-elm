@@ -27,8 +27,10 @@ $danger: $orange;
 // Use the new serif family
 $family-primary: $family-serif;
 
+// Hud colors
 $hud-background: rgba(220, 220, 220, 0.5);
-$hud-border: 2px solid lightgrey;
+$hud-border: 2px solid rgba(100, 100, 100, 0.2);
+$hud-background-active: rgba(200, 230, 230, 0.8);
 
 @import "~bulma";
 

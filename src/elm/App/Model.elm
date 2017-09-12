@@ -3,27 +3,26 @@ module App.Model exposing (..)
 import Phoenix.Socket
 import Chat.Model
 import Json.Encode as JE
-import Auth
-import Dict exposing (Dict)
+import App.Auth as Auth
+import UI.Model as UI
+import World.Model exposing (WorldData, Location, initWorldData)
 
 
 -- MODEL
-
-
-type alias UI =
-    { chatView : Bool
-    , nav : { isActive : Bool }
-    }
 
 
 type alias Model =
     { socket : Phoenix.Socket.Socket Msg
     , chat : Chat.Model.Model
     , auth : Auth.Model
-    , ui : UI
+    , ui : UI.Model
     , world : WorldData
-    , tileData : TileData
+    , tileData : UI.TileData
     }
+
+
+initModel socket chatModel =
+    Model socket chatModel Auth.init UI.init initWorldData UI.initTileData
 
 
 type Msg
@@ -35,44 +34,7 @@ type Msg
     | Connected
     | Disconnected
     | ToggleChatView
-    | ActivateNav
-
-
-type alias TileData =
-    { x : String
-    , y : String
-    , loc : Location
-    }
-
-
-type alias WorldData =
-    { locations : Locations
-    , dimensions : Dimensions
-    }
-
-
-type alias Dimensions =
-    { length : Int
-    , width : Int
-    , height : Int
-    }
-
-
-type alias Coordinates =
-    { x : Int
-    , y : Int
-    , z : Int
-    }
-
-
-type alias Location =
-    { entities : List String
-    , type_ : String
-    }
-
-
-type alias Locations =
-    Dict String Location
+    | ToggleInfo
 
 
 type alias Socket =
@@ -81,19 +43,3 @@ type alias Socket =
 
 type alias SocketMsg =
     Phoenix.Socket.Msg Msg
-
-initTileData = { x = "0", y = "0", loc = initLocation}
-
-initLocation  =
-   { entities = [], type_ = "" }
-
-initUI =
-    { chatView = False
-    , nav = { isActive = False }
-    }
-
-
-initWorldData =
-    { locations = Dict.empty
-    , dimensions = (Dimensions 0 0 0)
-    }

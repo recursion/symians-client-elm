@@ -14,7 +14,7 @@ import Phoenix.Channel
 view : Model -> Html Msg
 view model =
     div [ class "chat-container" ]
-        [ div [ class "messagebox" ]
+        [ div [ class "messagebox hud" ]
             [ messages model
             ]
         , newMessageForm model
@@ -29,7 +29,7 @@ view model =
 
 messages : Model -> Html Msg
 messages model =
-    ul [ class "messages hud" ]
+    ul [ class "messages" ]
         ((List.map renderMessage) (Channel.getCurrent model).messages)
 
 

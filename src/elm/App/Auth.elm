@@ -1,4 +1,4 @@
-module Auth exposing (..)
+module App.Auth exposing (..)
 
 import Html exposing (Html, div, h3, text)
 import Html.Attributes exposing (class)

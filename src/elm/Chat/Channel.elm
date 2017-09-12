@@ -4,40 +4,50 @@ import App.JsonHelpers exposing (encodeChatMessage, decodeChatMessage)
 import App.Model exposing (Msg(ChatMsg), Socket, SocketMsg)
 import Chat.Model exposing (..)
 import Dict exposing (Dict)
-import Json.Decode exposing (Value)
 import Phoenix.Channel
 import Phoenix.Socket
 import Phoenix.Push
-import Auth
+import App.Auth as Auth
 
-
+{-
+holds the shape of updates return value
+-}
 type alias UpdateReturn =
     ( ( Model, Cmd App.Model.SocketMsg ), App.Model.Socket )
+
+{-
+Initialize our default chat channel with an existing socket
+-}
+initWithSocket : String
+               -> String
+               -> (Chat.Model.Msg -> App.Model.Msg)
+               -> Phoenix.Socket.Socket App.Model.Msg
+               -> UpdateReturn
+initWithSocket event channelName parentMsg socket =
+    let
+        channels =
+            Dict.insert channelName (Channel []) Dict.empty
+
+        socketWithChatEvent =
+            socket
+                |> Phoenix.Socket.on event channelName (parentMsg << ReceiveChatMessage)
+
+        model =
+            Model "" channelName channels
+    in
+        join socketWithChatEvent model
+
+
 
 {- Get the current Channel -}
 getCurrent : Model -> Channel
 getCurrent model =
     Maybe.withDefault (Channel []) (Dict.get model.currentChannel model.channels)
 
-{- Update the messages in a channel -}
-updateMessages : List String -> String -> Model -> Channels
-updateMessages messages channelName model =
-    Dict.insert channelName (Channel messages) model.channels
 
-
-initWithSocket event channelName parentMsg socket =
-    let
-        channels = Dict.insert channelName (Channel []) Dict.empty
-        socketWithChatEvent =
-            socket
-                |> Phoenix.Socket.on event channelName (parentMsg << ReceiveChatMessage)
-
-        model = Model "" channelName channels
-    in
-        join socketWithChatEvent model
 
 {- Joins the current channel
-  TODO: Allow joining other channels
+   TODO: Allow joining other channels
 -}
 join : Socket -> Model -> UpdateReturn
 join socket model =
@@ -54,8 +64,11 @@ join socket model =
     in
         ( ( model, phxCmd ), phxSocket )
 
-{- Leave the current channel
--}
+
+
+{- Leave the current channel -}
+
+
 leave : Socket -> Model -> UpdateReturn
 leave socket model =
     let
@@ -64,8 +77,11 @@ leave socket model =
     in
         ( ( model, phxCmd ), phxSocket )
 
-{- Send a message over sockets
--}
+
+
+{- Send a message over sockets -}
+
+
 send : Auth.Model -> Socket -> Model -> UpdateReturn
 send auth socket model =
     let
@@ -83,60 +99,3 @@ send auth socket model =
             Phoenix.Socket.push push_ socket
     in
         ( ( { model | newMessage = "" }, phxCmd ), phxSocket )
-
-{- Add a message to a channel
--}
-addMessage : String -> String -> Model -> Channels
-addMessage msg channelName model =
-    let
-        currentChannel =
-            Maybe.withDefault (Channel []) (Dict.get channelName model.channels)
-
-        nextMessages =
-            msg :: currentChannel.messages
-
-        nextChannels =
-            updateMessages nextMessages channelName model
-    in
-        nextChannels
-
-{- Adds a joined message to the channel messages
--}
-showJoinedMessage : String -> Model -> Model
-showJoinedMessage channelName model =
-    let
-        nextChannels =
-            addMessage ("Joined channel " ++ channelName) channelName model
-    in
-        { model | channels = nextChannels }
-
-{- Adds a left message to a channel
--}
-showLeftMessage : String -> Model -> Model
-showLeftMessage channelName model =
-    let
-        nextChannels =
-            addMessage ("Left channel " ++ channelName) channelName model
-    in
-        { model | channels = nextChannels }
-
-{- We recieved a new chat message - decode it and add it to the current channels messages
--}
-processChatMessage : Value -> Model -> Model
-processChatMessage raw model =
-    case decodeChatMessage raw of
-        Ok chatMessage ->
-            let
-                currentChannel =
-                    Maybe.withDefault (Channel []) (Dict.get model.currentChannel model.channels)
-
-                nextMessages =
-                    (chatMessage.user ++ ": " ++ chatMessage.body) :: currentChannel.messages
-
-                nextChannels =
-                    Dict.insert model.currentChannel (Channel nextMessages) model.channels
-            in
-                { model | channels = nextChannels }
-
-        Err error ->
-            model

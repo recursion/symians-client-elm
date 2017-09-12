@@ -1,6 +1,7 @@
 module World.View exposing (view)
 
-import App.Model exposing (Model, Msg, Msg(DisplayTile), Location)
+import App.Model exposing (Model, Msg, Msg(DisplayTile))
+import World.Model exposing (Location)
 import Svg.Attributes exposing (..)
 import Svg.Events exposing (onMouseOver)
 import Html exposing (Html)

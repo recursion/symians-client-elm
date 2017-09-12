@@ -1,46 +1,46 @@
-module App.Config exposing (..)
-
+module App.Socket exposing (..)
+{-| This module contains constants, init, and helper functions for working with phoenix-websocket
+-}
 import App.Model exposing (..)
 import Phoenix.Socket
 import Phoenix.Channel
-import Chat.Channel
-import Auth
+
+
+-- Constants
 
 
 socketServer : String
 socketServer =
     "ws:/192.168.88.29:4000/socket/websocket"
 
+
 worldDataEvent : String
-worldDataEvent = "world"
+worldDataEvent =
+    "world"
+
 
 authDataEvent : String
 authDataEvent =
     "token"
 
+
 systemChannel : String
 systemChannel =
     "system:"
+
 
 chatChannel : String
 chatChannel =
     "system:chat"
 
 
-init =
-    let
-        socket =
-            initPhxSocket
+chatEvent : String
+chatEvent =
+    "new:msg"
 
-        ((chatModel, chatCmd), nextSocket) =
-            Chat.Channel.initWithSocket "new:msg" chatChannel ChatMsg socket 
 
-        model =
-            Model nextSocket chatModel Auth.init initUI initWorldData initTileData
 
-        (nextModel, nextCmd) = connectTo systemChannel model 
-    in
-        (nextModel, Cmd.batch [Cmd.map PhoenixMsg chatCmd, nextCmd])
+-- Init socket/channels
 
 
 initPhxSocket : Phoenix.Socket.Socket Msg
@@ -50,7 +50,8 @@ initPhxSocket =
         |> Phoenix.Socket.on authDataEvent systemChannel ReceiveToken
         |> Phoenix.Socket.on worldDataEvent systemChannel ReceiveWorldData
 
-connectTo : String -> Model -> (Model, Cmd Msg)
+
+connectTo : String -> Model -> ( Model, Cmd Msg )
 connectTo channelName model =
     let
         channel =
@@ -64,5 +65,15 @@ connectTo channelName model =
             Phoenix.Socket.join channel model.socket
     in
         ( { model | socket = socket }
+        , Cmd.map PhoenixMsg phxCmd
+        )
+
+processPhoenixMsg : Phoenix.Socket.Msg Msg -> Model -> (Model, Cmd Msg)
+processPhoenixMsg msg model =
+    let
+        ( phxSocket, phxCmd ) =
+            Phoenix.Socket.update msg model.socket
+    in
+        ( { model | socket = phxSocket }
         , Cmd.map PhoenixMsg phxCmd
         )

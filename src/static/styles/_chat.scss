@@ -1,20 +1,9 @@
 .chat-container {
-    position: relative;
+    position: fixed;
+    bottom: 0;
     color: rgba(0, 0, 0, 0.5);
     display: inline-block;
     width: 50%;
-}
-.controls {
-    position: fixed;
-    width: 100%;
-    bottom: 1px;
-    left: 1px;
-}
-.chat-toggle {
-    position: absolute;
-    bottom: 0;
-    letter-spacing: 0.2rem;
-    font-weight: bold;
 }
 .messagebox {
     position: relative;
@@ -22,11 +11,13 @@
     overflow: hidden;
     border-radius: 0 5px 0 0;
     font-size: 0.8rem;
+    font-weight: bold;
+    border-bottom: 0 !important;
 }
 .messages {
     position: absolute;
     bottom: 0;
-    width: 98.7%;
+    width: 100%;
     height: 100%;
     padding: 0.2rem;
     margin: 0;
@@ -40,8 +31,11 @@
 .messages:hover {
     overflow-y: scroll;
 }
-.messageInput, .messageControls {
+.messageControls {
     width: 100%;
+}
+.messageInput {
+    width: 90.5%;
 }
 .chatMessage {
     display: block;
