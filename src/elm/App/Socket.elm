@@ -43,7 +43,7 @@ chatEvent =
 -- Init socket/channels
 
 
-initPhxSocket : Phoenix.Socket.Socket Msg
+initPhxSocket : Socket
 initPhxSocket =
     Phoenix.Socket.init socketServer
         -- |> Phoenix.Socket.withDebug
@@ -68,7 +68,7 @@ initSystemChannel model =
         , Cmd.map PhoenixMsg phxCmd
         )
 
-processPhoenixMsg : Phoenix.Socket.Msg Msg -> Model -> (Model, Cmd Msg)
+processPhoenixMsg : SocketMsg -> Model -> (Model, Cmd Msg)
 processPhoenixMsg msg model =
     let
         ( phxSocket, phxCmd ) =

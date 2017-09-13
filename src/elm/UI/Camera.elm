@@ -4,8 +4,8 @@ module UI.Camera exposing (..)
 what the client is currently looking at/rendering
 -}
 
-import Svg.Attributes exposing (x, y, xlinkHref, viewBox, transform, width, height, fill, stroke)
-import Svg exposing (svg, use, g, rect, text)
+import Svg.Attributes exposing (x, y)
+import Svg exposing (svg, text)
 import UI.Model exposing (Camera)
 import World.Model exposing (Dimensions)
 
@@ -21,7 +21,11 @@ currentZLimit : Int
 currentZLimit =
     2
 
-
+render : (List (Svg.Attribute msg) -> List a -> Svg.Svg msg1)
+       -> List (Svg.Attribute msg)
+       -> Int -> Int -> Int
+       -> Camera
+       -> Svg.Svg msg1
 render svgObject props x_ y_ z_ camera =
     let
         ( posX, posY ) =
@@ -30,28 +34,8 @@ render svgObject props x_ y_ z_ camera =
         toNumber =
             \s -> Result.withDefault 0 (String.toInt s)
 
-        maxX =
-            (camera.width // tileSize) + 1
-
-        maxY =
-            (camera.height // tileSize) + 1
-
-        -- render only the locations that are currently with the camera's view
-        inBounds =
-            z_
-                == camera.z
-                && x_
-                >= camera.x
-                && x_
-                < camera.x
-                + maxX
-                && y_
-                >= camera.y
-                && y_
-                < camera.y
-                + maxY
     in
-        if inBounds then
+        if inBounds x_ y_ z_ camera then
             svgObject
                 (props
                     ++ [ x posX
@@ -62,6 +46,20 @@ render svgObject props x_ y_ z_ camera =
         else
             text ""
 
+inBounds : Int -> Int -> Int -> Camera -> Bool
+inBounds x y z camera =
+    let
+        maxX =
+            (camera.width // tileSize) + 1
+
+        maxY =
+            (camera.height // tileSize) + 1
+    in
+      z == camera.z
+        && x >= camera.x
+        && x < camera.x + maxX
+        && y >= camera.y
+        && y < camera.y + maxY
 
 moveZLevelUp : Dimensions -> Camera -> Camera
 moveZLevelUp dim camera =

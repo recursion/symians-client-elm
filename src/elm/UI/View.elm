@@ -1,9 +1,9 @@
 module UI.View exposing (renderHud)
 
-import Html exposing (Html, div, nav, a, button, text, span, p, label, canvas)
-import Html.Attributes exposing (id, class, attribute, href)
+import Html exposing (Html, text, div, label, span, button, table, tr, td)
+import Html.Attributes exposing (class)
 import Html.Events exposing (onClick)
-import App.Model exposing (Msg(..), Model)
+import App.Model exposing (Msg(ChatMsg, ToggleInfo, ToggleChatView), Model)
 import UI.Model as UI exposing (Camera, TileData)
 import Chat.View
 
@@ -39,7 +39,7 @@ renderHud model =
 
 tileInfoView : TileData -> Html Msg
 tileInfoView model =
-    div [ class "hud hud-tiledata" ]
+    table [ class "hud hud-tiledata" ]
         [ renderTileData "type: " [ text model.loc.type_ ]
         , renderTileData "x: " [ text model.x ]
         , renderTileData "y: " [ text model.y ]
@@ -50,9 +50,9 @@ tileInfoView model =
 
 renderTileData : String -> List (Html Msg) -> Html Msg
 renderTileData key value =
-    label [ class "tilelabel" ]
-        [ text key
-        , span [ class "tiledata" ] value
+    tr [ class "tiledata" ]
+        [ td [ class "tiledata-label" ] [ text key ]
+        , td [ class "tiledata-value" ] value
         ]
 
 

@@ -5,26 +5,20 @@
 }
 .hud-tiledata {
     border-radius: 5px 0 5px 5px;
-    position: fixed;
+    position: absolute;
     top: 1px;
     right: 1px;
-    width: 15%;
+    min-width: 15%;
     padding: 3px;
-
-    label {
-        display: block;
-        margin-right: 10px;
-    }
-    float: right;
 }
 .hud-btn-is-active {
     background-color: $hud-background-active;
 }
 
 .controls {
-    position: fixed;
-    height: 100px;
-    bottom: 50%;
+    position: absolute;
+    min-height: 100px;
+    bottom: 25%;
     right: 1px;
 }
 
@@ -34,4 +28,16 @@
     letter-spacing: 0.1rem;
     font-weight: bold;
     width: 4rem;
+}
+
+.tiledata-row {
+}
+.tiledata-label {
+    width: 50%;
+    text-align: right;
+    font-weight: bold;
+}
+.tiledata-value {
+    width: 50%;
+    text-align: center;
 }

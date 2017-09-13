@@ -12,46 +12,17 @@ import UI.Helpers
 import World.Model
 import World.Location
 import Dict exposing (Dict)
+import Window
 
 
--- UPDATE
-
-{-
-change a tile to selected
-import World.Model
-import World.Location
-import Dict exposing (Dict)
-  coordsAsString = World.Location.hashCoords posX posY posZ
-  _ = Debug.log "-> " (coordsAsString)
-
-  target = Maybe.withDefault World.Model.initLocation (Dict.get coordsAsString model.world.locations)
-  nextLocations = Dict.insert coordsAsString  { target | selected = True} model.world.locations
-  world = model.world
-  nextWorld = { world | locations = nextLocations }
-  nextModel = { model | world = nextWorld }
--}
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         ResizeWindow size ->
-            let
-                camera = model.ui.camera
-                nextCamera = { camera | width = size.width, height = size.height }
-                ui = model.ui
-                nextUI = { ui | camera = nextCamera }
-            in
-              {model | ui = nextUI }! []
+            resizeWindow size model ! []
 
-        SetSelected x y z ->
-            let
-                coordsAsString = World.Location.hashCoords x y z
-
-                target = Maybe.withDefault World.Model.initLocation (Dict.get coordsAsString model.world.locations)
-                nextLocations = Dict.insert coordsAsString  { target | selected = True} model.world.locations
-                world = model.world
-                nextWorld = { world | locations = nextLocations }
-            in
-                { model | world = nextWorld } ! []
+        ToggleSelected x y z ->
+            setSelected x y z model ! []
 
         ToggleChatView ->
             { model | ui = UI.toggleChat model.ui } ! []
@@ -60,7 +31,7 @@ update msg model =
             { model | ui = UI.toggleInfoView model.ui } ! []
 
         SetInspected posX posY posZ location ->
-            { model| ui = UI.Helpers.setInspectedTile posX posY posZ location model.ui } ! []
+            { model | ui = UI.Helpers.setInspectedTile posX posY posZ location model.ui } ! []
 
         ChatMsg message ->
             processChatMsg message model
@@ -85,6 +56,49 @@ update msg model =
 
         NoOp ->
             model ! []
+
+
+resizeWindow : Window.Size -> Model -> Model
+resizeWindow size model =
+    let
+        camera =
+            model.ui.camera
+
+        nextCamera =
+            { camera | width = size.width, height = size.height }
+
+        ui =
+            model.ui
+
+        nextUI =
+            { ui | camera = nextCamera }
+    in
+        { model | ui = nextUI }
+
+setSelected : String -> String -> String -> Model -> Model
+setSelected x y z model =
+    let
+        coordsAsString =
+            World.Location.hashCoords x y z
+
+        target =
+            Maybe.withDefault
+                World.Model.initLocation
+                (Dict.get coordsAsString model.world.locations)
+
+        nextLocations =
+            Dict.insert
+                coordsAsString
+                { target | selected = not target.selected }
+                model.world.locations
+
+        world =
+            model.world
+
+        nextWorld =
+            { world | locations = nextLocations }
+    in
+        { model | world = nextWorld }
 
 
 {-| use locationsAsList for rendering

@@ -22,16 +22,21 @@ type alias Model =
     }
 
 
-initModel socket chatModel =
-    Model socket chatModel Auth.init UI.init World.init
+type alias Socket =
+    Phoenix.Socket.Socket Msg
+
+
+type alias SocketMsg =
+    Phoenix.Socket.Msg Msg
+
 
 type Msg
     = ChatMsg Chat.Model.Msg
-    | PhoenixMsg (Phoenix.Socket.Msg Msg)
+    | PhoenixMsg SocketMsg
     | ReceiveToken JE.Value
     | ReceiveWorldData JE.Value
     | SetInspected String String String World.Location
-    | SetSelected String String String
+    | ToggleSelected String String String
     | ResizeWindow Window.Size
     | Connected
     | Disconnected
@@ -40,10 +45,6 @@ type Msg
     | KeyMsg Keyboard.KeyCode
     | NoOp
 
-
-type alias Socket =
-    Phoenix.Socket.Socket Msg
-
-
-type alias SocketMsg =
-    Phoenix.Socket.Msg Msg
+initModel : Socket -> Chat.Model.Model -> Model
+initModel socket chatModel =
+    Model socket chatModel Auth.init UI.init World.init

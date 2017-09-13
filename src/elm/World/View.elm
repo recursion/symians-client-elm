@@ -1,15 +1,16 @@
 module World.View exposing (render)
 
 import Html exposing (Html)
-import Svg.Attributes exposing (x, y, xlinkHref, viewBox, transform, width, height, fill, stroke)
-import Svg.Events exposing (onMouseOver, onMouseDown)
-import Svg exposing (svg, use, g, rect, text)
+import Svg.Attributes exposing (width, height, fill, stroke)
+import Svg.Events exposing (onMouseOver, onClick)
+import Svg exposing (svg, rect)
+import Dict exposing (Dict)
+
 import App.Model exposing (Msg(..), Model)
+import UI.Model exposing (Camera)
 import World.Model exposing (Location)
 import World.Location
-import UI.Model as UI exposing (Camera, TileData)
 import UI.Camera
-import Dict exposing (Dict)
 
 
 -- world rendering
@@ -50,6 +51,7 @@ renderLocation ( coords, location ) camera =
             , width <| toString <| UI.Camera.tileSize
             , height <| toString <| UI.Camera.tileSize
             , onMouseOver (SetInspected ogX ogY ogZ location)
+            , onClick (ToggleSelected ogX ogY ogZ)
             ]
     in
         UI.Camera.render rect locationProperties x_ y_ z_ camera
