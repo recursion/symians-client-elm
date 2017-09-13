@@ -4,12 +4,6 @@ import Dict exposing (Dict)
 
 
 type alias Model =
-    { dimensions: Dimensions
-    , worldData: WorldData
-    }
-
-
-type alias WorldData =
     { locations : Locations
     , dimensions : Dimensions
     }
@@ -39,12 +33,18 @@ type alias Locations =
     Dict String Location
 
 
+init =
+    { locations = Dict.empty
+    , dimensions = (Dimensions 0 0 0)
+    }
+
+
 initLocation : Location
 initLocation =
     { entities = [], type_ = "" }
 
 
-initWorldData : WorldData
+initWorldData : Model
 initWorldData =
     { locations = Dict.empty
     , dimensions = (Dimensions 0 0 0)

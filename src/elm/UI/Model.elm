@@ -6,9 +6,10 @@ import World.Model exposing (Location, initLocation)
 type alias Model =
     { viewChat : Bool
     , viewInfo : Bool
-    , nav : { isActive : Bool }
+    , currentTile : TileData
     , camera : Camera
     }
+
 
 type alias TileData =
     { x : String
@@ -16,40 +17,42 @@ type alias TileData =
     , loc : Location
     }
 
+
 type alias Camera =
-    { x: Int
-    , y: Int
-    , z: Int
-    , size : (Int, Int)
+    { x : Int
+    , y : Int
+    , z : Int
+    , size : ( Int, Int )
     }
-
-initCamera =
-    { x = 0
-    , y = 0
-    , z = 0
-    , size = (0, 0)
-    }
-
-initTileData : TileData
-initTileData = { x = "0", y = "0", loc = initLocation}
 
 
 init : Model
 init =
     { viewChat = False
     , viewInfo = False
-    , nav = { isActive = False }
+    , currentTile = initTileData
     , camera = initCamera
     }
+
+
+initCamera =
+    { x = 0
+    , y = 0
+    , z = 0
+    , size = ( 0, 0 )
+    }
+
+
+initTileData : TileData
+initTileData =
+    { x = "0", y = "0", loc = initLocation }
 
 
 toggleChat : Model -> Model
 toggleChat model =
     { model | viewChat = not model.viewChat }
 
+
 toggleInfoView : Model -> Model
 toggleInfoView model =
     { model | viewInfo = not model.viewInfo }
-
-displayTile posX posY location model =
-    { model | x = posX, y = posY, loc = location }

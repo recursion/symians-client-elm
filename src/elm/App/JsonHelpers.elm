@@ -1,7 +1,7 @@
 module App.JsonHelpers exposing (..)
 
 import Chat.Model exposing (ChatMessage)
-import World.Model exposing (..)
+import World.Model as World exposing (Coordinates, Location, Dimensions)
 import Json.Decode as JD exposing (field, maybe, int, string, float, nullable, Decoder)
 import Dict exposing (Dict)
 import Json.Encode as JE
@@ -36,9 +36,9 @@ locationsDecoder =
     JD.dict locationDecoder
 
 
-worldDataDecoder : JD.Decoder WorldData
+worldDataDecoder : JD.Decoder World.Model
 worldDataDecoder =
-    JD.map2 WorldData
+    JD.map2 World.Model
         (field "locations" locationsDecoder)
         (field "dimensions" dimensionsDecoder)
 
@@ -73,6 +73,6 @@ decodeChatMessage =
     JD.decodeValue chatMessageDecoder
 
 
-decodeWorldData : JD.Value -> Result String WorldData
+decodeWorldData : JD.Value -> Result String World.Model
 decodeWorldData =
     JD.decodeValue worldDataDecoder

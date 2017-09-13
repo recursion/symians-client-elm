@@ -1,61 +1,24 @@
 module UI.Camera exposing (..)
 
-import App.Model exposing (Model, Msg, Msg(DisplayTile))
-import World.Model exposing (Location)
 import UI.Model exposing (Camera)
-import Svg.Attributes exposing (..)
-import Svg.Events exposing (onMouseOver)
-import Html exposing (Html)
-import Dict exposing (Dict)
-import Svg exposing (..)
+import World.Location as Location
 
 
--- constants
-
-
-smallTile : Int
-smallTile =
-    32
-
-
-baseSize : Int
-baseSize =
+tileSize : Int
+tileSize =
     63
-
-
-overlayTileSize : Int
-overlayTileSize =
-    62
-
-
-
--- Model
-
-
-type alias Camera =
-    { x : Int
-    , y : Int
-    , z : Int
-    , size : ( Int, Int )
-    }
-
-
-initCamera =
-    { x = 0
-    , y = 0
-    , z = 0
-    , size = ( 0, 0 )
-    }
 
 
 
 -- Camera controls
 
 
+moveDown : Camera -> Camera
 moveDown camera =
     { camera | y = camera.y + 1 }
 
 
+moveUp : Camera -> Camera
 moveUp camera =
     if camera.y - 1 < 0 then
         camera
@@ -63,6 +26,7 @@ moveUp camera =
         { camera | y = camera.y - 1 }
 
 
+moveLeft : Camera -> Camera
 moveLeft camera =
     if camera.x - 1 < 0 then
         camera
@@ -70,96 +34,21 @@ moveLeft camera =
         { camera | x = camera.x - 1 }
 
 
+moveRight : Camera -> Camera
 moveRight camera =
     { camera | x = camera.x + 1 }
 
 
-
--- View functions
-
-
-render : Dict String Location -> Camera -> Html Msg
-render locations camera =
+translate : Camera -> ( Int, Int ) -> ( String, String )
+translate camera ( x_, y_ ) =
     let
-        render =
-            (\loc -> renderLocation camera loc)
+        tileMultiplier n =
+            n * tileSize
 
-        locations_ =
-            (Dict.toList locations)
-                |> (List.map render)
-    in
-        svg
-            [ class "world level" ]
-            locations_
-
-
-renderLocation : Camera -> ( String, Location ) -> Html Msg
-renderLocation camera ( coords, loc ) =
-    let
-        ( x_, y_, z_ ) =
-            extractCoords coords
-
-        ogX =
-            toString x_
-
-        ogY =
-            toString y_
-
-        ( posX, posY ) =
-            adjustCoordsForCamera camera ( x_, y_ )
-    in
-        g []
-            [ use
-                [ xlinkHref ("#" ++ loc.type_)
-                , x posX
-                , y posY
-                ]
-                []
-            , rect
-                [ fill "rgba(255, 255, 255, 0.01)"
-                , x posX
-                , y posY
-                , width <| toString overlayTileSize
-                , height <| toString overlayTileSize
-                , onMouseOver (DisplayTile ogX ogY loc)
-                , class "location"
-                ]
-                []
-            ]
-
-
-extractCoords : String -> ( Int, Int, Int )
-extractCoords asString =
-    let
-        coords_ =
-            String.split "|" asString
-
-        x =
-            Maybe.withDefault "0" (List.head coords_)
-                |> toNumber
-
-        y =
-            Maybe.withDefault "0" (List.head (List.drop 1 coords_))
-                |> toNumber
-
-        z =
-            Maybe.withDefault "0" (List.head (List.drop 2 coords_))
-                |> toNumber
-    in
-        ( x, y, z )
-
-
-toNumber =
-    \s -> Result.withDefault 0 (String.toInt s)
-
-
-adjustCoordsForCamera : Camera -> ( Int, Int ) -> ( String, String )
-adjustCoordsForCamera camera ( x_, y_ ) =
-    let
         positionx =
-            toString ((x_ * baseSize) - (camera.x * baseSize))
+            toString ((tileMultiplier x_) - (tileMultiplier camera.x))
 
         positiony =
-            toString ((y_ * baseSize) - (camera.y * baseSize))
+            toString ((tileMultiplier y_) - (tileMultiplier camera.y))
     in
         ( positionx, positiony )

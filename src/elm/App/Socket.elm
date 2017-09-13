@@ -51,11 +51,11 @@ initPhxSocket =
         |> Phoenix.Socket.on worldDataEvent systemChannel ReceiveWorldData
 
 
-connectTo : String -> Model -> ( Model, Cmd Msg )
-connectTo channelName model =
+initSystemChannel : Model -> ( Model, Cmd Msg )
+initSystemChannel model =
     let
         channel =
-            Phoenix.Channel.init channelName
+            Phoenix.Channel.init systemChannel
                 -- this is where the user token should get attached
                 -- |> Phoenix.Channel.withPayload userParams
                 |> Phoenix.Channel.onJoin (always (Connected))

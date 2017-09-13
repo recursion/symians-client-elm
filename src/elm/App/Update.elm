@@ -4,11 +4,12 @@ import App.JsonHelpers exposing (decodeTokenMessage, decodeWorldData)
 import App.Model exposing (..)
 import Json.Decode as JD
 import UI.Model as UI
-import Keyboard
+import Dict exposing (Dict)
 import Chat.Update
 import Chat.Model
 import App.Socket
-import UI.Camera as Camera
+import UI.Input as Input
+import UI.Helpers
 
 
 -- UPDATE
@@ -23,8 +24,12 @@ update msg model =
         ToggleInfo ->
             { model | ui = UI.toggleInfoView model.ui } ! []
 
-        DisplayTile posX posY location ->
-            { model | tileData = UI.displayTile posX posY location model.tileData } ! []
+        SetInspected posX posY location ->
+            { model
+                | ui =
+                    UI.Helpers.setInspectedTile posX posY location model.ui
+            }
+                ! []
 
         ChatMsg message ->
             processChatMsg message model
@@ -39,7 +44,7 @@ update msg model =
             processWorldData raw model
 
         KeyMsg code ->
-            processKeypress code model ! []
+            Input.processKeypress code model ! []
 
         Connected ->
             model ! []
@@ -51,57 +56,21 @@ update msg model =
             model ! []
 
 
-updateCamera action model =
-    let
-        ui =
-            model.ui
-
-        nextCamera =
-            action model.ui.camera
-
-        nextUI =
-            { ui | camera = nextCamera }
-    in
-        { model | ui = nextUI }
-
-
-processKeypress : Keyboard.KeyCode -> Model -> Model
-processKeypress code model =
-    let
-        nextModel =
-            if not model.chat.inputHasFocus then
-                case code of
-                    82 ->
-                        model
-
-                    70 ->
-                        model
-
-                    87 ->
-                        updateCamera Camera.moveUp model
-
-                    83 ->
-                        updateCamera Camera.moveDown model
-
-                    65 ->
-                        updateCamera Camera.moveLeft model
-
-                    68 ->
-                        updateCamera Camera.moveRight model
-
-                    _ ->
-                        model
-            else
-                model
-    in
-        nextModel
-
-
+{-| use locationsAsList for rendering
+only generate a new list when we make changes to the locations dictionary.
+TODO: Make sure anytime we change locations, we generate a new list
+-}
 processWorldData : JD.Value -> Model -> ( Model, Cmd Msg )
 processWorldData raw model =
     case decodeWorldData raw of
         Ok world ->
-            { model | world = world } ! []
+            let
+                nextWorld =
+                    { locations = world.locations
+                    , dimensions = world.dimensions
+                    }
+            in
+                { model | world = nextWorld } ! []
 
         Err error ->
             ( model, Cmd.none )

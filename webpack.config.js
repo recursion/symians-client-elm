@@ -79,7 +79,7 @@ if (isDev === true) {
                     options: {
                         verbose: true,
                         warn: true,
-                        debug: true
+                        debug: false
                     }
                 }]
             },{

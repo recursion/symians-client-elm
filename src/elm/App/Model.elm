@@ -5,7 +5,7 @@ import Chat.Model
 import Json.Encode as JE
 import App.Auth as Auth
 import UI.Model as UI
-import World.Model exposing (WorldData, Location, initWorldData)
+import World.Model as World
 import Keyboard
 
 
@@ -17,13 +17,12 @@ type alias Model =
     , chat : Chat.Model.Model
     , auth : Auth.Model
     , ui : UI.Model
-    , world : WorldData
-    , tileData : UI.TileData
+    , world : World.Model
     }
 
 
 initModel socket chatModel =
-    Model socket chatModel Auth.init UI.init initWorldData UI.initTileData
+    Model socket chatModel Auth.init UI.init World.init
 
 
 type Msg
@@ -31,7 +30,7 @@ type Msg
     | PhoenixMsg (Phoenix.Socket.Msg Msg)
     | ReceiveToken JE.Value
     | ReceiveWorldData JE.Value
-    | DisplayTile String String Location
+    | SetInspected String String World.Location
     | Connected
     | Disconnected
     | ToggleChatView

@@ -1,4 +1,4 @@
-module Chat.View exposing (view)
+module Chat.View exposing (root)
 
 import Html exposing (Html, h3, p, div, text, ul, li, input, form, button, br, table, tbody, tr, td)
 import Html.Attributes exposing (class, type_, value)
@@ -11,8 +11,8 @@ import Phoenix.Channel
 -- VIEW
 
 
-view : Model -> Html Msg
-view model =
+root : Model -> Html Msg
+root model =
     div [ class "chat-container" ]
         [ div [ class "messagebox hud" ]
             [ messages model
@@ -47,12 +47,14 @@ newMessageForm model =
             ]
         ]
 
+
 sendButton : Html Msg
 sendButton =
     p [ class "control" ]
         [ button [ class "button isStatic is-small hud" ]
-              [ text "Send" ]
+            [ text "Send" ]
         ]
+
 
 messageInput : Model -> Html Msg
 messageInput model =
