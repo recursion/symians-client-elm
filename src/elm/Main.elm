@@ -5,7 +5,8 @@ import Html.Attributes exposing (class)
 import App.Socket exposing (initPhxSocket, chatEvent, initSystemChannel, chatChannel, systemChannel)
 import App.Model exposing (Model, Msg, Msg(PhoenixMsg, ChatMsg, KeyMsg, ResizeWindow), initModel)
 import App.Update exposing (update)
-import UI.View exposing (renderHud, renderWorld)
+import UI.View exposing (renderHud)
+import World.View exposing (render)
 import Phoenix.Socket
 import Chat.Channel
 import Keyboard
@@ -40,7 +41,7 @@ init =
 view : Model -> Html Msg
 view model =
     div [ class "app" ]
-        [ renderWorld model.world.locations model.ui.camera
+        [ render model.world.locations model.ui.camera
         , renderHud model
         ]
 

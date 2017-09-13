@@ -12,11 +12,11 @@ processKeypress code model =
         case code of
             82 ->
                 -- r - move up z level
-                model
+                updateCamera Camera.moveZLevelUp model
 
             70 ->
                 -- f - move down z level
-                model
+                updateCamera Camera.moveZLevelDown model
 
             87 ->
                 updateCamera Camera.moveUp model

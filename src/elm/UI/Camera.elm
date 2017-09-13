@@ -1,5 +1,11 @@
 module UI.Camera exposing (..)
 
+{-| camera provides an abstraction for tracking and manipulating
+what the client is currently looking at/rendering
+-}
+
+import Svg.Attributes exposing (x, y, xlinkHref, viewBox, transform, width, height, fill, stroke)
+import Svg exposing (svg, use, g, rect, text)
 import UI.Model exposing (Camera)
 import World.Model exposing (Dimensions)
 
@@ -9,8 +15,72 @@ tileSize =
     64
 
 
+{-| currently we are only sending 3 z levels, so limit here
+-}
+currentZLimit : Int
+currentZLimit =
+    2
 
--- Camera controls
+
+render svgObject props x_ y_ z_ camera =
+    let
+        ( posX, posY ) =
+            translate ( x_, y_ ) camera
+
+        toNumber =
+            \s -> Result.withDefault 0 (String.toInt s)
+
+        maxX =
+            (camera.width // tileSize) + 1
+
+        maxY =
+            (camera.height // tileSize) + 1
+
+        -- render only the locations that are currently with the camera's view
+        inBounds =
+            z_
+                == camera.z
+                && x_
+                >= camera.x
+                && x_
+                < camera.x
+                + maxX
+                && y_
+                >= camera.y
+                && y_
+                < camera.y
+                + maxY
+    in
+        if inBounds then
+            svgObject
+                (props
+                    ++ [ x posX
+                       , y posY
+                       ]
+                )
+                []
+        else
+            text ""
+
+
+moveZLevelUp : Dimensions -> Camera -> Camera
+moveZLevelUp dim camera =
+    if camera.z >= currentZLimit then
+        camera
+    else
+        { camera | z = camera.z + 1 }
+
+
+moveZLevelDown : Dimensions -> Camera -> Camera
+moveZLevelDown dim camera =
+    let
+        nextZ =
+            camera.z - 1
+    in
+        if nextZ < 0 then
+            camera
+        else
+            { camera | z = nextZ }
 
 
 moveDown : Dimensions -> Camera -> Camera

@@ -1,73 +1,11 @@
-module UI.View exposing (renderHud, renderWorld)
+module UI.View exposing (renderHud)
 
 import Html exposing (Html, div, nav, a, button, text, span, p, label, canvas)
 import Html.Attributes exposing (id, class, attribute, href)
 import Html.Events exposing (onClick)
-import Svg.Attributes exposing (x, y, xlinkHref, viewBox, transform, width, height, fill, stroke)
-import Svg.Events exposing (onMouseOver, onMouseDown)
-import Svg exposing (svg, use, g, rect)
-import Dict exposing (Dict)
 import App.Model exposing (Msg(..), Model)
-import World.Model exposing (Location)
 import UI.Model as UI exposing (Camera, TileData)
-import UI.Camera
-import World.Location
 import Chat.View
-
-
-svgRoot =
-    "static/img/vector_tiles_items.svg"
-
-
-
--- world rendering
-
-
-renderWorld : Dict String Location -> Camera -> Html Msg
-renderWorld locations camera =
-    let
-        locations_ =
-            Dict.toList locations
-                |> List.map (\loc -> renderLocation loc camera)
-    in
-        svg
-            [ Svg.Attributes.class "world"
-            ]
-            [ g
-                [ transform "scale(1)"
-                ]
-                locations_
-            ]
-
-
-renderLocation ( coords, location ) camera =
-    let
-        class_ = if location.selected then
-                     "location-selected"
-                 else
-                     "location"
-
-        ( x_, y_, z_ ) =
-            World.Location.extractCoords coords
-
-        ( ogX, ogY, ogZ ) =
-            ( toString x_, toString y_, toString z_ )
-
-        ( posX, posY ) =
-            UI.Camera.translate ( x_, y_ ) camera
-    in
-       rect
-            [ x posX
-            , y posY
-            , Svg.Attributes.class class_
-            , fill "green"
-            , stroke "black"
-            , width <| toString <| UI.Camera.tileSize
-            , height <| toString <| UI.Camera.tileSize
-            , onMouseOver (SetInspected ogX ogY ogZ location)
-            ]
-            []
-
 
 
 -- hud rendering
