@@ -1,12 +1,11 @@
 module UI.Camera exposing (..)
 
 import UI.Model exposing (Camera)
-import World.Location as Location
 
 
 tileSize : Int
 tileSize =
-    63
+    64
 
 
 
@@ -39,8 +38,8 @@ moveRight camera =
     { camera | x = camera.x + 1 }
 
 
-translate : Camera -> ( Int, Int ) -> ( String, String )
-translate camera ( x_, y_ ) =
+translate : ( Int, Int ) -> Camera ->  ( String, String )
+translate ( x_, y_ ) camera =
     let
         tileMultiplier n =
             n * tileSize

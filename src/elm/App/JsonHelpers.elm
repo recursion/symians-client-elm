@@ -3,6 +3,7 @@ module App.JsonHelpers exposing (..)
 import Chat.Model exposing (ChatMessage)
 import World.Model as World exposing (Coordinates, Location, Dimensions)
 import Json.Decode as JD exposing (field, maybe, int, string, float, nullable, Decoder)
+import Json.Decode.Pipeline exposing (decode, optional, required)
 import Dict exposing (Dict)
 import Json.Encode as JE
 import App.Auth as Auth
@@ -26,9 +27,10 @@ dimensionsDecoder =
 
 locationDecoder : Decoder Location
 locationDecoder =
-    JD.map2 Location
-        (field "entities" (JD.list JD.string))
-        (field "type_" JD.string)
+    decode Location
+        |> required "entities" (JD.list JD.string)
+        |> required "type_" JD.string
+        |> optional "selected" JD.bool False
 
 
 locationsDecoder : Decoder (Dict String Location)

@@ -30,7 +30,7 @@ type Msg
     | PhoenixMsg (Phoenix.Socket.Msg Msg)
     | ReceiveToken JE.Value
     | ReceiveWorldData JE.Value
-    | SetInspected String String World.Location
+    | SetInspected String String String World.Location
     | Connected
     | Disconnected
     | ToggleChatView

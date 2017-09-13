@@ -5,7 +5,6 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var autoprefixer = require('autoprefixer');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
-// const HtmlWebpackInlineSVGPlugin = require('html-webpack-inline-svg-plugin');
 
 
 const prod = 'production';
@@ -47,13 +46,7 @@ var commonConfig = {
             options: {
                 postcss: [autoprefixer()]
             }
-        }),
-        new HtmlWebpackPlugin({
-            template: 'src/static/index.html',
-            inject: 'body',
-            filename: 'index.html'
-        }),
-        // new HtmlWebpackInlineSVGPlugin()
+        })
     ]
 }
 
@@ -109,7 +102,7 @@ if (isProd === true) {
         },
         plugins: [
             new ExtractTextPlugin({
-                filename: 'css/[name]-[hash].css',
+                filename: 'css/[name].css',
                 allChunks: true
             }),
             new CopyWebpackPlugin([{

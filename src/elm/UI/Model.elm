@@ -14,6 +14,7 @@ type alias Model =
 type alias TileData =
     { x : String
     , y : String
+    , z : String
     , loc : Location
     }
 
@@ -29,7 +30,7 @@ type alias Camera =
 init : Model
 init =
     { viewChat = False
-    , viewInfo = False
+    , viewInfo = True
     , currentTile = initTileData
     , camera = initCamera
     }
@@ -45,7 +46,7 @@ initCamera =
 
 initTileData : TileData
 initTileData =
-    { x = "0", y = "0", loc = initLocation }
+    { x = "0", y = "0", z = "0", loc = initLocation }
 
 
 toggleChat : Model -> Model

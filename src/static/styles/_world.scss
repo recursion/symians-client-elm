@@ -6,7 +6,11 @@
     right: 0;
     width: 100%;
     height: 100%;
+    background-color: black;
 }
-use.grass {
-    fill: #000;
+.location {
+    stroke: green;
+}
+.location:hover {
+    fill: lightgreen;
 }

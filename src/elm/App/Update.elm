@@ -4,7 +4,6 @@ import App.JsonHelpers exposing (decodeTokenMessage, decodeWorldData)
 import App.Model exposing (..)
 import Json.Decode as JD
 import UI.Model as UI
-import Dict exposing (Dict)
 import Chat.Update
 import Chat.Model
 import App.Socket
@@ -14,7 +13,20 @@ import UI.Helpers
 
 -- UPDATE
 
+{-
+change a tile to selected
+import World.Model
+import World.Location
+import Dict exposing (Dict)
+  coordsAsString = World.Location.hashCoords posX posY posZ
+  _ = Debug.log "-> " (coordsAsString)
 
+  target = Maybe.withDefault World.Model.initLocation (Dict.get coordsAsString model.world.locations)
+  nextLocations = Dict.insert coordsAsString  { target | selected = True} model.world.locations
+  world = model.world
+  nextWorld = { world | locations = nextLocations }
+  nextModel = { model | world = nextWorld }
+-}
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
@@ -24,12 +36,8 @@ update msg model =
         ToggleInfo ->
             { model | ui = UI.toggleInfoView model.ui } ! []
 
-        SetInspected posX posY location ->
-            { model
-                | ui =
-                    UI.Helpers.setInspectedTile posX posY location model.ui
-            }
-                ! []
+        SetInspected posX posY posZ location ->
+            { model| ui = UI.Helpers.setInspectedTile posX posY posZ location model.ui } ! []
 
         ChatMsg message ->
             processChatMsg message model

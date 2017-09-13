@@ -1,18 +1,24 @@
 module UI.View exposing (renderHud, renderWorld)
 
-import Html exposing (Html, div, nav, a, button, text, span, p, label)
+import Html exposing (Html, div, nav, a, button, text, span, p, label, canvas)
 import Html.Attributes exposing (id, class, attribute, href)
 import Html.Events exposing (onClick)
-import Svg.Attributes exposing (viewBox)
-import Svg exposing (svg)
+import Svg.Attributes exposing (x, y, xlinkHref, viewBox, transform, width, height, fill, stroke)
+import Svg.Events exposing (onMouseOver)
+import Svg exposing (svg, use, g, rect)
+import Dict exposing (Dict)
+import App.Model exposing (Msg(..), Model)
 import World.Model exposing (Location)
 import UI.Model as UI exposing (Camera, TileData)
 import UI.Camera
-import App.Model exposing (..)
-import World.Location 
+import World.Location
 import Chat.View
-import UI.Camera
-import Dict exposing (Dict)
+
+
+svgRoot =
+    "static/img/vector_tiles_items.svg"
+
+
 
 -- world rendering
 
@@ -26,9 +32,12 @@ renderWorld locations camera =
     in
         svg
             [ Svg.Attributes.class "world"
-            , viewBox "528 232 1680 1050"
             ]
-            locations_
+            [ g
+                [ transform "scale(.75)"
+                ]
+                locations_
+            ]
 
 
 renderLocation ( coords, location ) camera =
@@ -36,15 +45,23 @@ renderLocation ( coords, location ) camera =
         ( x_, y_, z_ ) =
             World.Location.extractCoords coords
 
-        ( ogX, ogY ) =
-            ( toString x_, toString y_ )
+        ( ogX, ogY, ogZ ) =
+            ( toString x_, toString y_, toString z_ )
 
         ( posX, posY ) =
-            UI.Camera.translate camera ( x_, y_ )
-
+            UI.Camera.translate ( x_, y_ ) camera
     in
-        location
-            |> World.Location.render camera (ogX, ogY, posX, posY)
+       rect
+            [ x posX
+            , y posY
+            , Svg.Attributes.class "location"
+            , fill "green"
+            , stroke "black"
+            , width <| toString <| UI.Camera.tileSize
+            , height <| toString <| UI.Camera.tileSize
+            , onMouseOver (SetInspected ogX ogY ogZ location)
+            ]
+            []
 
 
 
@@ -83,6 +100,7 @@ tileInfoView model =
         [ renderTileData "type: " [ text model.loc.type_ ]
         , renderTileData "x: " [ text model.x ]
         , renderTileData "y: " [ text model.y ]
+        , renderTileData "z: " [ text model.z ]
         , renderTileData "entities:" (List.map renderEntity model.loc.entities)
         ]
 

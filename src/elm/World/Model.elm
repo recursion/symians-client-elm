@@ -26,6 +26,7 @@ type alias Coordinates =
 type alias Location =
     { entities : List String
     , type_ : String
+    , selected : Bool
     }
 
 
@@ -41,7 +42,10 @@ init =
 
 initLocation : Location
 initLocation =
-    { entities = [], type_ = "" }
+    { entities = []
+    , type_ = ""
+    , selected = False
+    }
 
 
 initWorldData : Model

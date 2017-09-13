@@ -1,19 +1,8 @@
 module World.Location exposing (..)
 
-import App.Model exposing (Msg, Msg(SetInspected))
-import Svg.Attributes exposing (x, y, xlinkHref)
-import Svg.Events exposing (onMouseOver)
-import Svg exposing (svg, use)
 
-
-render camera ( ogX, ogY, posX, posY ) loc =
-    use
-        [ xlinkHref ("#" ++ loc.type_)
-        , x posX
-        , y posY
-        , onMouseOver (SetInspected ogX ogY loc)
-        ] []
-
+hashCoords x y z =
+    String.join "|" [x, y, z]
 
 extractCoords : String -> ( Int, Int, Int )
 extractCoords asString =
