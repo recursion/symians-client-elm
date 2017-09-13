@@ -19,7 +19,7 @@ updateCamera action model =
             model.ui
 
         nextCamera =
-            action model.ui.camera
+            action model.world.dimensions model.ui.camera
 
         nextUI =
             { ui | camera = nextCamera }

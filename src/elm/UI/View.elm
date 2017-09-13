@@ -4,7 +4,7 @@ import Html exposing (Html, div, nav, a, button, text, span, p, label, canvas)
 import Html.Attributes exposing (id, class, attribute, href)
 import Html.Events exposing (onClick)
 import Svg.Attributes exposing (x, y, xlinkHref, viewBox, transform, width, height, fill, stroke)
-import Svg.Events exposing (onMouseOver)
+import Svg.Events exposing (onMouseOver, onMouseDown)
 import Svg exposing (svg, use, g, rect)
 import Dict exposing (Dict)
 import App.Model exposing (Msg(..), Model)
@@ -34,7 +34,7 @@ renderWorld locations camera =
             [ Svg.Attributes.class "world"
             ]
             [ g
-                [ transform "scale(.75)"
+                [ transform "scale(1)"
                 ]
                 locations_
             ]
@@ -42,6 +42,11 @@ renderWorld locations camera =
 
 renderLocation ( coords, location ) camera =
     let
+        class_ = if location.selected then
+                     "location-selected"
+                 else
+                     "location"
+
         ( x_, y_, z_ ) =
             World.Location.extractCoords coords
 
@@ -54,7 +59,7 @@ renderLocation ( coords, location ) camera =
        rect
             [ x posX
             , y posY
-            , Svg.Attributes.class "location"
+            , Svg.Attributes.class class_
             , fill "green"
             , stroke "black"
             , width <| toString <| UI.Camera.tileSize

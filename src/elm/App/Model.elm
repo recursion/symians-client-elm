@@ -7,6 +7,7 @@ import App.Auth as Auth
 import UI.Model as UI
 import World.Model as World
 import Keyboard
+import Window
 
 
 -- MODEL
@@ -24,13 +25,14 @@ type alias Model =
 initModel socket chatModel =
     Model socket chatModel Auth.init UI.init World.init
 
-
 type Msg
     = ChatMsg Chat.Model.Msg
     | PhoenixMsg (Phoenix.Socket.Msg Msg)
     | ReceiveToken JE.Value
     | ReceiveWorldData JE.Value
     | SetInspected String String String World.Location
+    | SetSelected String String String
+    | ResizeWindow Window.Size
     | Connected
     | Disconnected
     | ToggleChatView

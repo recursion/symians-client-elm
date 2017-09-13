@@ -3,12 +3,14 @@ module Main exposing (..)
 import Html exposing (Html, div, text)
 import Html.Attributes exposing (class)
 import App.Socket exposing (initPhxSocket, chatEvent, initSystemChannel, chatChannel, systemChannel)
-import App.Model exposing (Model, Msg, Msg(PhoenixMsg, ChatMsg, KeyMsg), initModel)
+import App.Model exposing (Model, Msg, Msg(PhoenixMsg, ChatMsg, KeyMsg, ResizeWindow), initModel)
 import App.Update exposing (update)
 import UI.View exposing (renderHud, renderWorld)
 import Phoenix.Socket
 import Chat.Channel
 import Keyboard
+import Window
+import Task
 
 
 main : Program Never Model Msg
@@ -29,8 +31,10 @@ init =
 
         ( nextModel, nextCmd ) =
             initSystemChannel (initModel nextSocket chatModel)
+
+        getWindowSize = Task.perform ResizeWindow Window.size
     in
-        ( nextModel, Cmd.batch [ Cmd.map PhoenixMsg chatCmd, nextCmd ] )
+        ( nextModel, Cmd.batch [ Cmd.map PhoenixMsg chatCmd, nextCmd, getWindowSize ] )
 
 
 view : Model -> Html Msg
@@ -46,4 +50,5 @@ subscriptions model =
     Sub.batch
         [ Phoenix.Socket.listen model.socket PhoenixMsg
         , Keyboard.downs KeyMsg
+        , Window.resizes ResizeWindow
         ]

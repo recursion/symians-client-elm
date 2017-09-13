@@ -9,6 +9,9 @@ import Chat.Model
 import App.Socket
 import UI.Input as Input
 import UI.Helpers
+import World.Model
+import World.Location
+import Dict exposing (Dict)
 
 
 -- UPDATE
@@ -30,6 +33,26 @@ import Dict exposing (Dict)
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
+        ResizeWindow size ->
+            let
+                camera = model.ui.camera
+                nextCamera = { camera | width = size.width, height = size.height }
+                ui = model.ui
+                nextUI = { ui | camera = nextCamera }
+            in
+              {model | ui = nextUI }! []
+
+        SetSelected x y z ->
+            let
+                coordsAsString = World.Location.hashCoords x y z
+
+                target = Maybe.withDefault World.Model.initLocation (Dict.get coordsAsString model.world.locations)
+                nextLocations = Dict.insert coordsAsString  { target | selected = True} model.world.locations
+                world = model.world
+                nextWorld = { world | locations = nextLocations }
+            in
+                { model | world = nextWorld } ! []
+
         ToggleChatView ->
             { model | ui = UI.toggleChat model.ui } ! []
 

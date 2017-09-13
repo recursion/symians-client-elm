@@ -12,8 +12,9 @@
     stroke: green;
 }
 .location:hover {
-    fill: #9F9;
+    fill: #393;
 }
-.location:active {
-    fill: #595;
+.location-selected {
+    fill: #070;
+    stroke: #070;
 }
