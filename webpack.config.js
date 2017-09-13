@@ -46,7 +46,12 @@ var commonConfig = {
             options: {
                 postcss: [autoprefixer()]
             }
-        })
+        }),
+        new HtmlWebpackPlugin({
+            template: 'src/static/index.html',
+            inject: 'body',
+            filename: 'index.html'
+        }),
     ]
 }
 
@@ -102,7 +107,7 @@ if (isProd === true) {
         },
         plugins: [
             new ExtractTextPlugin({
-                filename: 'css/[name].css',
+                filename: 'css/[name]-[hash].css',
                 allChunks: true
             }),
             new CopyWebpackPlugin([{
