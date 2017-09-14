@@ -4,7 +4,6 @@ import Html exposing (Html, h3, p, div, text, ul, li, input, form, button, br, t
 import Html.Attributes exposing (class, type_, value)
 import Html.Events exposing (onInput, onSubmit, onClick, onFocus, onBlur)
 import Chat.Model exposing (..)
-import Phoenix.Channel
 
 
 -- VIEW
@@ -17,10 +16,7 @@ root model =
             [ messages model
             ]
         , newMessageForm model
-
-        -- , channelsTable (Dict.values model.phxSocket.channels)
         ]
-
 
 
 -- messages
@@ -67,39 +63,4 @@ messageInput model =
             , onBlur ToggleChatInputFocus
             ]
             []
-        ]
-
-
-
--- Channels
-
-
-channelsButtons : Html Msg
-channelsButtons =
-    div [ class "panel-block channel-buttons" ]
-        [ p [ class "control" ]
-            [ channelButton "Join chat" JoinChannel
-            , channelButton "Leave chat" LeaveChannel
-            ]
-        ]
-
-
-channelButton : String -> Msg -> Html Msg
-channelButton name action =
-    button [ class "button isPrimary", onClick action ] [ text name ]
-
-
-channelsTable : List (Phoenix.Channel.Channel Msg) -> Html Msg
-channelsTable channels =
-    table []
-        [ tbody [] (List.map channelRow channels)
-        ]
-
-
-channelRow : Phoenix.Channel.Channel Msg -> Html Msg
-channelRow channel =
-    tr []
-        [ td [] [ text channel.name ]
-        , td [] [ (text << toString) channel.payload ]
-        , td [] [ (text << toString) channel.state ]
         ]

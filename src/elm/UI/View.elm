@@ -3,20 +3,20 @@ module UI.View exposing (render)
 import Html exposing (Html, text, div, label, span, button, table, tr, td)
 import Html.Attributes exposing (class)
 import Html.Events exposing (onClick)
-import App.Model exposing (Msg(ChatMsg, ToggleInfo, ToggleChatView), Model)
-import UI.Model as UI exposing (Camera, TileData)
+import App.Model as App exposing (Msg)
+import UI.Model as UI exposing (Model, Camera, TileData)
 import Chat.View
 
 
 -- hud rendering
 
 
-render : Model -> Html Msg
+render : App.Model -> Html Msg
 render model =
     let
-        chat =
+        chatView =
             if model.ui.viewChat then
-                Html.map ChatMsg (Chat.View.root model.chat)
+                Html.map App.ChatMsg (Chat.View.root model.chat)
             else
                 text ""
 
@@ -27,8 +27,8 @@ render model =
                 text ""
     in
         div []
-            [ chat
-            , controls model
+            [ chatView
+            , controls model.ui
             , info
             ]
 
@@ -69,14 +69,14 @@ controls : Model -> Html Msg
 controls model =
     let
         chatClass =
-            isActive model.ui.viewChat
+            isActive model.viewChat
 
         infoClass =
-            isActive model.ui.viewInfo
+            isActive model.viewInfo
     in
         div [ class "controls" ]
-            [ hudButton "Chat" ToggleChatView chatClass
-            , hudButton "Info" ToggleInfo infoClass
+            [ hudButton "Chat" (App.UIMsg UI.ToggleChatView) chatClass
+            , hudButton "Info" (App.UIMsg UI.ToggleInfo) infoClass
             ]
 
 

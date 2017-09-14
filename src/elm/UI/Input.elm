@@ -2,7 +2,6 @@ module UI.Input exposing (..)
 
 import Keyboard
 import App.Model exposing (Model)
-import UI.Helpers exposing (updateCamera)
 import UI.Camera as Camera
 
 
@@ -34,3 +33,17 @@ processKeypress code model =
                 model
     else
         model
+
+
+updateCamera action model =
+    let
+        nextCamera =
+            action model.ui.camera
+
+        ui =
+            model.ui
+
+        nextUI =
+            { ui | camera = nextCamera }
+    in
+        { model | ui = nextUI }

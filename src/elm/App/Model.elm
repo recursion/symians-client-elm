@@ -6,8 +6,6 @@ import Json.Encode as JE
 import App.Auth as Auth
 import UI.Model as UI
 import World.Model as World
-import Keyboard
-import Window
 
 
 -- MODEL
@@ -32,17 +30,12 @@ type alias Model =
 
 type Msg
     = ChatMsg Chat.Model.Msg
+    | UIMsg UI.Msg
     | PhoenixMsg SocketMsg
     | ReceiveToken JE.Value
     | ReceiveWorldData JE.Value
-    | SetInspected String String String World.Location
-    | ToggleSelected String String String
-    | ResizeWindow Window.Size
     | Connected
     | Disconnected
-    | ToggleChatView
-    | ToggleInfo
-    | KeyMsg Keyboard.KeyCode
     | NoOp
 
 initModel : Socket -> Chat.Model.Model -> Model

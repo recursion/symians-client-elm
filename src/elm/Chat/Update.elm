@@ -10,11 +10,8 @@ update msg model =
     case msg of
         SendMessage ->
             let
-                encoder =
-                    (encodeChatMessage model.newMessage)
-
                 externalMsg =
-                    Send newChatMsgEvent model.name encoder
+                    Send newChatMsgEvent model.name (encodeChatMessage model.newMessage)
             in
                 ( ( {model| newMessage = ""}, Cmd.none ), externalMsg )
 

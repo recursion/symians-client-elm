@@ -61,16 +61,16 @@ inBounds x y z camera =
         && y >= camera.y
         && y < camera.y + maxY
 
-moveZLevelUp : Dimensions -> Camera -> Camera
-moveZLevelUp dim camera =
+moveZLevelUp : Camera -> Camera
+moveZLevelUp camera =
     if camera.z >= currentZLimit then
         camera
     else
         { camera | z = camera.z + 1 }
 
 
-moveZLevelDown : Dimensions -> Camera -> Camera
-moveZLevelDown dim camera =
+moveZLevelDown : Camera -> Camera
+moveZLevelDown camera =
     let
         nextZ =
             camera.z - 1
@@ -81,8 +81,8 @@ moveZLevelDown dim camera =
             { camera | z = nextZ }
 
 
-moveDown : Dimensions -> Camera -> Camera
-moveDown dim camera =
+moveDown : Camera -> Camera
+moveDown camera =
     let
         nextY =
             camera.y + 1
@@ -90,30 +90,30 @@ moveDown dim camera =
         tilesPos =
             camera.height // tileSize
     in
-        if nextY > (dim.height - tilesPos) + 1 then
+        if nextY > (camera.worldDimensions.height - tilesPos) + 1 then
             camera
         else
             { camera | y = nextY }
 
 
-moveUp : Dimensions -> Camera -> Camera
-moveUp dim camera =
+moveUp :  Camera -> Camera
+moveUp camera =
     if camera.y - 1 < -1 then
         camera
     else
         { camera | y = camera.y - 1 }
 
 
-moveLeft : Dimensions -> Camera -> Camera
-moveLeft dim camera =
+moveLeft : Camera -> Camera
+moveLeft camera =
     if camera.x - 1 < -1 then
         camera
     else
         { camera | x = camera.x - 1 }
 
 
-moveRight : Dimensions -> Camera -> Camera
-moveRight dim camera =
+moveRight : Camera -> Camera
+moveRight camera =
     let
         nextX =
             camera.x + 1
@@ -121,7 +121,7 @@ moveRight dim camera =
         tilesPos =
             camera.width // tileSize
     in
-        if nextX > (dim.width - tilesPos) + 1 then
+        if nextX > (camera.worldDimensions.width - tilesPos) + 1 then
             camera
         else
             { camera | x = nextX }

@@ -50,8 +50,8 @@ renderLocation ( coords, location ) camera =
             , stroke "black"
             , width <| toString <| UI.Camera.tileSize
             , height <| toString <| UI.Camera.tileSize
-            , onMouseOver (SetInspected ogX ogY ogZ location)
-            , onClick (ToggleSelected ogX ogY ogZ)
+            , onMouseOver (UIMsg (UI.Model.SetInspected ogX ogY ogZ location))
+            , onClick (UIMsg (UI.Model.ToggleSelected ogX ogY ogZ))
             ]
     in
         UI.Camera.render rect locationProperties x_ y_ z_ camera

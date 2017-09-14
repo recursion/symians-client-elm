@@ -1,7 +1,18 @@
 module UI.Model exposing (..)
 
-import World.Model exposing (Location, initLocation)
+import World.Model exposing (Location, initLocation, Dimensions)
+import Window
+import Keyboard
 
+
+
+type Msg
+    = SetInspected String String String Location
+    | ToggleSelected String String String
+    | ResizeWindow Window.Size
+    | ToggleChatView
+    | ToggleInfo
+    | KeyMsg Keyboard.KeyCode
 
 type alias Model =
     { viewChat : Bool
@@ -23,6 +34,7 @@ type alias Camera =
     { x : Int
     , y : Int
     , z : Int
+    , worldDimensions : Dimensions
     , width : Int
     , height : Int
     }
@@ -41,6 +53,7 @@ initCamera =
     { x = 0
     , y = 0
     , z = 0
+    , worldDimensions = (Dimensions 0 0 0)
     , width = 0
     , height = 0
     }

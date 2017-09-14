@@ -1,42 +1,20 @@
 module App.Update exposing (update)
 
-import Dict exposing (Dict)
 import Json.Decode as JD
-import Window
-
 import World.Decoders exposing (decodeWorldData)
 import App.Socket exposing (SocketCmdMsg(..))
 import App.Auth exposing (decodeTokenMessage)
 import App.Model exposing (..)
-
 import Chat.Update
 import Chat.Model
-
-import UI.Model as UI
-import UI.Input as Input
-import UI.Helpers
-
-import World.Model
-import World.Location
+import UI.Update
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        ResizeWindow size ->
-            resizeWindow size model ! []
-
-        ToggleSelected x y z ->
-            setSelected x y z model ! []
-
-        ToggleChatView ->
-            { model | ui = UI.toggleChat model.ui } ! []
-
-        ToggleInfo ->
-            { model | ui = UI.toggleInfoView model.ui } ! []
-
-        SetInspected posX posY posZ location ->
-            { model | ui = UI.Helpers.setInspectedTile posX posY posZ location model.ui } ! []
+        UIMsg message ->
+            UI.Update.update message model
 
         ChatMsg message ->
             processChatMsg message model
@@ -50,9 +28,6 @@ update msg model =
         ReceiveWorldData raw ->
             processWorldData raw model
 
-        KeyMsg code ->
-            Input.processKeypress code model ! []
-
         Connected ->
             model ! []
 
@@ -61,50 +36,6 @@ update msg model =
 
         App.Model.NoOp ->
             model ! []
-
-
-resizeWindow : Window.Size -> Model -> Model
-resizeWindow size model =
-    let
-        camera =
-            model.ui.camera
-
-        nextCamera =
-            { camera | width = size.width, height = size.height }
-
-        ui =
-            model.ui
-
-        nextUI =
-            { ui | camera = nextCamera }
-    in
-        { model | ui = nextUI }
-
-
-setSelected : String -> String -> String -> Model -> Model
-setSelected x y z model =
-    let
-        coordsAsString =
-            World.Location.hashCoords x y z
-
-        target =
-            Maybe.withDefault
-                World.Model.initLocation
-                (Dict.get coordsAsString model.world.locations)
-
-        nextLocations =
-            Dict.insert
-                coordsAsString
-                { target | selected = not target.selected }
-                model.world.locations
-
-        world =
-            model.world
-
-        nextWorld =
-            { world | locations = nextLocations }
-    in
-        { model | world = nextWorld }
 
 
 {-| use locationsAsList for rendering
@@ -120,8 +51,23 @@ processWorldData raw model =
                     { locations = world.locations
                     , dimensions = world.dimensions
                     }
+
+                ui =
+                    model.ui
+
+                camera =
+                    model.ui.camera
+
+                nextCamera =
+                    { camera | worldDimensions = world.dimensions }
+
+                nextUI =
+                    { ui | camera = nextCamera }
+
+                nextModel =
+                    { model | ui = nextUI }
             in
-                { model | world = nextWorld } ! []
+                { nextModel | world = nextWorld } ! []
 
         Err error ->
             ( model, Cmd.none )
@@ -151,4 +97,3 @@ processChatMsg message model =
         ( { nextModel | chat = chatModel }
         , Cmd.batch [ Cmd.map ChatMsg chatCommand, cmd ]
         )
-
