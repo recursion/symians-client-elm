@@ -1,4 +1,4 @@
-module UI.View exposing (renderHud)
+module UI.View exposing (render)
 
 import Html exposing (Html, text, div, label, span, button, table, tr, td)
 import Html.Attributes exposing (class)
@@ -11,8 +11,8 @@ import Chat.View
 -- hud rendering
 
 
-renderHud : Model -> Html Msg
-renderHud model =
+render : Model -> Html Msg
+render model =
     let
         chat =
             if model.ui.viewChat then
