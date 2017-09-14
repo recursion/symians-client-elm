@@ -5,7 +5,6 @@ import Chat.Messages as Messages
 import Chat.Decoders exposing (encodeChatMessage)
 import App.Socket exposing (SocketCmdMsg(..))
 
-newMessageEvent = "new:msg"
 
 update msg model =
     case msg of
@@ -15,15 +14,15 @@ update msg model =
                     (encodeChatMessage model.newMessage)
 
                 externalMsg =
-                    Send newMessageEvent model.currentChannel encoder
+                    Send newChatMsgEvent model.name encoder
             in
                 ( ( {model| newMessage = ""}, Cmd.none ), externalMsg )
 
         JoinChannel ->
-            ( ( model, Cmd.none ), Join model.currentChannel)
+            ( ( model, Cmd.none ), Join model.name)
 
         LeaveChannel ->
-            ( ( model, Cmd.none ), Leave model.currentChannel)
+            ( ( model, Cmd.none ), Leave model.name)
 
         SetNewMessage str ->
             ( ( { model | newMessage = str }, Cmd.none ), NoOp )
@@ -31,11 +30,11 @@ update msg model =
         ReceiveChatMessage raw ->
             ( ( Messages.process raw model, Cmd.none ), NoOp )
 
-        ShowJoinedMessage channelName ->
-            ( ( Messages.showJoined channelName model, Cmd.none ), NoOp )
+        ShowJoinedMessage ->
+            ( ( Messages.showJoined model, Cmd.none ), NoOp )
 
-        ShowLeftMessage channelName ->
-            ( ( Messages.showLeft channelName model, Cmd.none ), NoOp )
+        ShowLeftMessage ->
+            ( ( Messages.showLeft model, Cmd.none ), NoOp )
 
         ToggleChatInputFocus ->
             ( ( { model | inputHasFocus = not model.inputHasFocus }, Cmd.none ), NoOp )

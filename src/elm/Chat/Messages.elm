@@ -1,54 +1,41 @@
 module Chat.Messages exposing (..)
 
 import Chat.Model exposing (..)
-import Dict exposing (Dict)
 import Json.Encode as JE
 import Chat.Decoders exposing (decodeChatMessage)
-import Chat.Channels as Channels
 
 
 
 {-| Update the messages in a channel
 -}
-update : List String -> String -> Model -> Channels
-update messages channelName model =
-    Dict.insert channelName (Channel messages) model.channels
+update : List String -> Model -> Model
+update nextMessages model =
+    { model | messages = nextMessages }
 
 
 {-| Add a message to a channel
 -}
-add : String -> String -> Model -> Channels
-add msg channelName model =
+add : String -> Model -> Model
+add msg model =
     let
-        currentChannel =
-            Channels.getCurrent model
-
         nextMessages =
-            msg :: currentChannel.messages
+            msg :: model.messages
     in
-        update nextMessages channelName model
+        update nextMessages model
 
 
 {-| Adds a joined message to the channel messages
 -}
-showJoined : String -> Model -> Model
-showJoined channelName model =
-    let
-        nextChannels =
-            add ("Joined channel " ++ channelName) channelName model
-    in
-        { model | channels = nextChannels }
+showJoined : Model -> Model
+showJoined model =
+      add ("Joined channel " ++ model.name) model
 
 
 {-| Adds a left message to a channel
 -}
-showLeft : String -> Model -> Model
-showLeft channelName model =
-    let
-        nextChannels =
-            add ("Left channel " ++ channelName) channelName model
-    in
-        { model | channels = nextChannels }
+showLeft : Model -> Model
+showLeft model =
+      add ("Left channel " ++ model.name) model
 
 
 {-|  decode an incoming new chat message
@@ -61,11 +48,8 @@ process raw model =
             let
                 msg =
                     (chatMessage.user ++ ": " ++ chatMessage.body)
-
-                nextChannels =
-                    add msg model.currentChannel model
             in
-                { model | channels = nextChannels }
+                add msg model
 
         Err error ->
             let

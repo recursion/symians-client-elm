@@ -24,24 +24,16 @@ type Msg
     | ReceiveChatMessage JE.Value
     | JoinChannel
     | LeaveChannel
-    | ShowJoinedMessage String
-    | ShowLeftMessage String
+    | ShowJoinedMessage
+    | ShowLeftMessage
     | ToggleChatInputFocus
 
 
-type alias Channel =
-    { messages : List String }
-
-
-type alias Channels =
-    Dict String Channel
-
-
 type alias Model =
-    { newMessage : String
+    { name : String
+    , newMessage : String
     , inputHasFocus : Bool
-    , currentChannel : String
-    , channels : Channels
+    , messages : List String
     }
 
 
@@ -54,10 +46,10 @@ type alias ChatMessage =
 init channelName =
     let
         onJoin =
-            ShowJoinedMessage channelName
+            ShowJoinedMessage
 
         onClose =
-            ShowLeftMessage channelName
+            ShowLeftMessage
 
         subscriptionData =
             ( newChatMsgEvent, channelName, ReceiveChatMessage )
@@ -66,5 +58,4 @@ init channelName =
 
 
 initModel channelName =
-    Dict.insert channelName (Channel []) Dict.empty
-        |> Model "" False channelName
+    Model channelName "" False []
