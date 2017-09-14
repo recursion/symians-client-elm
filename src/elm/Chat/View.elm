@@ -4,8 +4,8 @@ import Html exposing (Html, h3, p, div, text, ul, li, input, form, button, br, t
 import Html.Attributes exposing (class, type_, value)
 import Html.Events exposing (onInput, onSubmit, onClick, onFocus, onBlur)
 import Chat.Model exposing (..)
-import Chat.Channel as Channel
 import Phoenix.Channel
+import Chat.Channels as Channels
 
 
 -- VIEW
@@ -30,7 +30,7 @@ root model =
 messages : Model -> Html Msg
 messages model =
     ul [ class "messages" ]
-        ((List.map renderMessage) (Channel.getCurrent model).messages)
+        ((List.map renderMessage) (Channels.getCurrent model).messages)
 
 
 renderMessage : String -> Html Msg

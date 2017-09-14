@@ -12,22 +12,22 @@ import Window
 
 -- MODEL
 
-
-type alias Model =
-    { socket : Phoenix.Socket.Socket Msg
-    , chat : Chat.Model.Model
-    , auth : Auth.Model
-    , ui : UI.Model
-    , world : World.Model
-    }
-
-
 type alias Socket =
     Phoenix.Socket.Socket Msg
 
 
 type alias SocketMsg =
     Phoenix.Socket.Msg Msg
+
+
+type alias Model =
+    { socket : Socket
+    , chat : Chat.Model.Model
+    , auth : Auth.Model
+    , ui : UI.Model
+    , world : World.Model
+    }
+
 
 
 type Msg

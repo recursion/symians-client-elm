@@ -1,18 +1,23 @@
 module App.Update exposing (update)
 
-import App.JsonHelpers exposing (decodeTokenMessage, decodeWorldData)
-import App.Model exposing (..)
+import Dict exposing (Dict)
 import Json.Decode as JD
-import UI.Model as UI
+import Window
+
+import World.Decoders exposing (decodeWorldData)
+import App.Socket exposing (SocketCmdMsg(..))
+import App.Auth exposing (decodeTokenMessage)
+import App.Model exposing (..)
+
 import Chat.Update
 import Chat.Model
-import App.Socket
+
+import UI.Model as UI
 import UI.Input as Input
 import UI.Helpers
+
 import World.Model
 import World.Location
-import Dict exposing (Dict)
-import Window
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -54,7 +59,7 @@ update msg model =
         Disconnected ->
             model ! []
 
-        NoOp ->
+        App.Model.NoOp ->
             model ! []
 
 
@@ -74,6 +79,7 @@ resizeWindow size model =
             { ui | camera = nextCamera }
     in
         { model | ui = nextUI }
+
 
 setSelected : String -> String -> String -> Model -> Model
 setSelected x y z model =
@@ -136,10 +142,13 @@ processToken raw model =
 processChatMsg : Chat.Model.Msg -> Model -> ( Model, Cmd Msg )
 processChatMsg message model =
     let
-        ( ( chatModel, chatCommand ), nextSocket ) =
-            Chat.Update.update message model.auth model.socket model.chat
+        ( ( chatModel, chatCommand ), msg ) =
+            Chat.Update.update message model.chat
 
-        nextModel =
-            { model | socket = nextSocket }
+        ( nextModel, cmd ) =
+            App.Socket.externalMsg msg model
     in
-        ( { nextModel | chat = chatModel }, Cmd.map PhoenixMsg chatCommand )
+        ( { nextModel | chat = chatModel }
+        , Cmd.batch [ Cmd.map ChatMsg chatCommand, cmd ]
+        )
+

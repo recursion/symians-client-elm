@@ -1,43 +1,41 @@
 module Chat.Update exposing (update)
 
 import Chat.Model exposing (..)
-import Chat.Channel as Channel
 import Chat.Messages as Messages
-import Phoenix.Socket
-import App.Model
-import App.Auth as Auth
+import Chat.Decoders exposing (encodeChatMessage)
+import App.Socket exposing (SocketCmdMsg(..))
 
+newMessageEvent = "new:msg"
 
-type alias UpdateReturn =
-    ( ( Model, Cmd App.Model.SocketMsg ), App.Model.Socket )
-
-
-update : Msg -> Auth.Model -> Phoenix.Socket.Socket App.Model.Msg -> Model -> UpdateReturn
-update msg auth socket model =
+update msg model =
     case msg of
         SendMessage ->
-            Channel.send auth socket model
+            let
+                encoder =
+                    (encodeChatMessage model.newMessage)
+
+                externalMsg =
+                    Send newMessageEvent model.currentChannel encoder
+            in
+                ( ( {model| newMessage = ""}, Cmd.none ), externalMsg )
 
         JoinChannel ->
-            Channel.join socket model
+            ( ( model, Cmd.none ), Join model.currentChannel)
 
         LeaveChannel ->
-            Channel.leave socket model
+            ( ( model, Cmd.none ), Leave model.currentChannel)
 
         SetNewMessage str ->
-            ( ( { model | newMessage = str }, Cmd.none ), socket )
+            ( ( { model | newMessage = str }, Cmd.none ), NoOp )
 
         ReceiveChatMessage raw ->
-            ( ( Messages.process raw model, Cmd.none ), socket )
+            ( ( Messages.process raw model, Cmd.none ), NoOp )
 
         ShowJoinedMessage channelName ->
-            ( ( Messages.showJoined channelName model, Cmd.none ), socket )
+            ( ( Messages.showJoined channelName model, Cmd.none ), NoOp )
 
         ShowLeftMessage channelName ->
-            ( ( Messages.showLeft channelName model, Cmd.none ), socket )
+            ( ( Messages.showLeft channelName model, Cmd.none ), NoOp )
 
         ToggleChatInputFocus ->
-            (({ model | inputHasFocus = not model.inputHasFocus }, Cmd.none), socket)
-
-        NoOp ->
-            ( ( model, Cmd.none ), socket )
+            ( ( { model | inputHasFocus = not model.inputHasFocus }, Cmd.none ), NoOp )

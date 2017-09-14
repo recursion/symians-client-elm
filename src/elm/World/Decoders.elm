@@ -1,12 +1,10 @@
-module App.JsonHelpers exposing (..)
+module World.Decoders exposing (..)
 
-import Chat.Model exposing (ChatMessage)
 import World.Model as World exposing (Coordinates, Location, Dimensions)
 import Json.Decode as JD exposing (field, maybe, int, string, float, nullable, Decoder)
 import Json.Decode.Pipeline exposing (decode, optional, required)
 import Dict exposing (Dict)
-import Json.Encode as JE
-import App.Auth as Auth
+import Json.Decode as JD
 
 
 coordinatesDecoder : Decoder Coordinates
@@ -43,36 +41,6 @@ worldDataDecoder =
     JD.map2 World.Model
         (field "locations" locationsDecoder)
         (field "dimensions" dimensionsDecoder)
-
-
-tokenMessageDecoder : JD.Decoder Auth.Model
-tokenMessageDecoder =
-    JD.map3 Auth.Model
-        (maybe (field "id" JD.int))
-        (maybe (field "token" JD.string))
-        (field "status" JD.string)
-
-
-chatMessageDecoder : JD.Decoder ChatMessage
-chatMessageDecoder =
-    JD.map2 ChatMessage
-        (field "user" JD.string)
-        (field "body" JD.string)
-
-
-decodeTokenMessage : JD.Value -> Result String Auth.Model
-decodeTokenMessage =
-    JD.decodeValue tokenMessageDecoder
-
-
-encodeChatMessage : String -> String -> JE.Value
-encodeChatMessage token msg =
-    (JE.object [ ( "token", JE.string token ), ( "body", JE.string msg ) ])
-
-
-decodeChatMessage : JD.Value -> Result String ChatMessage
-decodeChatMessage =
-    JD.decodeValue chatMessageDecoder
 
 
 decodeWorldData : JD.Value -> Result String World.Model

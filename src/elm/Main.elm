@@ -2,13 +2,14 @@ module Main exposing (..)
 
 import Html exposing (Html, div, text)
 import Html.Attributes exposing (class)
-import App.Socket exposing (initPhxSocket, chatEvent, initSystemChannel, chatChannel, systemChannel)
+import App.Socket exposing (initPhxSocket, initSystemChannel, systemChannel)
 import App.Model exposing (Model, Msg, Msg(PhoenixMsg, ChatMsg, KeyMsg, ResizeWindow), initModel)
 import App.Update exposing (update)
 import UI.View exposing (renderHud)
 import World.View exposing (render)
 import Phoenix.Socket
-import Chat.Channel
+import App.Socket as Socket
+import Chat.Model as Chat
 import Keyboard
 import Window
 import Task
@@ -27,16 +28,17 @@ main =
 init : ( Model, Cmd Msg )
 init =
     let
-        ( ( chatModel, chatCmd ), nextSocket ) =
-            Chat.Channel.initWithSocket chatEvent chatChannel ChatMsg initPhxSocket
+        ( initialModel, systemCmd ) =
+            initSystemChannel (initModel initPhxSocket (Chat.initModel Chat.defaultChannel))
 
-        ( nextModel, nextCmd ) =
-            initSystemChannel (initModel nextSocket chatModel)
+        ( nextModel, chatCmd ) = Socket.initChatChannel initialModel
 
-        getWindowSize = Task.perform ResizeWindow Window.size
+        getWindowSize =
+            Task.perform ResizeWindow Window.size
     in
-        ( nextModel, Cmd.batch [ Cmd.map PhoenixMsg chatCmd, nextCmd, getWindowSize ] )
-
+        ( nextModel
+        , Cmd.batch [ systemCmd, chatCmd, getWindowSize ]
+        )
 
 view : Model -> Html Msg
 view model =

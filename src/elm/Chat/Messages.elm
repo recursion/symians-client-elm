@@ -1,10 +1,11 @@
 module Chat.Messages exposing (..)
 
-import Chat.Channel as Channel
 import Chat.Model exposing (..)
 import Dict exposing (Dict)
 import Json.Encode as JE
-import App.JsonHelpers exposing (decodeChatMessage)
+import Chat.Decoders exposing (decodeChatMessage)
+import Chat.Channels as Channels
+
 
 
 {-| Update the messages in a channel
@@ -20,7 +21,7 @@ add : String -> String -> Model -> Channels
 add msg channelName model =
     let
         currentChannel =
-            Channel.getCurrent model
+            Channels.getCurrent model
 
         nextMessages =
             msg :: currentChannel.messages

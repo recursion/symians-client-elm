@@ -2,6 +2,7 @@ module App.Auth exposing (..)
 
 import Html exposing (Html, div, h3, text)
 import Html.Attributes exposing (class)
+import Json.Decode as JD exposing (field, maybe, int, string, float, nullable, Decoder)
 
 
 type alias Model =
@@ -30,3 +31,15 @@ view model =
             , h3 [] [ text token ]
             , h3 [] [ text model.status ]
             ]
+
+decodeTokenMessage : JD.Value -> Result String Model
+decodeTokenMessage =
+    JD.decodeValue tokenMessageDecoder
+
+tokenMessageDecoder : JD.Decoder Model
+tokenMessageDecoder =
+    JD.map3 Model
+        (maybe (field "id" JD.int))
+        (maybe (field "token" JD.string))
+        (field "status" JD.string)
+
