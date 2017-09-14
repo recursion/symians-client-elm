@@ -1,49 +1,32 @@
 module UI.Input exposing (..)
 
-import Keyboard
-import App.Model exposing (Model)
 import UI.Camera as Camera
 
 
-processKeypress : Keyboard.KeyCode -> Model -> Model
-processKeypress code model =
-    if not model.chat.inputHasFocus then
+processKeypress code inputIgnored =
+    if not inputIgnored then
         case code of
             82 ->
                 -- r - move up z level
-                updateCamera Camera.moveZLevelUp model
+                Just Camera.moveZLevelUp
 
             70 ->
                 -- f - move down z level
-                updateCamera Camera.moveZLevelDown model
+                Just Camera.moveZLevelDown
 
             87 ->
-                updateCamera Camera.moveUp model
+                Just Camera.moveUp
 
             83 ->
-                updateCamera Camera.moveDown model
+                Just Camera.moveDown
 
             65 ->
-                updateCamera Camera.moveLeft model
+                Just Camera.moveLeft
 
             68 ->
-                updateCamera Camera.moveRight model
+                Just Camera.moveRight
 
             _ ->
-                model
+               Nothing 
     else
-        model
-
-
-updateCamera action model =
-    let
-        nextCamera =
-            action model.ui.camera
-
-        ui =
-            model.ui
-
-        nextUI =
-            { ui | camera = nextCamera }
-    in
-        { model | ui = nextUI }
+        Nothing
