@@ -3,7 +3,7 @@ module Chat.Update exposing (update)
 import Chat.Model exposing (..)
 import Chat.Messages as Messages
 import Chat.Decoders exposing (encodeChatMessage)
-import App.Socket exposing (SocketCmdMsg(..))
+import App.Model exposing (SocketAction(..))
 
 
 update msg model =
@@ -22,16 +22,16 @@ update msg model =
             ( ( model, Cmd.none ), Leave model.name)
 
         SetNewMessage str ->
-            ( ( { model | newMessage = str }, Cmd.none ), NoOp )
+            ( ( { model | newMessage = str }, Cmd.none ), NoAction )
 
         ReceiveChatMessage raw ->
-            ( ( Messages.process raw model, Cmd.none ), NoOp )
+            ( ( Messages.process raw model, Cmd.none ), NoAction )
 
         ShowJoinedMessage ->
-            ( ( Messages.showJoined model, Cmd.none ), NoOp )
+            ( ( Messages.showJoined model, Cmd.none ), NoAction )
 
         ShowLeftMessage ->
-            ( ( Messages.showLeft model, Cmd.none ), NoOp )
+            ( ( Messages.showLeft model, Cmd.none ), NoAction )
 
         ToggleChatInputFocus ->
-            ( ( { model | inputHasFocus = not model.inputHasFocus }, Cmd.none ), NoOp )
+            ( ( { model | inputHasFocus = not model.inputHasFocus }, Cmd.none ), NoAction )

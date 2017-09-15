@@ -42,8 +42,8 @@ type alias ChatMessage =
     , body : String
     }
 
-
-init channelName =
+initData : (Msg, Msg, (String, (JE.Value -> Msg)))
+initData =
     let
         onJoin =
             ShowJoinedMessage
@@ -52,7 +52,7 @@ init channelName =
             ShowLeftMessage
 
         subscriptionData =
-            ( newChatMsgEvent, channelName, ReceiveChatMessage )
+            ( newChatMsgEvent, ReceiveChatMessage )
     in
         ( onJoin, onClose, subscriptionData )
 

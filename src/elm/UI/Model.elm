@@ -1,74 +1,80 @@
 module UI.Model exposing (..)
 
 import World.Model exposing (Location, initLocation, Dimensions)
+import World.Coordinates exposing (Coordinates)
 import Window
 import Keyboard
-
+import Task
 
 
 type Msg
-    = SetInspected String String String Location
-    | ToggleSelected String String String
+    = SetInspected Coordinates Location
+    | ToggleSelected Coordinates
     | ResizeWindow Window.Size
+    | KeyMsg Keyboard.KeyCode
     | ToggleChatView
     | ToggleInfo
-    | KeyMsg Keyboard.KeyCode
+
 
 type alias Model =
     { viewChat : Bool
     , viewInfo : Bool
-    , currentTile : TileData
+    , inspector : Inspection
     , camera : Camera
+    , selected : List Coordinates
     }
 
 
-type alias TileData =
-    { x : String
-    , y : String
-    , z : String
+type alias Inspection =
+    { position : Coordinates
     , loc : Location
     }
 
 
 type alias Camera =
-    { x : Int
-    , y : Int
-    , z : Int
+    { position : Coordinates
     , worldDimensions : Dimensions
     , width : Int
     , height : Int
     }
 
 
-init : Model
+init : ( Model, Cmd Msg )
 init =
-    { viewChat = False
-    , viewInfo = True
-    , currentTile = initTileData
-    , camera = initCamera
-    }
+    ( { viewChat = False
+      , viewInfo = True
+      , inspector = initInspector
+      , camera = initCamera
+      , selected = []
+      }
+    , Task.perform ResizeWindow Window.size
+    )
 
 
+initModel : Model
+initModel =
+    Model False False initInspector initCamera []
+
+
+initCamera : Camera
 initCamera =
-    { x = 0
-    , y = 0
-    , z = 0
-    , worldDimensions = (Dimensions 0 0 0)
+    { position = Coordinates 0 0 0 
+    , worldDimensions = Dimensions 0 0 0
     , width = 0
     , height = 0
     }
 
 
-initTileData : TileData
-initTileData =
-    { x = "0", y = "0", z = "0", loc = initLocation }
+initInspector : Inspection
+initInspector =
+    { position = Coordinates 0 0 0
+    , loc = initLocation
+    }
 
 
-toggleChat : Model -> Model
-toggleChat model =
-    { model | viewChat = not model.viewChat }
-
-
-toggleInfoView : Model -> Model
-toggleInfoView model =
-    { model | viewInfo = not model.viewInfo }
+subscriptions : Model -> Sub Msg
+subscriptions model =
+    Sub.batch
+        [ Keyboard.downs KeyMsg
+        , Window.resizes ResizeWindow
+        ]

@@ -1,6 +1,7 @@
 module World.Decoders exposing (..)
 
-import World.Model as World exposing (Coordinates, Location, Dimensions)
+import World.Model as World exposing (Location, Dimensions)
+import World.Coordinates exposing (Coordinates)
 import Json.Decode as JD exposing (field, maybe, int, string, float, nullable, Decoder)
 import Json.Decode.Pipeline exposing (decode, optional, required)
 import Dict exposing (Dict)

@@ -2,18 +2,18 @@ module Main exposing (..)
 
 import Html exposing (Html, div, text)
 import Html.Attributes exposing (class)
-import App.Socket exposing (initPhxSocket, initSystemChannel, systemChannel)
-import App.Model exposing (Model, Msg, Msg(PhoenixMsg, ChatMsg, UIMsg), initModel)
+
+import App.Model exposing (Model, Msg(..))
+import Chat.Model as Chat
+import UI.Model as UI
+
 import App.Update exposing (update)
 import App.Socket as Socket
-import Chat.Model as Chat
-import Phoenix.Socket
+import App.Init as Init
+
+import Chat.View
 import World.View
 import UI.View
-import UI.Model as UI
-import Keyboard
-import Window
-import Task
 
 
 main : Program Never Model Msg
@@ -29,30 +29,35 @@ main =
 init : ( Model, Cmd Msg )
 init =
     let
-        ( initialModel, systemCmd ) =
-            initSystemChannel (initModel initPhxSocket (Chat.initModel Chat.defaultChannel))
+        ( initialModel, uiCmd ) =
+            App.Model.init Socket.initPhxSocket
+                <| Chat.initModel Chat.defaultChannel
 
-        ( nextModel, chatCmd ) = Socket.initChatChannel initialModel
+        ( nextModel, systemCmd ) =
+            Init.system initialModel
 
-        getWindowSize =
-            Cmd.map UIMsg (Task.perform UI.ResizeWindow Window.size)
+        ( finalModel, chatCmd ) =
+            Init.chat ChatMsg Chat.defaultChannel nextModel
     in
-        ( nextModel
-        , Cmd.batch [ systemCmd, chatCmd, getWindowSize ]
+        ( finalModel
+        , Cmd.batch [ uiCmd, systemCmd, chatCmd ]
         )
+
 
 view : Model -> Html Msg
 view model =
     div [ class "app" ]
-        [ World.View.render model.world.locations model.ui.camera
-        , UI.View.render model
+        [ World.View.render model
+        , div [ class "ui" ]
+            [ Html.map ChatMsg (Chat.View.render model.ui model.chat)
+            , Html.map UIMsg (UI.View.hud model.ui)
+            ]
         ]
 
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.batch
-        [ Phoenix.Socket.listen model.socket PhoenixMsg
-        , Sub.map UIMsg (Keyboard.downs UI.KeyMsg)
-        , Sub.map UIMsg (Window.resizes UI.ResizeWindow)
+        [ Socket.listen model
+        , Sub.map UIMsg  (UI.subscriptions model.ui)
         ]

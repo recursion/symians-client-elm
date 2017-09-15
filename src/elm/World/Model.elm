@@ -16,13 +16,6 @@ type alias Dimensions =
     }
 
 
-type alias Coordinates =
-    { x : Int
-    , y : Int
-    , z : Int
-    }
-
-
 type alias Location =
     { entities : List String
     , type_ : String
@@ -33,7 +26,7 @@ type alias Location =
 type alias Locations =
     Dict String Location
 
-
+init : Model
 init =
     { locations = Dict.empty
     , dimensions = (Dimensions 0 0 0)
@@ -45,11 +38,4 @@ initLocation =
     { entities = []
     , type_ = ""
     , selected = False
-    }
-
-
-initWorldData : Model
-initWorldData =
-    { locations = Dict.empty
-    , dimensions = (Dimensions 0 0 0)
     }

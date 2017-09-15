@@ -1,13 +1,26 @@
-module UI.Camera exposing (..)
+module UI.Camera
+    exposing
+        ( tileSize
+        , translate
+        , inBounds
+        , moveZLevelDown
+        , moveZLevelUp
+        , moveUp
+        , moveDown
+        , moveLeft
+        , moveRight
+        , resize
+        , updateDimensions
+        )
 
 {-| camera provides an abstraction for tracking and manipulating
 what the client is currently looking at/rendering
 -}
 
-import Svg.Attributes exposing (x, y)
-import Svg exposing (svg, text)
 import UI.Model exposing (Camera)
 import World.Model exposing (Dimensions)
+import World.Coordinates exposing (Coordinates)
+import Window
 
 
 tileSize : Int
@@ -21,33 +34,33 @@ currentZLimit : Int
 currentZLimit =
     2
 
-render : (List (Svg.Attribute msg) -> List a -> Svg.Svg msg1)
-       -> List (Svg.Attribute msg)
-       -> Int -> Int -> Int
-       -> Camera
-       -> Svg.Svg msg1
-render svgObject props x_ y_ z_ camera =
+
+updateDimensions : Dimensions -> Camera -> Camera
+updateDimensions dim camera =
+    { camera | worldDimensions = dim }
+
+
+{-| translate a set of coordinates to their position in the camera view
+-}
+translate : Coordinates -> Camera -> ( String, String )
+translate coords camera =
     let
-        ( posX, posY ) =
-            translate ( x_, y_ ) camera
+        tileMultiplier n =
+            n * tileSize
 
-        toNumber =
-            \s -> Result.withDefault 0 (String.toInt s)
+        positionx =
+            toString ((tileMultiplier coords.x) - (tileMultiplier camera.position.x))
 
+        positiony =
+            toString ((tileMultiplier coords.y) - (tileMultiplier camera.position.y))
     in
-        if inBounds x_ y_ z_ camera then
-            svgObject
-                (props
-                    ++ [ x posX
-                       , y posY
-                       ]
-                )
-                []
-        else
-            text ""
+        ( positionx, positiony )
 
-inBounds : Int -> Int -> Int -> Camera -> Bool
-inBounds x y z camera =
+
+{-| check coordinates to see if they are within the cameras view
+-}
+inBounds : Coordinates -> Camera -> Bool
+inBounds coords camera =
     let
         maxX =
             (camera.width // tileSize) + 1
@@ -55,88 +68,135 @@ inBounds x y z camera =
         maxY =
             (camera.height // tileSize) + 1
     in
-      z == camera.z
-        && x >= camera.x
-        && x < camera.x + maxX
-        && y >= camera.y
-        && y < camera.y + maxY
+        onZLevel coords camera.position
+            && xInView maxX coords camera.position
+            && yInView maxY coords camera.position
+
+
+onZLevel : Coordinates -> Coordinates -> Bool
+onZLevel loc cam =
+    cam.z == loc.z
+
+
+xInView : Int -> Coordinates -> Coordinates -> Bool
+xInView maxX loc cam =
+    loc.x >= cam.x && loc.x < (cam.x + maxX)
+
+
+yInView : Int -> Coordinates -> Coordinates -> Bool
+yInView maxY loc cam =
+    loc.y >= cam.y && loc.y < (cam.y + maxY)
+
+
+
+-- Camera Controls
+
 
 moveZLevelUp : Camera -> Camera
 moveZLevelUp camera =
-    if camera.z >= currentZLimit then
+    if camera.position.z >= currentZLimit then
         camera
     else
-        { camera | z = camera.z + 1 }
+        let
+            pos =
+                camera.position
+
+            nextPos =
+                { pos | z = camera.position.z + 1 }
+        in
+            { camera | position = nextPos }
 
 
 moveZLevelDown : Camera -> Camera
 moveZLevelDown camera =
     let
         nextZ =
-            camera.z - 1
+            camera.position.z - 1
+
+        pos =
+            camera.position
+
+        nextPos =
+            { pos | z = nextZ }
     in
         if nextZ < 0 then
             camera
         else
-            { camera | z = nextZ }
+            { camera | position = nextPos }
 
 
 moveDown : Camera -> Camera
 moveDown camera =
     let
         nextY =
-            camera.y + 1
+            camera.position.y + 1
 
         tilesPos =
             camera.height // tileSize
+
+        pos =
+            camera.position
+
+        nextPos =
+            { pos | y = nextY }
     in
         if nextY > (camera.worldDimensions.height - tilesPos) + 1 then
             camera
         else
-            { camera | y = nextY }
+            { camera | position = nextPos }
 
 
-moveUp :  Camera -> Camera
+moveUp : Camera -> Camera
 moveUp camera =
-    if camera.y - 1 < -1 then
+    if camera.position.y - 1 < -1 then
         camera
     else
-        { camera | y = camera.y - 1 }
+        let
+            pos =
+                camera.position
+
+            nextPos =
+                { pos | y = camera.position.y - 1 }
+        in
+            { camera | position = nextPos }
 
 
 moveLeft : Camera -> Camera
 moveLeft camera =
-    if camera.x - 1 < -1 then
+    if camera.position.x - 1 < -1 then
         camera
     else
-        { camera | x = camera.x - 1 }
+        let
+            pos =
+                camera.position
+
+            nextPos =
+                { pos | x = camera.position.x - 1 }
+        in
+            { camera | position = nextPos }
 
 
 moveRight : Camera -> Camera
 moveRight camera =
     let
         nextX =
-            camera.x + 1
+            camera.position.x + 1
 
         tilesPos =
             camera.width // tileSize
+
+        pos =
+            camera.position
+
+        nextPos =
+            { pos | x = nextX }
     in
         if nextX > (camera.worldDimensions.width - tilesPos) + 1 then
             camera
         else
-            { camera | x = nextX }
+            { camera | position = nextPos }
 
 
-translate : ( Int, Int ) -> Camera -> ( String, String )
-translate ( x_, y_ ) camera =
-    let
-        tileMultiplier n =
-            n * tileSize
-
-        positionx =
-            toString ((tileMultiplier x_) - (tileMultiplier camera.x))
-
-        positiony =
-            toString ((tileMultiplier y_) - (tileMultiplier camera.y))
-    in
-        ( positionx, positiony )
+resize : Window.Size -> Camera -> Camera
+resize size model =
+    { model | width = size.width, height = size.height }

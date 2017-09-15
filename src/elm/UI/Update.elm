@@ -1,113 +1,50 @@
-module UI.Update exposing (update)
+module UI.Update exposing (update, camera)
 
-import Dict exposing (Dict)
-import Window
-
-import App.Model as App
-import World.Model exposing (initLocation)
+import World.Coordinates exposing (Coordinates)
 import UI.Model exposing (..)
-
-import World.Location
 import UI.Input as Input
+import UI.Camera as Camera
 
-update : Msg -> App.Model -> (App.Model, Cmd App.Msg)
-update msg model =
+
+update : Bool -> Msg -> Model -> ( Model, Cmd Msg )
+update inputHasFocus msg model =
     case msg of
+        KeyMsg code ->
+            Input.process code inputHasFocus model ! []
+
         ResizeWindow size ->
-            let
-              nextUI = resizeWindow size model.ui
-            in
-                updateUI nextUI model ! []
+            { model | camera = Camera.resize size model.camera } ! []
 
-        ToggleSelected x y z ->
-                setSelected x y z model ! []
-
-        ToggleChatView ->
-            let
-                ui = model.ui
-                nextUI = { ui | viewChat = not ui.viewChat }
-            in
-                updateUI nextUI model ! []
+        SetInspected coords location ->
+            { model | inspector = Inspection coords location } ! []
 
         ToggleInfo ->
-            let
-                ui = model.ui
-                nextUI = { ui | viewInfo = not ui.viewInfo }
-            in
-                updateUI nextUI model ! []
+            { model | viewInfo = not model.viewInfo } ! []
 
-        SetInspected posX posY posZ location ->
-            let
-                nextUI = setInspectedTile posX posY posZ location model.ui
-            in
-                updateUI nextUI model ! []
+        ToggleChatView ->
+            { model | viewChat = not model.viewChat } ! []
 
-        KeyMsg code ->
-            case Input.processKeypress code model.chat.inputHasFocus of
-                Nothing -> model ! []
-                Just action ->
-                    updateCamera action model ! []
+        ToggleSelected coords ->
+            if List.member coords model.selected then
+                removeSelected coords model ! []
+            else
+                addSelected coords model ! []
 
 
-updateUI nextUI model =
-      { model | ui = nextUI }
-
-updateCamera action model =
+removeSelected : Coordinates -> Model -> Model
+removeSelected coords model =
     let
-        nextCamera =
-            action model.ui.camera
-
-        ui =
-            model.ui
-
-        nextUI =
-            { ui | camera = nextCamera }
+        notCoords = (\n -> n /= coords)
+        nextSelected = List.filter notCoords model.selected
     in
-        updateUI nextUI model
-
-setInspectedTile posX posY posZ location model =
-    let
-        td =
-            model.currentTile
-
-        nextTile =
-            { td | x = posX, y = posY, z = posZ, loc = location }
-
-    in
-        { model | currentTile = nextTile }
+        { model | selected = nextSelected }
 
 
-
-resizeWindow : Window.Size -> Model -> Model
-resizeWindow size model =
-    let
-        camera =
-            model.camera
-
-        nextCamera =
-            { camera | width = size.width, height = size.height }
-    in
-        { model | camera = nextCamera }
+addSelected : Coordinates -> Model -> Model
+addSelected coords model =
+    { model | selected = coords :: model.selected }
 
 
-
-setSelected x y z model =
-    let
-        coordsAsString =
-            World.Location.hashCoords x y z
-
-        target =
-            Maybe.withDefault
-                initLocation
-                (Dict.get coordsAsString model.world.locations)
-
-        nextLocations =
-            Dict.insert
-                coordsAsString
-                { target | selected = not target.selected }
-                model.world.locations
-
-        world = model.world
-        nextWorld ={ world | locations = nextLocations }
-    in
-        { model | world = nextWorld }
+camera : Camera -> Model -> Model
+camera camera model =
+    { model | camera = camera }

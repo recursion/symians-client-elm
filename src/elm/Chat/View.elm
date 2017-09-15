@@ -1,4 +1,4 @@
-module Chat.View exposing (root)
+module Chat.View exposing (render, view)
 
 import Html exposing (Html, h3, p, div, text, ul, li, input, form, button, br, table, tbody, tr, td)
 import Html.Attributes exposing (class, type_, value)
@@ -9,8 +9,14 @@ import Chat.Model exposing (..)
 -- VIEW
 
 
-root : Model -> Html Msg
-root model =
+render ui chat =
+    if ui.viewChat then
+        view chat
+    else
+        text ""
+
+view : Model -> Html Msg
+view model =
     div [ class "chat-container" ]
         [ div [ class "messagebox hud" ]
             [ messages model

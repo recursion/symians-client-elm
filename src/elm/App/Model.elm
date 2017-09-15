@@ -6,9 +6,13 @@ import Json.Encode as JE
 import App.Auth as Auth
 import UI.Model as UI
 import World.Model as World
-
+import Chat.Model as Chat
 
 -- MODEL
+
+type alias Encoder = (String -> JE.Value)
+type alias Decoder = (JE.Value -> Msg)
+
 
 type alias Socket =
     Phoenix.Socket.Socket Msg
@@ -26,7 +30,12 @@ type alias Model =
     , world : World.Model
     }
 
-
+type SocketAction
+    = Join String
+    | JoinWithHandlers String Chat.Msg Chat.Msg
+    | Leave String
+    | Send String String Encoder
+    | NoAction
 
 type Msg
     = ChatMsg Chat.Model.Msg
@@ -38,6 +47,18 @@ type Msg
     | Disconnected
     | NoOp
 
+
 initModel : Socket -> Chat.Model.Model -> Model
 initModel socket chatModel =
-    Model socket chatModel Auth.init UI.init World.init
+    Model socket chatModel Auth.init UI.initModel World.init
+
+
+init : Socket -> Chat.Model.Model -> ( Model, Cmd Msg )
+init socket chatModel =
+    let
+        ( uiModel, uiCmd ) =
+            UI.init
+    in
+        ( Model socket chatModel Auth.init uiModel World.init
+        , Cmd.map UIMsg uiCmd
+        )
