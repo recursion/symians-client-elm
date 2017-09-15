@@ -12,12 +12,12 @@ type Msg
     | WindowResized Window.Size
     | KeyMsg Keyboard.KeyCode
     | ToggleChatView
-    | ToggleInfo
+    | ToggleInspector
 
 
 type alias Model =
     { viewChat : Bool
-    , viewInfo : Bool
+    , viewInspector : Bool
     , inspector : Inspection
     , camera : Camera
     , selected : List Coordinates
@@ -41,7 +41,7 @@ type alias Camera =
 init : ( Model, Cmd Msg )
 init =
     ( { viewChat = False
-      , viewInfo = True
+      , viewInspector = True
       , inspector = initInspector
       , camera = initCamera
       , selected = []

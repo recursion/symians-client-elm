@@ -18,8 +18,8 @@ update inputHasFocus msg model =
         SetInspected coords location ->
             { model | inspector = Inspection coords location } ! []
 
-        ToggleInfo ->
-            { model | viewInfo = not model.viewInfo } ! []
+        ToggleInspector ->
+            { model | viewInspector = not model.viewInspector } ! []
 
         ToggleChatView ->
             { model | viewChat = not model.viewChat } ! []

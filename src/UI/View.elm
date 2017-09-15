@@ -23,7 +23,7 @@ hud model =
 
 inspector : Model -> Html Msg
 inspector model =
-    if model.viewInfo then
+    if model.viewInspector then
         renderInspector model.inspector
     else
         text ""
@@ -37,7 +37,7 @@ controls : Model -> Html Msg
 controls model =
     div [ class "controls" ]
         [ hudButton "Chat" UI.ToggleChatView <| isActive model.viewChat
-        , hudButton "Info" UI.ToggleInfo <| isActive model.viewInfo
+        , hudButton "Info" UI.ToggleInspector <| isActive model.viewInspector
         ]
 
 
