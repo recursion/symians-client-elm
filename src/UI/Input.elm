@@ -17,9 +17,9 @@ type Action
 {-| checks the keycode for a matching action
 and performs that actions when a match is found
 -}
-keypress : Keyboard.KeyCode -> Bool -> Model -> Model
-keypress code inputHasFocus model =
-    case matchKey code inputHasFocus of
+keypress : Keyboard.KeyCode -> Model -> Model
+keypress code model =
+    case matchKey code model.consoleHasFocus of
         NoOp ->
             model
 

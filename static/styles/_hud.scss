@@ -1,7 +1,6 @@
 .hud {
     border: $hud-border;
     background-color: $hud-background;
-    margin-left: 2px;
 }
 .hud-tiledata {
     border-radius: 5px 0 5px 5px;
@@ -18,18 +17,21 @@
 .controls {
     position: absolute;
     min-height: 100px;
-    bottom: 25%;
-    right: 1px;
+    top: 1px;
+    left: 1px;
 }
 
 .toggle {
     margin: 0.05rem;
     display: block;
-    letter-spacing: 0.1rem;
     font-weight: bold;
-    width: 4rem;
+    letter-spacing: 0.05em;
+    text-shadow: -1px -1px 5px white;
+    width: 5rem;
 }
-
+.toggle:hover {
+    text-shadow: 1px 1px 5px white;
+}
 .tiledata-row {
 }
 .tiledata-label {

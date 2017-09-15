@@ -4,16 +4,18 @@ import Html exposing (Html, img, text, div, label, span, button, table, tr, td, 
 import Html.Attributes exposing (src, class)
 import Html.Events exposing (onClick)
 import UI.Model as UI exposing (Msg, Model, Camera, Inspection)
-
+import UI.Console as Console
+import Chat.Model as Chat
 
 -- hud rendering
 
 
-hud : Model -> Html Msg
-hud model =
+hud : Chat.Model -> Model -> Html Msg
+hud chatModel model =
     div [ class "hud" ]
         [ controls model
         , inspector model
+        , Console.render chatModel model 
         ]
 
 
@@ -36,8 +38,8 @@ inspector model =
 controls : Model -> Html Msg
 controls model =
     div [ class "controls" ]
-        [ hudButton "Chat" UI.ToggleChatView <| isActive model.viewChat
-        , hudButton "Info" UI.ToggleInspector <| isActive model.viewInspector
+        [ hudButton "Console" UI.ToggleConsole <| isActive model.viewConsole
+        , hudButton "Inspector" UI.ToggleInspector <| isActive model.viewInspector
         ]
 
 
@@ -46,7 +48,7 @@ isActive setting =
     if setting then
         "hud-btn-is-active"
     else
-        ""
+        "hud-btn"
 
 
 hudButton : String -> msg -> String -> Html msg

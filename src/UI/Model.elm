@@ -11,16 +11,22 @@ type Msg
     | ToggleSelected Coordinates
     | WindowResized Window.Size
     | KeyMsg Keyboard.KeyCode
-    | ToggleChatView
+    | ToggleConsole
     | ToggleInspector
+    | SubmitConsoleInput
+    | SetConsoleInput String
+    | ToggleConsoleFocus
+
 
 
 type alias Model =
-    { viewChat : Bool
+    { viewConsole : Bool
     , viewInspector : Bool
     , inspector : Inspection
     , camera : Camera
     , selected : List Coordinates
+    , consoleInput : String
+    , consoleHasFocus : Bool
     }
 
 
@@ -40,11 +46,13 @@ type alias Camera =
 
 init : ( Model, Cmd Msg )
 init =
-    ( { viewChat = False
+    ( { viewConsole = False
       , viewInspector = True
       , inspector = initInspector
       , camera = initCamera
       , selected = []
+      , consoleInput = ""
+      , consoleHasFocus = False
       }
     , Task.perform WindowResized Window.size
     )
@@ -52,7 +60,7 @@ init =
 
 initModel : Model
 initModel =
-    Model False False initInspector initCamera []
+    Model False False initInspector initCamera [] "" False
 
 
 initCamera : Camera

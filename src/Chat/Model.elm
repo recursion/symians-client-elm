@@ -1,7 +1,6 @@
 module Chat.Model exposing (..)
 
 import Json.Encode as JE
-import Dict exposing (Dict)
 
 
 newChatMsgEvent : String
@@ -19,20 +18,15 @@ defaultChannel =
 
 
 type Msg
-    = SendMessage
-    | SetNewMessage String
-    | ReceiveChatMessage JE.Value
+    = ReceiveChatMessage JE.Value
     | JoinChannel
     | LeaveChannel
     | ShowJoinedMessage
     | ShowLeftMessage
-    | ToggleChatInputFocus
 
 
 type alias Model =
     { name : String
-    , newMessage : String
-    , inputHasFocus : Bool
     , messages : List String
     }
 
@@ -42,20 +36,13 @@ type alias ChatMessage =
     , body : String
     }
 
-initData : (Msg, Msg, (String, (JE.Value -> Msg)))
+
+initData : ( Msg, Msg, ( String, JE.Value -> Msg ) )
 initData =
-    let
-        onJoin =
-            ShowJoinedMessage
+    ( ShowJoinedMessage, ShowLeftMessage
+    , ( newChatMsgEvent, ReceiveChatMessage )
+    )
 
-        onClose =
-            ShowLeftMessage
-
-        subscriptionData =
-            ( newChatMsgEvent, ReceiveChatMessage )
-    in
-        ( onJoin, onClose, subscriptionData )
-
-
+initModel : String -> Model
 initModel channelName =
-    Model channelName "" False []
+    Model channelName []

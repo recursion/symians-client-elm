@@ -16,10 +16,15 @@ import UI.Model
 ui : UI.Model.Msg -> Model -> ( Model, Cmd Msg )
 ui message model =
     let
-        ( uiModel, uiCmd ) =
-            UI.Update.update model.chat.inputHasFocus message model.ui
+        (( uiModel, uiCmd ), action) =
+            UI.Update.update model.chat message model.ui
+
+        ( nextModel, cmd ) =
+            externalMsg action model
     in
-        ( { model | ui = uiModel }, Cmd.map UIMsg uiCmd )
+        ( { nextModel | ui = uiModel }
+        , Cmd.batch [ Cmd.map UIMsg uiCmd, cmd ]
+        )
 
 
 world : JD.Value -> Model -> ( Model, Cmd Msg )

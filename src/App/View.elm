@@ -5,7 +5,6 @@ import Html.Attributes exposing (class)
 import App.Model exposing (Model, Msg(..), State(..))
 import UI.View exposing (loadingScreen)
 import World.Models as World
-import Chat.View
 import World.View
 import UI.View
 
@@ -24,7 +23,6 @@ render world model =
     div [ class "app" ]
         [ Html.map UIMsg (World.View.render world model.ui)
         , div [ class "ui" ]
-            [ Html.map ChatMsg (Chat.View.render model.ui model.chat)
-            , Html.map UIMsg (UI.View.hud model.ui)
+            [ Html.map UIMsg (UI.View.hud model.chat model.ui)
             ]
         ]

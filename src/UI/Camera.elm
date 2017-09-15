@@ -79,9 +79,15 @@ getScreenLocations camera =
 -}
 size : Camera -> ( Int, Int )
 size camera =
-    ( (camera.position.x + maxX camera)
-    , (camera.position.y + maxY camera)
+    ( width camera
+    , height camera
     )
+
+width camera =
+    camera.position.x + (maxX camera)
+
+height camera =
+    camera.position.y + (maxY camera)
 
 {-| return camera view width
 -}

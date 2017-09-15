@@ -4,31 +4,50 @@ import World.Models exposing (Coordinates)
 import UI.Model exposing (..)
 import UI.Input as Input
 import UI.Camera as Camera
+import Chat.Model as Chat
+import App.Model exposing (SocketAction(..))
+import Chat.Decoders exposing (encodeChatMessage)
 
 
-update : Bool -> Msg -> Model -> ( Model, Cmd Msg )
-update inputHasFocus msg model =
+update : Chat.Model -> Msg -> Model -> (( Model, Cmd Msg ), SocketAction)
+update chat msg model =
     case msg of
         KeyMsg code ->
-            Input.keypress code inputHasFocus model ! []
+            (((Input.keypress code model), Cmd.none), NoAction)
 
         WindowResized size ->
-            { model | camera = Camera.resize size model.camera } ! []
+            (({ model | camera = Camera.resize size model.camera }, Cmd.none), NoAction)
 
         SetInspected coords location ->
-            { model | inspector = Inspection coords location } ! []
+            (({ model | inspector = Inspection coords location }, Cmd.none), NoAction)
 
         ToggleInspector ->
-            { model | viewInspector = not model.viewInspector } ! []
+            (({ model | viewInspector = not model.viewInspector }, Cmd.none), NoAction)
 
-        ToggleChatView ->
-            { model | viewChat = not model.viewChat } ! []
+        ToggleConsole ->
+            (({ model | viewConsole = not model.viewConsole }, Cmd.none), NoAction)
 
         ToggleSelected coords ->
             if List.member coords model.selected then
-                removeSelected coords model ! []
+                ((removeSelected coords model, Cmd.none), NoAction)
             else
-                addSelected coords model ! []
+                ((addSelected coords model, Cmd.none), NoAction)
+
+        SubmitConsoleInput ->
+            (({ model | consoleInput = "" }, Cmd.none), processConsoleInput chat model)
+
+        SetConsoleInput input ->
+            (({ model | consoleInput = input }, Cmd.none), NoAction)
+
+        ToggleConsoleFocus ->
+            (({ model | consoleHasFocus = not model.consoleHasFocus }, Cmd.none), NoAction)
+
+processConsoleInput chat model =
+    case (String.left 1 model.consoleInput) of
+      "\\" ->
+          Debug.log ("Got console input: " ++ model.consoleInput) NoAction
+      _ ->
+          Send Chat.newChatMsgEvent chat.name (encodeChatMessage model.consoleInput)
 
 
 removeSelected : Coordinates -> Model -> Model
