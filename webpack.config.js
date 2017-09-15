@@ -65,7 +65,7 @@ if (isDev === true) {
         devServer: {
             // serve index.html in place of 404 responses
             historyApiFallback: true,
-            contentBase: './src',
+            contentBase: './src/static',
             hot: true
         },
         module: {
@@ -114,7 +114,7 @@ if (isProd === true) {
                 from: 'src/static/img/',
                 to: 'static/images/'
             }, {
-                from: 'src/static/img/favicon.ico',
+                from: 'src/static/favicon.ico',
                 to: 'static/'
             }]),
 
