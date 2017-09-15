@@ -1,6 +1,6 @@
 module UI.Update exposing (update, camera)
 
-import World.Coordinates exposing (Coordinates)
+import World.Model exposing (Coordinates)
 import UI.Model exposing (..)
 import UI.Input as Input
 import UI.Camera as Camera
@@ -12,7 +12,7 @@ update inputHasFocus msg model =
         KeyMsg code ->
             Input.process code inputHasFocus model ! []
 
-        ResizeWindow size ->
+        WindowResized size ->
             { model | camera = Camera.resize size model.camera } ! []
 
         SetInspected coords location ->

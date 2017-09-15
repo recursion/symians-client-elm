@@ -1,16 +1,13 @@
 module World.Coordinates exposing (..)
-
-
-type alias Coordinates =
-    { x : Int
-    , y : Int
-    , z : Int
-    }
+{-| represents x, y, z coordinates
+functions for working with coordinates
+-}
+import World.Model exposing (Coordinates, CoordHash)
 
 {-| takes a set of `Coordinates`
 returns a string of coords joined by '|'
 -}
-hash : Coordinates -> String
+hash : Coordinates -> CoordHash
 hash coords =
     String.join "|"
         [ toString coords.x
@@ -18,10 +15,11 @@ hash coords =
         , toString coords.z
         ]
 
+
 {-| takes a string of '|' seperated coordinates and
 splits it into a `Coordinates` record
 -}
-extract : String -> Coordinates
+extract : CoordHash -> Coordinates
 extract asString =
     let
         toNumber =

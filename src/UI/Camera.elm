@@ -2,7 +2,6 @@ module UI.Camera
     exposing
         ( tileSize
         , translate
-        , inBounds
         , moveZLevelDown
         , moveZLevelUp
         , moveUp
@@ -19,8 +18,7 @@ what the client is currently looking at/rendering
 -}
 
 import UI.Model exposing (Camera)
-import World.Model exposing (Dimensions)
-import World.Coordinates exposing (Coordinates)
+import World.Model exposing (Dimensions, Coordinates)
 import Window
 
 
@@ -44,77 +42,88 @@ updateDimensions dim camera =
     { camera | worldDimensions = dim }
 
 
-{-| translate a set of coordinates to their position in the camera view
+{-| translate a set of world coordinates to camera coordinates
 -}
-translate : Coordinates -> Camera -> ( String, String )
+translate : Coordinates -> Camera -> ( Int, Int)
 translate coords camera =
     let
         tileMultiplier n =
             n * tileSize
 
-        positionx =
-            toString ((tileMultiplier coords.x) - (tileMultiplier camera.position.x))
-
-        positiony =
-            toString ((tileMultiplier coords.y) - (tileMultiplier camera.position.y))
+        translate_ a b =
+            ((tileMultiplier a) - (tileMultiplier b))
     in
-        ( positionx, positiony )
+        ( translate_ coords.x camera.position.x
+        , translate_ coords.y camera.position.y
+        )
 
-{-| get all coordinates currently in the camera bounds
+
+{-| get all coordinates currently in the camera view
 -}
 getScreenLocations : Camera -> List ( Int, Int )
 getScreenLocations camera =
     let
-        (width, height) = size camera
+        ( width, height ) =
+            size camera
+
         xGen x =
             List.map (coords x) (List.range camera.position.y height)
 
         coords x y =
-            (x, y)
+            ( x, y )
     in
         List.concatMap xGen (List.range camera.position.x width)
-{-| returns the size of a cameras view
-in the shape of a width, height tuple
-          (width, height)
+
+
+{-| return the camera view size 
 -}
-size : Camera -> (Int, Int)
+size : Camera -> ( Int, Int )
 size camera =
     ( (camera.position.x + maxX camera)
     , (camera.position.y + maxY camera)
     )
 
-
+{-| return camera view width
+-}
 maxX : Camera -> Int
 maxX camera =
     (camera.width // tileSize) + 1
 
 
+{-| return camera view height
+-}
 maxY : Camera -> Int
 maxY camera =
     (camera.height // tileSize) + 1
 
 
-{-| check coordinates to see if they are within the cameras view
+{-| are coordinates inside the camera view
 -}
 inBounds : Coordinates -> Camera -> Bool
 inBounds coords camera =
     onZLevel coords camera.position
-        && xInView (maxX camera) coords camera.position
-        && yInView (maxY camera) coords camera.position
+        && inXBound (maxX camera) coords camera.position
+        && inYBound (maxY camera) coords camera.position
 
 
+{-| are coordinates on the camera z level
+-}
 onZLevel : Coordinates -> Coordinates -> Bool
 onZLevel loc cam =
     cam.z == loc.z
 
 
-xInView : Int -> Coordinates -> Coordinates -> Bool
-xInView maxX loc cam =
+{-| are coordinates in the camera x view
+-}
+inXBound : Int -> Coordinates -> Coordinates -> Bool
+inXBound maxX loc cam =
     loc.x >= cam.x && loc.x < (cam.x + maxX)
 
 
-yInView : Int -> Coordinates -> Coordinates -> Bool
-yInView maxY loc cam =
+{-| are coordinates in the camera y view
+-}
+inYBound : Int -> Coordinates -> Coordinates -> Bool
+inYBound maxY loc cam =
     loc.y >= cam.y && loc.y < (cam.y + maxY)
 
 

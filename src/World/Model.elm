@@ -26,6 +26,16 @@ type alias Location =
 type alias Locations =
     Dict String Location
 
+type alias CoordHash =
+    String
+
+
+type alias Coordinates =
+    { x : Int
+    , y : Int
+    , z : Int
+    }
+
 init : Model
 init =
     { locations = Dict.empty

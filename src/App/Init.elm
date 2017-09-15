@@ -23,6 +23,24 @@ systemChannel =
     "system:"
 
 
+init : ( Model, Cmd Msg )
+init =
+    let
+        ( initialModel, uiCmd ) =
+            App.Model.init Socket.initPhxSocket
+                <| Chat.initModel Chat.defaultChannel
+
+        ( nextModel, systemCmd ) =
+            system initialModel
+
+        ( finalModel, chatCmd ) =
+            chat ChatMsg Chat.defaultChannel nextModel
+    in
+        ( finalModel
+        , Cmd.batch [ uiCmd, systemCmd, chatCmd ]
+        )
+
+
 chat : (Chat.Msg -> Msg) -> String -> Model -> ( Model, Cmd Msg )
 chat parentMsg name model =
     let

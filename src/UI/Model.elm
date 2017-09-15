@@ -1,7 +1,6 @@
 module UI.Model exposing (..)
 
-import World.Model exposing (Location, initLocation, Dimensions)
-import World.Coordinates exposing (Coordinates)
+import World.Model exposing (Location, initLocation, Dimensions, Coordinates)
 import Window
 import Keyboard
 import Task
@@ -10,7 +9,7 @@ import Task
 type Msg
     = SetInspected Coordinates Location
     | ToggleSelected Coordinates
-    | ResizeWindow Window.Size
+    | WindowResized Window.Size
     | KeyMsg Keyboard.KeyCode
     | ToggleChatView
     | ToggleInfo
@@ -47,7 +46,7 @@ init =
       , camera = initCamera
       , selected = []
       }
-    , Task.perform ResizeWindow Window.size
+    , Task.perform WindowResized Window.size
     )
 
 
@@ -76,5 +75,5 @@ subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.batch
         [ Keyboard.downs KeyMsg
-        , Window.resizes ResizeWindow
+        , Window.resizes WindowResized
         ]
