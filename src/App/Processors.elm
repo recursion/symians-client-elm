@@ -46,7 +46,7 @@ insertWorldData world model =
                 model.ui.camera
     in
         { model
-            | world = nextWorld
+            | world = Loaded nextWorld
             , ui = UI.Update.camera nextCamera model.ui
         }
 

@@ -21,13 +21,16 @@ type alias Socket =
 type alias SocketMsg =
     Phoenix.Socket.Msg Msg
 
+type State
+    = Loading
+    | Loaded World.Model
 
 type alias Model =
     { socket : Socket
     , chat : Chat.Model.Model
     , auth : Auth.Model
     , ui : UI.Model
-    , world : World.Model
+    , world : State
     }
 
 type SocketAction
@@ -50,7 +53,7 @@ type Msg
 
 initModel : Socket -> Chat.Model.Model -> Model
 initModel socket chatModel =
-    Model socket chatModel Auth.init UI.initModel World.init
+    Model socket chatModel Auth.init UI.initModel Loading
 
 
 init : Socket -> Chat.Model.Model -> ( Model, Cmd Msg )
@@ -59,6 +62,6 @@ init socket chatModel =
         ( uiModel, uiCmd ) =
             UI.init
     in
-        ( Model socket chatModel Auth.init uiModel World.init
+        ( Model socket chatModel Auth.init uiModel Loading
         , Cmd.map UIMsg uiCmd
         )

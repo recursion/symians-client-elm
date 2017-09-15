@@ -1,7 +1,7 @@
-module UI.View exposing (hud)
+module UI.View exposing (hud, loadingScreen)
 
-import Html exposing (Html, text, div, label, span, button, table, tr, td)
-import Html.Attributes exposing (class)
+import Html exposing (Html, img, text, div, label, span, button, table, tr, td, h1)
+import Html.Attributes exposing (src, class)
 import Html.Events exposing (onClick)
 import UI.Model as UI exposing (Msg, Model, Camera, Inspection)
 
@@ -84,3 +84,21 @@ renderIData key value =
 renderEntity : String -> Html Msg
 renderEntity entity =
     div [ class "entity-data" ] [ text entity ]
+
+
+
+-- Loading screen
+
+
+loadingScreen : Html Msg
+loadingScreen =
+    div [ class "fullscreen loadscreen" ]
+        [ div [ class "centered" ]
+            [ h1 [ class "" ] [ Html.text "Loading" ]
+            , img
+                [ src "img/loading.gif"
+                , class "loading"
+                ]
+                []
+            ]
+        ]

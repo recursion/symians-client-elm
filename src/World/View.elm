@@ -5,20 +5,34 @@ import Svg.Attributes exposing (width, height, fill, stroke, x, y, class)
 import Svg.Events exposing (onMouseOver, onClick)
 import Svg exposing (svg, rect, text)
 import Dict exposing (Dict)
-import App.Model exposing (Msg(..), Model)
+import App.Model exposing (Msg(..), Model, State(..))
 import UI.Model as UI exposing (Camera)
-import World.Model exposing (Location)
+import World.Model as World exposing (Location)
 import World.Coordinates exposing (Coordinates, extract)
 import UI.Model
 import UI.Camera
+import UI.View exposing (loadingScreen)
 
 
 render : Model -> Html Msg
 render model =
+    case model.world of
+        Loading ->
+            Html.map UIMsg loadingScreen
+
+        Loaded world ->
+            renderWorld world model
+
+
+renderWorld : World.Model -> Model -> Html Msg
+renderWorld world model =
     svg
-        [ class "world" ]
+        [ class "fullscreen world" ]
+            --TODO: what we should do here is:
+            -- calculate all the current positions on screen
+            -- get only those tiles for rendering
         (Dict.toList
-            model.world.locations
+            world.locations
             |> List.map (\loc -> renderLocation loc model.ui)
         )
 
@@ -38,7 +52,7 @@ renderLocation ( coordinates, loc ) ui =
         if UI.Camera.inBounds coords ui.camera then
             rect tileProperties []
         else
-            text ""
+            Svg.text ""
 
 
 {-| set up the properties for a tile
