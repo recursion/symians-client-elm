@@ -11,9 +11,10 @@ module UI.Camera
         , moveRight
         , resize
         , updateDimensions
+        , getScreenLocations
         )
 
-{-| camera provides an abstraction for tracking and manipulating
+{-| camera provides functions for tracking and manipulating
 what the client is currently looking at/rendering
 -}
 
@@ -29,12 +30,15 @@ tileSize =
 
 
 {-| currently we are only sending 3 z levels, so limit here
+TODO: get rid of this
 -}
 currentZLimit : Int
 currentZLimit =
     2
 
 
+{-| update the camera dimensions
+-}
 updateDimensions : Dimensions -> Camera -> Camera
 updateDimensions dim camera =
     { camera | worldDimensions = dim }
@@ -56,21 +60,47 @@ translate coords camera =
     in
         ( positionx, positiony )
 
+{-| get all coordinates currently in the camera bounds
+-}
+getScreenLocations : Camera -> List ( Int, Int )
+getScreenLocations camera =
+    let
+        (width, height) = size camera
+        xGen x =
+            List.map (coords x) (List.range camera.position.y height)
+
+        coords x y =
+            (x, y)
+    in
+        List.concatMap xGen (List.range camera.position.x width)
+{-| returns the size of a cameras view
+in the shape of a width, height tuple
+          (width, height)
+-}
+size : Camera -> (Int, Int)
+size camera =
+    ( (camera.position.x + maxX camera)
+    , (camera.position.y + maxY camera)
+    )
+
+
+maxX : Camera -> Int
+maxX camera =
+    (camera.width // tileSize) + 1
+
+
+maxY : Camera -> Int
+maxY camera =
+    (camera.height // tileSize) + 1
+
 
 {-| check coordinates to see if they are within the cameras view
 -}
 inBounds : Coordinates -> Camera -> Bool
 inBounds coords camera =
-    let
-        maxX =
-            (camera.width // tileSize) + 1
-
-        maxY =
-            (camera.height // tileSize) + 1
-    in
-        onZLevel coords camera.position
-            && xInView maxX coords camera.position
-            && yInView maxY coords camera.position
+    onZLevel coords camera.position
+        && xInView (maxX camera) coords camera.position
+        && yInView (maxY camera) coords camera.position
 
 
 onZLevel : Coordinates -> Coordinates -> Bool
@@ -92,6 +122,9 @@ yInView maxY loc cam =
 -- Camera Controls
 
 
+{-| move the camera up a z level
+keeps the view in bounds of the world dimensions
+-}
 moveZLevelUp : Camera -> Camera
 moveZLevelUp camera =
     if camera.position.z >= currentZLimit then
@@ -107,6 +140,9 @@ moveZLevelUp camera =
             { camera | position = nextPos }
 
 
+{-| move the camera down a z level
+keeps the view in bounds of the world dimensions
+-}
 moveZLevelDown : Camera -> Camera
 moveZLevelDown camera =
     let
@@ -125,6 +161,9 @@ moveZLevelDown camera =
             { camera | position = nextPos }
 
 
+{-| move the camera down
+keeps the view in bounds of the world dimensions
+-}
 moveDown : Camera -> Camera
 moveDown camera =
     let
@@ -146,6 +185,9 @@ moveDown camera =
             { camera | position = nextPos }
 
 
+{-| move the camera up
+keeps the view in bounds of the world dimensions
+-}
 moveUp : Camera -> Camera
 moveUp camera =
     if camera.position.y - 1 < -1 then
@@ -161,6 +203,9 @@ moveUp camera =
             { camera | position = nextPos }
 
 
+{-| move the camera to the left
+keeps the view in bounds of the world dimensions
+-}
 moveLeft : Camera -> Camera
 moveLeft camera =
     if camera.position.x - 1 < -1 then
@@ -176,6 +221,9 @@ moveLeft camera =
             { camera | position = nextPos }
 
 
+{-| move the camera to the right
+keeps the view in bounds of the world dimensions
+-}
 moveRight : Camera -> Camera
 moveRight camera =
     let
@@ -197,6 +245,9 @@ moveRight camera =
             { camera | position = nextPos }
 
 
+{-| handler for window resize
+changes the cameras height/width to match the screen size
+-}
 resize : Window.Size -> Camera -> Camera
 resize size model =
     { model | width = size.width, height = size.height }
