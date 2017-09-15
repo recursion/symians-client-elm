@@ -107,7 +107,7 @@ if (isProd === true) {
         },
         plugins: [
             new ExtractTextPlugin({
-                filename: 'css/[name]-[hash].css',
+                filename: 'css/[name].css',
                 allChunks: true
             }),
             new CopyWebpackPlugin([{
