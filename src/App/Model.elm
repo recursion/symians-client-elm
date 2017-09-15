@@ -5,7 +5,7 @@ import Chat.Model
 import Json.Encode as JE
 import App.Auth as Auth
 import UI.Model as UI
-import World.Model as World
+import World.Models as World
 import Chat.Model as Chat
 
 -- MODEL

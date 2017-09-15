@@ -1,4 +1,4 @@
-module UI.Input exposing (process)
+module UI.Input exposing (keypress)
 
 import UI.Model exposing (Model)
 import UI.Camera as Camera
@@ -17,9 +17,9 @@ type Action
 {-| checks the keycode for a matching action
 and performs that actions when a match is found
 -}
-process : Keyboard.KeyCode -> Bool -> Model -> Model
-process code inputHasFocus model =
-    case processKeypress code inputHasFocus of
+keypress : Keyboard.KeyCode -> Bool -> Model -> Model
+keypress code inputHasFocus model =
+    case matchKey code inputHasFocus of
         NoOp ->
             model
 
@@ -45,8 +45,8 @@ process code inputHasFocus model =
 return an action if a match exists
 return a noop if no match is found
 -}
-processKeypress : Keyboard.KeyCode -> Bool -> Action
-processKeypress code inputIgnored =
+matchKey : Keyboard.KeyCode -> Bool -> Action
+matchKey code inputIgnored =
     if not inputIgnored then
         case code of
             82 ->

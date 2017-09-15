@@ -1,8 +1,11 @@
 module World.Coordinates exposing (..)
+
 {-| represents x, y, z coordinates
 functions for working with coordinates
 -}
-import World.Model exposing (Coordinates, CoordHash)
+
+import World.Models exposing (Coordinates, CoordHash)
+
 
 {-| takes a set of `Coordinates`
 returns a string of coords joined by '|'

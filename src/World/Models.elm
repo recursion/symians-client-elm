@@ -1,4 +1,4 @@
-module World.Model exposing (..)
+module World.Models exposing (..)
 
 import Dict exposing (Dict)
 

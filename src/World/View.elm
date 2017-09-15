@@ -7,18 +7,16 @@ import Html exposing (Html)
 import Svg.Attributes exposing (class)
 import Svg exposing (svg)
 
-import App.Model exposing (Msg(..), Model, State(..))
-import World.Model exposing (Coordinates)
+import World.Models as World exposing (Coordinates)
 import World.Coordinates exposing (hash)
 import World.Location as Location
-import World.Model as World
 import UI.Camera as Camera
 import UI.Model as UI
 
 
 {-| looks up the locations currently in the cameras view and renders them
 -}
-render : World.Model -> UI.Model -> Html Msg
+render : World.Model -> UI.Model -> Html UI.Msg
 render world ui =
     svg
         [ class "fullscreen world" ]

@@ -18,7 +18,7 @@ what the client is currently looking at/rendering
 -}
 
 import UI.Model exposing (Camera)
-import World.Model exposing (Dimensions, Coordinates)
+import World.Models exposing (Dimensions, Coordinates)
 import Window
 
 

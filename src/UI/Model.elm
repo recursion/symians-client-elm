@@ -1,6 +1,6 @@
 module UI.Model exposing (..)
 
-import World.Model exposing (Location, initLocation, Dimensions, Coordinates)
+import World.Models exposing (Location, initLocation, Dimensions, Coordinates)
 import Window
 import Keyboard
 import Task

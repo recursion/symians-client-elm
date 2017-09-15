@@ -1,6 +1,6 @@
 module UI.Update exposing (update, camera)
 
-import World.Model exposing (Coordinates)
+import World.Models exposing (Coordinates)
 import UI.Model exposing (..)
 import UI.Input as Input
 import UI.Camera as Camera
@@ -10,7 +10,7 @@ update : Bool -> Msg -> Model -> ( Model, Cmd Msg )
 update inputHasFocus msg model =
     case msg of
         KeyMsg code ->
-            Input.process code inputHasFocus model ! []
+            Input.keypress code inputHasFocus model ! []
 
         WindowResized size ->
             { model | camera = Camera.resize size model.camera } ! []

@@ -2,7 +2,7 @@ module App.Processors exposing (..)
 
 import Json.Decode as JD
 import World.Decoders exposing (decodeWorldData)
-import World.Model as World
+import World.Models as World
 import App.Socket as Socket
 import App.Auth exposing (decodeTokenMessage)
 import App.Model exposing (..)

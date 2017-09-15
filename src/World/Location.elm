@@ -3,11 +3,11 @@ module World.Location exposing (get, render)
 import Html exposing (Html)
 import Svg.Attributes exposing (width, height, fill, stroke, x, y, class)
 import Svg.Events exposing (onMouseOver, onClick)
-import Svg exposing (svg, rect, text)
-import App.Model exposing (Msg(..))
-import World.Model exposing (Locations, Location, Coordinates, CoordHash)
-import World.Coordinates as Coordinates
+import Svg exposing (rect, text)
 import Dict exposing (Dict)
+
+import World.Models exposing (Locations, Location, Coordinates, CoordHash)
+import World.Coordinates as Coordinates
 import UI.Model as UI
 import UI.Camera as Camera
 
@@ -23,20 +23,20 @@ get locations key =
 
 {-| renders an svg rect for locations or empty text for nothing
 -}
-render : Maybe ( CoordHash, Location ) -> UI.Model -> Html Msg
+render : Maybe ( CoordHash, Location ) -> UI.Model -> Html UI.Msg
 render maybeLoc ui =
     case maybeLoc of
         Just (coords, loc)->
-            rect (configureTile coords loc ui) []
+            rect (configure coords loc ui) []
 
         Nothing ->
-            Svg.text ""
+            text ""
 
 
 {-| set up the properties for a tile
 -}
-configureTile : CoordHash -> Location -> UI.Model -> List (Svg.Attribute Msg)
-configureTile coordinates loc ui =
+configure: CoordHash -> Location -> UI.Model -> List (Svg.Attribute UI.Msg)
+configure coordinates loc ui =
     let
         coords =
             Coordinates.extract coordinates
@@ -50,8 +50,8 @@ configureTile coordinates loc ui =
         , stroke "green"
         , width <| toString <| Camera.tileSize
         , height <| toString <| Camera.tileSize
-        , onMouseOver (UIMsg (UI.SetInspected coords loc))
-        , onClick (UIMsg (UI.ToggleSelected coords))
+        , onMouseOver (UI.SetInspected coords loc)
+        , onClick (UI.ToggleSelected coords)
         , class <| applySelection coords ui.selected
         ]
 
