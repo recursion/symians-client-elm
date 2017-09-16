@@ -16,6 +16,7 @@ type Msg
     | SubmitConsoleInput
     | SetConsoleInput String
     | ToggleConsoleFocus
+    | ConsoleInput Int
 
 
 
@@ -46,7 +47,7 @@ type alias Camera =
 
 init : ( Model, Cmd Msg )
 init =
-    ( { viewConsole = False
+    ( { viewConsole = True
       , viewInspector = True
       , inspector = initInspector
       , camera = initCamera

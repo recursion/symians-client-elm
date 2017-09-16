@@ -9,52 +9,72 @@ import App.Model exposing (SocketAction(..))
 import Chat.Decoders exposing (encodeChatMessage)
 
 
-update : Chat.Model -> Msg -> Model -> (( Model, Cmd Msg ), SocketAction)
+(=>) =
+    (,)
+
+
+update : Chat.Model -> Msg -> Model -> ( ( Model, Cmd Msg ), SocketAction )
 update chat msg model =
     case msg of
         KeyMsg code ->
-            (((Input.keypress code model), Cmd.none), NoAction)
+            ( (Input.keypress code model), Cmd.none ) => NoAction
 
         WindowResized size ->
-            (({ model | camera = Camera.resize size model.camera }, Cmd.none), NoAction)
+            ( { model | camera = Camera.resize size model.camera }, Cmd.none ) => NoAction
 
         SetInspected coords location ->
-            (({ model | inspector = Inspection coords location }, Cmd.none), NoAction)
+            ( { model | inspector = Inspection coords location }, Cmd.none ) => NoAction
 
         ToggleInspector ->
-            (({ model | viewInspector = not model.viewInspector }, Cmd.none), NoAction)
+            ( { model | viewInspector = not model.viewInspector }, Cmd.none ) => NoAction
 
         ToggleConsole ->
-            (({ model | viewConsole = not model.viewConsole }, Cmd.none), NoAction)
+            ( { model | viewConsole = not model.viewConsole }, Cmd.none ) => NoAction
 
         ToggleSelected coords ->
             if List.member coords model.selected then
-                ((removeSelected coords model, Cmd.none), NoAction)
+                ( ( removeSelected coords model, Cmd.none ), NoAction )
             else
-                ((addSelected coords model, Cmd.none), NoAction)
+                ( ( addSelected coords model, Cmd.none ), NoAction )
 
         SubmitConsoleInput ->
-            (({ model | consoleInput = "" }, Cmd.none), processConsoleInput chat model)
+            ( { model | consoleInput = "" }, Cmd.none ) => processConsoleInput chat model
 
         SetConsoleInput input ->
-            (({ model | consoleInput = input }, Cmd.none), NoAction)
+            ( { model | consoleInput = input }, Cmd.none ) => NoAction
 
         ToggleConsoleFocus ->
-            (({ model | consoleHasFocus = not model.consoleHasFocus }, Cmd.none), NoAction)
+            ( { model | consoleHasFocus = not model.consoleHasFocus }, Cmd.none ) => NoAction
+
+        ConsoleInput keycode ->
+            case keycode of
+                13 ->
+                    ( { model | consoleInput = "" }
+                    , Cmd.none
+                    )
+                        => processConsoleInput chat model
+
+                _ ->
+                    ( model, Cmd.none ) => NoAction
+
 
 processConsoleInput chat model =
     case (String.left 1 model.consoleInput) of
-      "\\" ->
-          Debug.log ("Got console input: " ++ model.consoleInput) NoAction
-      _ ->
-          Send Chat.newChatMsgEvent chat.name (encodeChatMessage model.consoleInput)
+        "\\" ->
+            Debug.log ("Got console input: " ++ model.consoleInput) NoAction
+
+        _ ->
+            Send Chat.newChatMsgEvent chat.name (encodeChatMessage model.consoleInput)
 
 
 removeSelected : Coordinates -> Model -> Model
 removeSelected coords model =
     let
-        notCoords = (\n -> n /= coords)
-        nextSelected = List.filter notCoords model.selected
+        notCoords =
+            (\n -> n /= coords)
+
+        nextSelected =
+            List.filter notCoords model.selected
     in
         { model | selected = nextSelected }
 

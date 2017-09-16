@@ -6,10 +6,12 @@ import Svg.Events exposing (onMouseOver, onClick)
 import Svg exposing (rect, text)
 import Dict exposing (Dict)
 
+
 import World.Models exposing (Locations, Location, Coordinates, CoordHash)
 import World.Coordinates as Coordinates
 import UI.Model as UI
 import UI.Camera as Camera
+
 
 {-| looks up a location by a coordinates hash
 returns a maybe tuple (coords, location)
@@ -43,24 +45,20 @@ configure coordinates loc ui =
 
         ( screenX, screenY ) =
             Camera.translate coords ui.camera
+
+        color =
+            if List.member coords ui.selected then
+                "#383"
+            else
+                "green"
+
     in
         [ x <| toString screenX
         , y <| toString screenY
-        , fill "green"
-        , stroke "green"
+        , fill color
+        , stroke color
         , width <| toString <| Camera.tileSize
         , height <| toString <| Camera.tileSize
         , onMouseOver (UI.SetInspected coords loc)
         , onClick (UI.ToggleSelected coords)
-        , class <| applySelection coords ui.selected
         ]
-
-
-{-| Sets a color based on whether or not these coordinates have been selected
--}
-applySelection : Coordinates -> List Coordinates -> String
-applySelection coords selected =
-    if List.member coords selected then
-        "location-selected"
-    else
-        "location"

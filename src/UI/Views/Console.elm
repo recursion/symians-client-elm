@@ -1,68 +1,85 @@
 module UI.Views.Console exposing (render)
 
-import Html exposing (Html, h3, p, div, text, ul, li, input, form, button, br, table, tbody, tr, td)
-import Html.Attributes exposing (class, type_, value)
-import Html.Events exposing (onInput, onSubmit, onClick, onFocus, onBlur)
+import Element exposing (..)
+import Element.Events exposing (..)
+import Element.Attributes exposing (..)
+import Element.Input as Input
 import UI.Model exposing (..)
+import App.Styles exposing (Styles(..), stylesheet)
+import Json.Decode as JD
 import Chat.Model as Chat
+
 
 -- VIEW
 
-
-render : Chat.Model -> Model -> Html Msg
+render : Chat.Model -> Model -> Element Styles variation Msg
 render chatModel model =
     if model.viewConsole then
-        div [ class "hud console" ]
-            [ div [ class "hud console-display" ]
-                [ messages chatModel
+        modal None
+            [ alignBottom, alignLeft, width (percent 60) ]
+            (column Hud
+                [ width fill, padding 1 ]
+                [ (messages chatModel)
+                , (console model)
                 ]
-            , console model
-            ]
+            )
     else
-        text ""
+        empty
 
 
-
--- messages
-
-
-messages : Chat.Model -> Html Msg
+messages : Chat.Model -> Element Styles variation Msg
 messages chatModel =
-    ul [ class "console-messages" ]
-        ((List.map renderMessage) chatModel.messages)
+    column None
+        [ padding 2
+        , alignBottom
+        , height (px 100)
+        , width fill
+        , clip
+        , yScrollbar
+        ]
+        ((List.map renderMessage) (List.reverse chatModel.messages))
 
 
-renderMessage : String -> Html Msg
+renderMessage : String -> Element Styles variation Msg
 renderMessage str =
-    li [ class "block console-message" ] [ text str ]
+    el None [] ( text str )
 
 
-console : Model -> Html Msg
+
+-- Console
+
+
+console : Model -> Element Styles variation Msg
 console model =
-     form [ class "field has-addons console-message_controls", onSubmit SubmitConsoleInput ]
-            [ sendButton
-            , consoleInput model
-            ]
-
-
-sendButton : Html Msg
-sendButton =
-    p [ class "console-control" ]
-        [ button [ class "button isStatic is-small hud" ]
-            [ text "Send" ]
+    row None
+        [ width fill, padding 2, spacing 3 ]
+        [ sendButton
+        , consoleInput model
         ]
 
 
-consoleInput : Model -> Html Msg
+consoleInput : Model -> Element Styles variation Msg
 consoleInput model =
-    p [ class "console-control console-input" ]
-        [ input
-            [ class "input is-small hud"
-            , type_ "text"
-            , value model.consoleInput
-            , onInput SetConsoleInput
-            , onFocus ToggleConsoleFocus
+    el None
+        [ width fill ]
+        (Input.text Hud
+            [ onFocus ToggleConsoleFocus
             , onBlur ToggleConsoleFocus
+            , on "keyup" (JD.map ConsoleInput keyCode)
+            , width fill
             ]
-            []
-        ]
+            { value = model.consoleInput
+            , onChange = SetConsoleInput
+            , label =
+                Input.placeholder
+                    { label = Input.labelLeft empty
+                    , text = "Enter \\help for help."
+                    }
+            , options =
+                []
+            }
+        )
+
+sendButton : Element Styles variation Msg
+sendButton =
+    button Hud [ onClick SubmitConsoleInput ] (text "send")

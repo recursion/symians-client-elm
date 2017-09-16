@@ -16,7 +16,6 @@
   },
   "devDependencies": {
     "autoprefixer": "^6.7.7",
-    "bulma": "^0.5.1",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.27.3",
     "elm": "^0.18.0",

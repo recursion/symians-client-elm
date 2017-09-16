@@ -1,38 +1,43 @@
 module UI.Views.Inspector exposing (view)
 
-import Html exposing (Html, img, text, div, label, span, button, table, tr, td, h1)
-import Html.Attributes exposing (src, class)
-import UI.Model as UI exposing (Msg, Model, Camera, Inspection)
+import UI.Model exposing (Model, Msg, Inspection)
+import Element exposing (..)
+import Element.Attributes exposing (..)
+import App.Styles exposing (Styles(..), stylesheet)
 
 
-
-view : Model -> Html Msg
+view : Model -> Element Styles variation Msg
 view model =
     if model.viewInspector then
         renderInspector model.inspector
     else
-        text ""
+        empty
 
 
-renderInspector : Inspection -> Html Msg
+renderInspector : Inspection -> Element Styles variation Msg
 renderInspector model =
-    table [ class "hud hud-tiledata" ]
-        [ renderIData "type: " [ text model.loc.type_ ]
-        , renderIData "x: " [ text <| toString model.position.x ]
-        , renderIData "y: " [ text <| toString model.position.y ]
-        , renderIData "z: " [ text <| toString model.position.z ]
-        , renderIData "entities:" (List.map renderEntity model.loc.entities)
-        ]
+    modal Hud
+        [ alignRight, alignTop, width (percent 15), height fill ]
+        (column None
+            [ padding 5 ]
+            [ renderIData "type: " (text model.loc.type_)
+            , renderIData "x: " (text <| toString model.position.x)
+            , renderIData "y: " (text <| toString model.position.y)
+            , renderIData "z: " (text <| toString model.position.z)
+            , el None [] (text "entities:")
+            ]
+        )
 
 
-renderIData : String -> List (Html Msg) -> Html Msg
+renderIData : String -> Element Styles variation Msg -> Element Styles variation Msg
 renderIData key value =
-    tr [ class "tiledata" ]
-        [ td [ class "tiledata-label" ] [ text key ]
-        , td [ class "tiledata-value" ] value
+    row None
+        [ width fill ]
+        [ el None [ width (percent 50) ] (text key)
+        , el None [ width (percent 50) ] (value)
         ]
 
 
-renderEntity : String -> Html Msg
+renderEntity : String -> Element Styles variation Msg
 renderEntity entity =
-    div [ class "entity-data" ] [ text entity ]
+    el None [] (text entity)

@@ -1,21 +1,22 @@
 module UI.Views.Hud exposing (view, loadingScreen)
 
-import Html exposing (Html, div, button, text, img, h1)
-import Html.Attributes exposing (src, class)
-import Html.Events exposing (onClick)
+import Element exposing (..)
+import Element.Attributes exposing (..)
+import Element.Events exposing (..)
+
 import UI.Model as UI exposing (Msg, Model, Camera, Inspection)
 import UI.Views.Console as Console
 import UI.Views.Inspector as Inspector
 import Chat.Model as Chat
+import App.Styles exposing (Styles(..), stylesheet)
 
 
-
-view : Chat.Model -> Model -> Html Msg
+view : Chat.Model -> Model -> Element Styles variation Msg
 view chatModel model =
-    div [ class "hud" ]
-        [ controls model
+    column None []
+        [ Console.render chatModel model
         , Inspector.view model
-        , Console.render chatModel model
+        , controls model
         ]
 
 
@@ -23,44 +24,30 @@ view chatModel model =
 -- hud controls
 
 
-controls : Model -> Html Msg
+controls : Model -> Element Styles variation Msg
 controls model =
-    div [ class "controls" ]
-        [ hudButton "Console" UI.ToggleConsole <| isActive model.viewConsole
-        , hudButton "Inspector" UI.ToggleInspector <| isActive model.viewInspector
-        ]
+    modal None [ padding 4, alignLeft, alignTop, width fill, height fill]
+        (column None [ spacing 4, width (percent 15)]
+            [ hudButton "Console" UI.ToggleConsole
+            , hudButton "Inspector" UI.ToggleInspector
+            ])
 
 
-isActive : Bool -> String
-isActive setting =
-    if setting then
-        "hud-btn-is-active"
-    else
-        "hud-btn"
-
-
-hudButton : String -> msg -> String -> Html msg
-hudButton name action class_ =
-    button
-        [ class ("button is-small hud toggle " ++ class_)
-        , onClick action
-        ]
-        [ text name ]
+hudButton : String -> Msg -> Element Styles variation Msg
+hudButton name action =
+    button Hud
+        [ onClick action, width fill]
+        (text name)
 
 
 
 -- Loading screen
 
 
-loadingScreen : Html Msg
+loadingScreen : Element Styles variation Msg
 loadingScreen =
-    div [ class "fullscreen loadscreen" ]
-        [ div [ class "centered" ]
-            [ h1 [ class "" ] [ Html.text "Loading" ]
-            , img
-                [ src "img/loading.gif"
-                , class "loading"
-                ]
-                []
-            ]
-        ]
+    modal None []
+      (column None [width fill, height fill, center]
+          [ h1 None [center] (text "Loading")
+          , image None [center] {src = "img/loading.gif", caption = "Loading"}
+          ])
