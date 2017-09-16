@@ -4,6 +4,7 @@ import Color exposing (rgba)
 import Style exposing (..)
 import Style.Border as Border
 import Style.Color as Color
+-- import Style.Shadow as Shadow
 -- import Style.Font as Font
 -- import Style.Transition as Transition
 
@@ -20,7 +21,7 @@ colors =
 stylesheet : StyleSheet Styles variation
 stylesheet =
     Style.styleSheet
-        [ style None [] -- It's handy to have a blank style
+        [ style None []
         , style Hud
             [ Color.background colors.hudBackground
             , Border.all 1

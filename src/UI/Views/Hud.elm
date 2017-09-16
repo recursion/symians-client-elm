@@ -26,8 +26,8 @@ view chatModel model =
 
 controls : Model -> Element Styles variation Msg
 controls model =
-    modal None [ padding 4, alignLeft, alignTop, width fill, height fill]
-        (column None [ spacing 4, width (percent 15)]
+    modal None [ padding 4, alignLeft, alignTop, width (percent 15), height fill]
+        (column None [ spacing 4, width fill ]
             [ hudButton "Console" UI.ToggleConsole
             , hudButton "Inspector" UI.ToggleInspector
             ])
