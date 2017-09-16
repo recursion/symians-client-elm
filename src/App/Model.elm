@@ -42,7 +42,7 @@ type SocketAction
     = Join String
     | JoinWithHandlers String Chat.Msg Chat.Msg
     | Leave String
-    | Send String String Encoder
+    | Send String Encoder
     | NoAction
 
 type Msg

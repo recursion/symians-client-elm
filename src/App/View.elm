@@ -5,7 +5,8 @@ import Html exposing (Html)
 import Element.Attributes exposing (..)
 import App.Styles exposing (Styles(..), stylesheet)
 import App.Model exposing (Model, Msg(..), State(..))
-import UI.Views.Hud as Hud
+import UI.Hud as Hud
+import UI.Model as UI
 import World.Models as World
 import World.View
 
@@ -15,19 +16,36 @@ root model =
     Element.viewport stylesheet <|
         case model.world of
             Loading ->
-                Element.map UIMsg (Hud.loadingScreen model.ui)
+                loadingScreen model.ui
 
             Loaded world ->
-                render world model
+                symView world model
 
-render : World.Model -> Model -> Element Styles variation Msg
-render world model =
+
+symView : World.Model -> Model -> Element Styles variation Msg
+symView world model =
     column None
         [ clip, height fill, width fill ]
         [ full None
             [ width fill, height fill ]
             (html (Html.map UIMsg (World.View.render world model.ui)))
         , el None
-            [ ]
+            []
             (Element.map UIMsg (Hud.view model.chat model.ui))
         ]
+
+
+
+-- Loading screen
+
+
+loadingScreen : UI.Model -> Element Styles variation Msg
+loadingScreen model =
+    modal None
+        [ verticalCenter, width fill, height fill, center ]
+        (column None
+            [ width fill, height fill, center ]
+            [ h1 Load [ center ] (text "Loading")
+            , image None [ center ] { src = model.images.loading, caption = "Loading" }
+            ]
+        )

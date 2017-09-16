@@ -3,8 +3,8 @@ module Chat.Model exposing (..)
 import Json.Encode as JE
 
 
-newChatMsgEvent : String
-newChatMsgEvent =
+newMsgEvent : String
+newMsgEvent =
     "new:msg"
 
 
@@ -40,7 +40,7 @@ type alias ChatMessage =
 initData : ( Msg, Msg, ( String, JE.Value -> Msg ) )
 initData =
     ( ShowJoinedMessage, ShowLeftMessage
-    , ( newChatMsgEvent, ReceiveChatMessage )
+    , ( newMsgEvent, ReceiveChatMessage )
     )
 
 initModel : String -> Model

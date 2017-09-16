@@ -1,4 +1,4 @@
-module UI.Views.Console exposing (render)
+module UI.Console exposing (render, process)
 
 import Element exposing (..)
 import Element.Events exposing (..)
@@ -6,11 +6,34 @@ import Element.Attributes exposing (..)
 import Element.Input as Input
 import UI.Model exposing (..)
 import App.Styles exposing (Styles(..), stylesheet)
-import Json.Decode as JD
 import Chat.Model as Chat
+import App.Model exposing (SocketAction(..))
+import Chat.Decoders exposing (encodeChatMessage)
+
+
+(=>) =
+    (,)
+
+process : Model -> ((Model, Cmd Msg), SocketAction)
+process model =
+    let
+        _ = Debug.log "---> " ()
+        processInput =
+            if (String.left 1 model.consoleInput) == "\\" then
+                Debug.log ("Got console input: " ++ model.consoleInput) NoAction
+            else
+                Send Chat.newMsgEvent (encodeChatMessage model.consoleInput)
+    in
+        if model.consoleInput == "" then
+            ( { model | consoleInput = "" }, Cmd.none ) => NoAction
+        else
+            ( { model | consoleInput = "" }, Cmd.none ) => processInput 
+
+
 
 
 -- VIEW
+
 
 render : Chat.Model -> Model -> Element Styles variation Msg
 render chatModel model =
@@ -41,8 +64,8 @@ messages chatModel =
 
 
 renderMessage : String -> Element Styles variation Msg
-renderMessage str =
-    el None [] ( text str )
+renderMessage msg =
+    el None [] (text msg)
 
 
 
@@ -53,9 +76,9 @@ console : Model -> Element Styles variation Msg
 console model =
     row None
         [ width fill, padding 2, spacing 3 ]
-        [ sendButton
+        ([ button Hud [ onClick SubmitConsoleInput ] (text "send")
         , consoleInput model
-        ]
+        ])
 
 
 consoleInput : Model -> Element Styles variation Msg
@@ -65,7 +88,6 @@ consoleInput model =
         (Input.text Hud
             [ onFocus ToggleConsoleFocus
             , onBlur ToggleConsoleFocus
-            , on "keyup" (JD.map ConsoleInput keyCode)
             , width fill
             ]
             { value = model.consoleInput
@@ -79,7 +101,3 @@ consoleInput model =
                 []
             }
         )
-
-sendButton : Element Styles variation Msg
-sendButton =
-    button Hud [ onClick SubmitConsoleInput ] (text "send")

@@ -17,7 +17,7 @@ ui : UI.Model.Msg -> Model -> ( Model, Cmd Msg )
 ui message model =
     let
         (( uiModel, uiCmd ), action) =
-            UI.Update.update model.chat message model.ui
+            UI.Update.update message model.ui
 
         ( nextModel, cmd ) =
             externalMsg action model
@@ -85,8 +85,8 @@ chat message model =
 externalMsg : SocketAction -> Model -> ( Model, Cmd Msg )
 externalMsg msg model =
     case msg of
-        Send event channel encoder ->
-            Socket.send event channel encoder model
+        Send event encoder ->
+            Socket.send event model.chat.name encoder model
 
         Join channel ->
             Socket.join channel model

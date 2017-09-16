@@ -16,7 +16,6 @@ type Msg
     | SubmitConsoleInput
     | SetConsoleInput String
     | ToggleConsoleFocus
-    | ConsoleInput Int
 
 
 

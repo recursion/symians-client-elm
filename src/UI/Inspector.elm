@@ -1,4 +1,4 @@
-module UI.Views.Inspector exposing (view)
+module UI.Inspector exposing (view)
 
 import UI.Model exposing (Model, Msg, Inspection)
 import Element exposing (..)
@@ -19,7 +19,7 @@ renderInspector model =
     modal Hud
         [ alignRight, alignTop, width (percent 15), height fill ]
         (column None
-            [ padding 5 ]
+            [ padding 5, spacing 3 ]
             [ renderIData "type: " (text model.loc.type_)
             , renderIData "x: " (text <| toString model.position.x)
             , renderIData "y: " (text <| toString model.position.y)
