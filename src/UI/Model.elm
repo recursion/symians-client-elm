@@ -28,6 +28,7 @@ type alias Model =
     , selected : List Coordinates
     , consoleInput : String
     , consoleHasFocus : Bool
+    , images : { loading : String }
     }
 
 
@@ -54,6 +55,7 @@ init =
       , selected = []
       , consoleInput = ""
       , consoleHasFocus = False
+      , images = { loading = "" }
       }
     , Task.perform WindowResized Window.size
     )
@@ -61,7 +63,7 @@ init =
 
 initModel : Model
 initModel =
-    Model False False initInspector initCamera [] "" False
+    Model False False initInspector initCamera [] "" False { loading = "" }
 
 
 initCamera : Camera

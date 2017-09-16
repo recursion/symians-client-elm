@@ -23,22 +23,28 @@ systemChannel =
     "system:"
 
 
-init : ( Model, Cmd Msg )
-init =
+init : Flags -> ( Model, Cmd Msg )
+init flags =
     let
         ( initialModel, uiCmd ) =
-            App.Model.init Socket.initPhxSocket
-                <| Chat.initModel Chat.defaultChannel
+            App.Model.init Socket.initPhxSocket <|
+                Chat.initModel Chat.defaultChannel
 
         ( nextModel, systemCmd ) =
             system initialModel
 
-        ( finalModel, chatCmd ) =
+        ( lastModel, chatCmd ) =
             chat ChatMsg Chat.defaultChannel nextModel
     in
-        ( finalModel
+        ( loadImages lastModel flags.images
         , Cmd.batch [ uiCmd, systemCmd, chatCmd ]
         )
+
+loadImages model images =
+    let
+        ui = model.ui
+    in
+        { model | ui = { ui | images = images } }
 
 
 chat : (Chat.Msg -> Msg) -> String -> Model -> ( Model, Cmd Msg )

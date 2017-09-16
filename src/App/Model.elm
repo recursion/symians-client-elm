@@ -33,6 +33,11 @@ type alias Model =
     , world : State
     }
 
+type alias Flags =
+    { images :
+          {loading: String}
+    }
+
 type SocketAction
     = Join String
     | JoinWithHandlers String Chat.Msg Chat.Msg

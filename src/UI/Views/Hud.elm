@@ -44,10 +44,10 @@ hudButton name action =
 -- Loading screen
 
 
-loadingScreen : Element Styles variation Msg
-loadingScreen =
+loadingScreen : Model -> Element Styles variation Msg
+loadingScreen model =
     modal None []
       (column None [width fill, height fill, center]
           [ h1 None [center] (text "Loading")
-          , image None [center] {src = "img/loading.gif", caption = "Loading"}
+          , image None [center] {src = model.images.loading, caption = "Loading"}
           ])

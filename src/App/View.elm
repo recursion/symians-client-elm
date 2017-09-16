@@ -15,7 +15,7 @@ root model =
     Element.viewport stylesheet <|
         case model.world of
             Loading ->
-                Element.map UIMsg Hud.loadingScreen
+                Element.map UIMsg (Hud.loadingScreen model.ui)
 
             Loaded world ->
                 render world model
