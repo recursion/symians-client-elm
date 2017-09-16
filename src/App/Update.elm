@@ -29,5 +29,5 @@ update msg model =
         Disconnected ->
             model ! []
 
-        App.Model.NoOp ->
+        NoOp ->
             model ! []

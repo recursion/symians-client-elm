@@ -14,10 +14,13 @@ import Chat.Decoders exposing (encodeChatMessage)
 (=>) =
     (,)
 
-process : Model -> ((Model, Cmd Msg), SocketAction)
+
+process : Model -> ( ( Model, Cmd Msg ), SocketAction )
 process model =
     let
-        _ = Debug.log "---> " ()
+        _ =
+            Debug.log "---> " ()
+
         processInput =
             if (String.left 1 model.consoleInput) == "\\" then
                 Debug.log ("Got console input: " ++ model.consoleInput) NoAction
@@ -27,8 +30,7 @@ process model =
         if model.consoleInput == "" then
             ( { model | consoleInput = "" }, Cmd.none ) => NoAction
         else
-            ( { model | consoleInput = "" }, Cmd.none ) => processInput 
-
+            ( { model | consoleInput = "" }, Cmd.none ) => processInput
 
 
 
@@ -41,8 +43,8 @@ render chatModel model =
         modal None
             [ alignBottom, alignLeft, width (percent 60) ]
             (column Hud
-                [ width fill, padding 1 ]
-                [ (messages chatModel)
+                [ width fill, padding 1, clip]
+                [ (renderMessages chatModel model)
                 , (console model)
                 ]
             )
@@ -50,22 +52,34 @@ render chatModel model =
         empty
 
 
-messages : Chat.Model -> Element Styles variation Msg
-messages chatModel =
-    column None
-        [ padding 2
-        , alignBottom
-        , height (px 100)
-        , width fill
-        , clip
-        , yScrollbar
-        ]
-        ((List.map renderMessage) (List.reverse chatModel.messages))
+renderMessages : Chat.Model -> Model -> Element Styles variation Msg
+renderMessages chatModel model =
+    if model.consoleScroll then
+        column None
+            [ padding 2
+            , height (px 100)
+            , width fill
+            , yScrollbar
+            , onMouseOver ToggleConsoleScrollBar
+            , onMouseOut ToggleConsoleScrollBar
+            ]
+            ((List.map renderMessage) (List.reverse chatModel.messages))
+
+    else 
+        column None
+            [ padding 2
+            , alignBottom
+            , height (px 100)
+            , width fill
+            , onMouseOver ToggleConsoleScrollBar
+            , onMouseOut ToggleConsoleScrollBar
+            ]
+            ((List.map renderMessage) (List.reverse chatModel.messages))
 
 
 renderMessage : String -> Element Styles variation Msg
 renderMessage msg =
-    el None [] (text msg)
+    el None [ padding 3 ] (text msg)
 
 
 
@@ -77,8 +91,9 @@ console model =
     row None
         [ width fill, padding 2, spacing 3 ]
         ([ button Hud [ onClick SubmitConsoleInput ] (text "send")
-        , consoleInput model
-        ])
+         , consoleInput model
+         ]
+        )
 
 
 consoleInput : Model -> Element Styles variation Msg
@@ -89,6 +104,7 @@ consoleInput model =
             [ onFocus ToggleConsoleFocus
             , onBlur ToggleConsoleFocus
             , width fill
+            , padding 3
             ]
             { value = model.consoleInput
             , onChange = SetConsoleInput

@@ -16,6 +16,7 @@ type Msg
     | SubmitConsoleInput
     | SetConsoleInput String
     | ToggleConsoleFocus
+    | ToggleConsoleScrollBar
 
 
 
@@ -27,6 +28,7 @@ type alias Model =
     , selected : List Coordinates
     , consoleInput : String
     , consoleHasFocus : Bool
+    , consoleScroll : Bool
     , images : { loading : String }
     }
 
@@ -54,6 +56,7 @@ init =
       , selected = []
       , consoleInput = ""
       , consoleHasFocus = False
+      , consoleScroll = False
       , images = { loading = "" }
       }
     , Task.perform WindowResized Window.size
@@ -62,7 +65,7 @@ init =
 
 initModel : Model
 initModel =
-    Model False False initInspector initCamera [] "" False { loading = "" }
+    Model False False initInspector initCamera [] "" False False { loading = "" }
 
 
 initCamera : Camera

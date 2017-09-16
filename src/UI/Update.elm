@@ -42,6 +42,9 @@ update msg model =
         ToggleConsoleFocus ->
             ( { model | consoleHasFocus = not model.consoleHasFocus }, Cmd.none ) => NoAction
 
+        ToggleConsoleScrollBar ->
+            ( { model | consoleScroll = not model.consoleScroll }) => Cmd.none => NoAction
+
 
 toggleSelected : Coordinates -> Model -> ( ( Model, Cmd Msg ), SocketAction )
 toggleSelected coords model =
