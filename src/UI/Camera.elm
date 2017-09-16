@@ -82,10 +82,11 @@ size camera =
     ( width camera
     , height camera
     )
-
+width : Camera -> Int
 width camera =
     camera.position.x + (maxX camera)
 
+height : Camera -> Int
 height camera =
     camera.position.y + (maxY camera)
 
@@ -107,29 +108,29 @@ maxY camera =
 -}
 inBounds : Coordinates -> Camera -> Bool
 inBounds coords camera =
-    onZLevel coords camera.position
-        && inXBound (maxX camera) coords camera.position
-        && inYBound (maxY camera) coords camera.position
+    isOnZLevel coords camera.position
+        && isInXBound (maxX camera) coords camera.position
+        && isInYBound (maxY camera) coords camera.position
 
 
 {-| are coordinates on the camera z level
 -}
-onZLevel : Coordinates -> Coordinates -> Bool
-onZLevel loc cam =
+isOnZLevel : Coordinates -> Coordinates -> Bool
+isOnZLevel loc cam =
     cam.z == loc.z
 
 
 {-| are coordinates in the camera x view
 -}
-inXBound : Int -> Coordinates -> Coordinates -> Bool
-inXBound maxX loc cam =
+isInXBound : Int -> Coordinates -> Coordinates -> Bool
+isInXBound maxX loc cam =
     loc.x >= cam.x && loc.x < (cam.x + maxX)
 
 
 {-| are coordinates in the camera y view
 -}
-inYBound : Int -> Coordinates -> Coordinates -> Bool
-inYBound maxY loc cam =
+isInYBound : Int -> Coordinates -> Coordinates -> Bool
+isInYBound maxY loc cam =
     loc.y >= cam.y && loc.y < (cam.y + maxY)
 
 

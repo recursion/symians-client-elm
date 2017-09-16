@@ -1,4 +1,4 @@
-module UI.Console exposing (render)
+module UI.Views.Console exposing (render)
 
 import Html exposing (Html, h3, p, div, text, ul, li, input, form, button, br, table, tbody, tr, td)
 import Html.Attributes exposing (class, type_, value)
