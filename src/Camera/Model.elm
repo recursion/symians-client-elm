@@ -17,5 +17,5 @@ initCamera =
     , worldDimensions = Dimensions 0 0 0
     , width = 0
     , height = 0
-    , tileSize = 64
+    , tileSize = 32
     }

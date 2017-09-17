@@ -27,11 +27,6 @@ translate coords model =
     let
         -- if we are at our movement limit
         -- shift tiles to fill the screen
-        _ = if model.position.x == 0 then
-                Debug.log "We are at 0!" ()
-            else
-                ()
-
         tileMultiplier n =
             n * model.tileSize
 
