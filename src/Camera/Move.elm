@@ -4,6 +4,7 @@ import Camera.Model exposing (..)
 
 currentZLimit = 2
 
+
 {-| move the camera up a z level
 keeps the view in bounds of the world dimensions
 -}
@@ -51,7 +52,7 @@ down model =
         nextY =
             model.position.y + 1
 
-        tilesPos =
+        screenHeightInTiles =
             model.height // model.tileSize
 
         pos =
@@ -60,7 +61,7 @@ down model =
         nextPos =
             { pos | y = nextY }
     in
-        if nextY > (model.worldDimensions.height - tilesPos) + 1 then
+        if (nextY + screenHeightInTiles) > model.worldDimensions.height  then
             model
         else
             { model | position = nextPos }
@@ -71,7 +72,7 @@ keeps the view in bounds of the world dimensions
 -}
 up : Model -> Model
 up model =
-    if model.position.y - 1 < -1 then
+    if model.position.y - 1 < 0 then
         model
     else
         let
@@ -89,7 +90,7 @@ keeps the view in bounds of the world dimensions
 -}
 left : Model -> Model
 left model =
-    if model.position.x - 1 < -1 then
+    if model.position.x - 1 < 0 then
         model
     else
         let
@@ -111,7 +112,7 @@ right model =
         nextX =
             model.position.x + 1
 
-        tilesPos =
+        screenWidthInTiles =
             model.width // model.tileSize
 
         pos =
@@ -120,7 +121,7 @@ right model =
         nextPos =
             { pos | x = nextX }
     in
-        if nextX > (model.worldDimensions.width - tilesPos) + 1 then
+        if (nextX + screenWidthInTiles) > model.worldDimensions.width then
             model
         else
             { model | position = nextPos }

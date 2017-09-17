@@ -1,4 +1,4 @@
-module Camera.Utils exposing (..)
+module Camera.Utils exposing (updateDimensions, translate, resize, getScreenLocations)
 
 import World.Models exposing (Dimensions, Coordinates)
 import Camera.Model exposing (Model)
@@ -25,6 +25,13 @@ resize size model =
 translate : Coordinates -> Model -> ( Int, Int )
 translate coords model =
     let
+        -- if we are at our movement limit
+        -- shift tiles to fill the screen
+        _ = if model.position.x == 0 then
+                Debug.log "We are at 0!" ()
+            else
+                ()
+
         tileMultiplier n =
             n * model.tileSize
 
