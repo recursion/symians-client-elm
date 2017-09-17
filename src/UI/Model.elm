@@ -1,6 +1,8 @@
 module UI.Model exposing (..)
 
 import World.Models exposing (Location, initLocation, Dimensions, Coordinates)
+import Console.Model as Console
+import Camera.Model as Camera
 import Window
 import Keyboard
 import Task
@@ -11,24 +13,17 @@ type Msg
     | ToggleSelected Coordinates
     | WindowResized Window.Size
     | KeyMsg Keyboard.KeyCode
-    | ToggleConsole
     | ToggleInspector
-    | SubmitConsoleInput
-    | SetConsoleInput String
-    | ToggleConsoleFocus
-    | ToggleConsoleScrollBar
-
+    | ConsoleMsg Console.Msg
 
 
 type alias Model =
-    { viewConsole : Bool
+    { window : Window
     , viewInspector : Bool
     , inspector : Inspection
-    , camera : Camera
+    , camera : Camera.Model
     , selected : List Coordinates
-    , consoleInput : String
-    , consoleHasFocus : Bool
-    , consoleScroll : Bool
+    , console : Console.Model
     , images : { loading : String }
     }
 
@@ -38,43 +33,23 @@ type alias Inspection =
     , loc : Location
     }
 
-
-type alias Camera =
-    { position : Coordinates
-    , worldDimensions : Dimensions
-    , width : Int
-    , height : Int
-    }
+type alias Window =
+    { width : Int, height : Int }
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( { viewConsole = True
-      , viewInspector = True
-      , inspector = initInspector
-      , camera = initCamera
-      , selected = []
-      , consoleInput = ""
-      , consoleHasFocus = False
-      , consoleScroll = False
-      , images = { loading = "" }
-      }
-    , Task.perform WindowResized Window.size
-    )
+    ( initModel, Task.perform WindowResized Window.size )
 
 
 initModel : Model
 initModel =
-    Model False False initInspector initCamera [] "" False False { loading = "" }
+    Model initWindow False initInspector Camera.initCamera [] Console.initConsole { loading = "" }
 
 
-initCamera : Camera
-initCamera =
-    { position = Coordinates 0 0 0 
-    , worldDimensions = Dimensions 0 0 0
-    , width = 0
-    , height = 0
-    }
+initWindow : Window
+initWindow =
+    { width = 0, height = 0 }
 
 
 initInspector : Inspection

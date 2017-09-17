@@ -1,9 +1,10 @@
 module UI.Input exposing (keypress)
 
-import UI.Model exposing (Model, Msg)
+import UI.Model exposing (Model, Msg(..))
 import App.Model exposing (SocketAction(..))
-import UI.Camera as Camera
-import UI.Console as Console
+import Camera.Move 
+import Console.Input as Console
+import Utils exposing ((=>))
 import Keyboard
 
 type Action
@@ -16,7 +17,6 @@ type Action
     | SubmitConsoleInput
     | NoOp
 
-(=>) = (,)
 
 {-| checks the keycode for a matching action
 and performs that actions when a match is found
@@ -28,43 +28,46 @@ keypress code model =
             model => Cmd.none => NoAction
 
         SubmitConsoleInput ->
-            if model.consoleHasFocus then
-                Console.process model
+            if model.console.hasFocus then
+                let
+                    ((nextConsole, cmd), action) = Console.process model.console
+                in
+                    ({model | console = nextConsole}, Cmd.map ConsoleMsg cmd) => action
             else
                 model => Cmd.none => NoAction
 
         MoveCameraUp ->
             ifNotIgnoringInput
-            (({ model | camera = Camera.moveUp model.camera }, Cmd.none) => NoAction)
+            (({ model | camera = Camera.Move.up model.camera }, Cmd.none) => NoAction)
             model
 
         MoveCameraDown ->
             ifNotIgnoringInput
-            ({ model | camera = Camera.moveDown model.camera } => Cmd.none => NoAction)
+            ({ model | camera = Camera.Move.down model.camera } => Cmd.none => NoAction)
             model
 
         MoveCameraLeft ->
             ifNotIgnoringInput
-            ({ model | camera = Camera.moveLeft model.camera } => Cmd.none => NoAction)
+            ({ model | camera = Camera.Move.left model.camera } => Cmd.none => NoAction)
             model
 
         MoveCameraRight ->
             ifNotIgnoringInput
-            ({ model | camera = Camera.moveRight model.camera } => Cmd.none => NoAction)
+            ({ model | camera = Camera.Move.right model.camera } => Cmd.none => NoAction)
             model
 
         MoveCameraZLevelUp ->
             ifNotIgnoringInput
-            ({ model | camera = Camera.moveZLevelUp model.camera } => Cmd.none => NoAction)
+            ({ model | camera = Camera.Move.zLevelUp model.camera } => Cmd.none => NoAction)
             model
 
         MoveCameraZLevelDown ->
             ifNotIgnoringInput
-            ({ model | camera = Camera.moveZLevelDown model.camera } => Cmd.none => NoAction)
+            ({ model | camera = Camera.Move.zLevelDown model.camera } => Cmd.none => NoAction)
             model
 
 ifNotIgnoringInput work model =
-    if model.consoleHasFocus then
+    if model.console.hasFocus then
         model => Cmd.none => NoAction
     else
         work

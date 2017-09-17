@@ -3,13 +3,11 @@ module UI.Update exposing (update, camera)
 import World.Models exposing (Coordinates)
 import UI.Model exposing (..)
 import UI.Input as Input
-import UI.Camera as Camera
+import Camera.Utils as Camera
 import App.Model exposing (SocketAction(..))
-import UI.Console as Console
-
-
-(=>) =
-    (,)
+import Camera.Model
+import Console.Update as Console
+import Utils exposing ((=>))
 
 
 update : Msg -> Model -> ( ( Model, Cmd Msg ), SocketAction )
@@ -19,7 +17,7 @@ update msg model =
             Input.keypress code model
 
         WindowResized size ->
-            ( { model | camera = Camera.resize size model.camera }, Cmd.none ) => NoAction
+            manageResize size model
 
         SetInspected coords location ->
             ( { model | inspector = Inspection coords location }, Cmd.none ) => NoAction
@@ -27,23 +25,29 @@ update msg model =
         ToggleInspector ->
             ( { model | viewInspector = not model.viewInspector }, Cmd.none ) => NoAction
 
-        ToggleConsole ->
-            ( { model | viewConsole = not model.viewConsole }, Cmd.none ) => NoAction
-
         ToggleSelected coords ->
             toggleSelected coords model
 
-        SubmitConsoleInput ->
-            Console.process model
+        ConsoleMsg message ->
+            processConsoleMessage message model
 
-        SetConsoleInput input ->
-            ( { model | consoleInput = input }, Cmd.none ) => NoAction
 
-        ToggleConsoleFocus ->
-            ( { model | consoleHasFocus = not model.consoleHasFocus }, Cmd.none ) => NoAction
+processConsoleMessage message model =
+    let
+        ( ( consoleModel, consoleCmd ), action ) =
+            Console.update message model.console
+    in
+        ( ( { model | console = consoleModel }, Cmd.map ConsoleMsg consoleCmd ), action )
 
-        ToggleConsoleScrollBar ->
-            ( { model | consoleScroll = not model.consoleScroll }) => Cmd.none => NoAction
+
+manageResize size model =
+    ( { model
+        | camera = Camera.resize size model.camera
+        , window = size
+      }
+    , Cmd.none
+    )
+        => NoAction
 
 
 toggleSelected : Coordinates -> Model -> ( ( Model, Cmd Msg ), SocketAction )
@@ -71,6 +75,6 @@ addSelected coords model =
     { model | selected = coords :: model.selected }
 
 
-camera : Camera -> Model -> Model
+camera : Camera.Model.Model -> Model -> Model
 camera camera model =
     { model | camera = camera }

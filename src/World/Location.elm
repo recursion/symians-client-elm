@@ -10,7 +10,7 @@ import Dict exposing (Dict)
 import World.Models exposing (Locations, Location, Coordinates, CoordHash)
 import World.Coordinates as Coordinates
 import UI.Model as UI
-import UI.Camera as Camera
+import Camera.Utils as Camera
 
 
 {-| looks up a location by a coordinates hash
@@ -57,8 +57,8 @@ configure coordinates loc ui =
         , y <| toString screenY
         , fill color
         , stroke color
-        , width <| toString <| Camera.tileSize
-        , height <| toString <| Camera.tileSize
+        , width <| toString <| ui.camera.tileSize
+        , height <| toString <| ui.camera.tileSize
         , onMouseOver (UI.SetInspected coords loc)
         , onClick (UI.ToggleSelected coords)
         ]
