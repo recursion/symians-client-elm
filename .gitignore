@@ -35,5 +35,6 @@ public/
 bower_components/
 
 elm-stuff
+tests/elm-stuff
 
 build

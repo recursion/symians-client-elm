@@ -1,10 +1,21 @@
 # Symians Client
 
-## run the dev server
-> `elm-app start`
+## Development
+This project has 2 global dependancies: 
+  - (elm-create-app)[https://github.com/halfzebra/create-elm-app] - for the dev server
+  - (elm-test)[https://github.com/elmt-community/elm-test] for testing
 
-## run dev server without the debugger
-> `ELM_DEBUGGER=false elm-app start` - start without debugger
+### run the dev server
+> `npm start`
 
-## build to server assets
-> `elm-make src/Main.elm --output=../symians_server/assets/js/elm.js`
+### run dev server the debugger
+> `npm start:debug`
+
+### build project elm and scss to server assets
+> `npm run build`
+
+### build sass assets locally
+> `npm run build:sass`
+
+### watch sass and rebuild locally on changes
+> `npm run watch:sass`

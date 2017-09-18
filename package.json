@@ -1,0 +1,24 @@
+{
+  "name": "client",
+  "version": "1.0.0",
+  "description": "## run the dev server > `elm-app start`",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "node-sass": "^4.5.3",
+    "source-map": "^0.5.7"
+  },
+  "scripts": {
+    "start": "ELM_DEBUGGER=false elm-app start",
+    "start:debug": "elm-app start",
+    "watch:sass": "node-sass -w src/ -o src/",
+    "build:sass": "node-sass src/ -o src/",
+    "build": "elm-make src/Main.elm --output=../symians_server/assets/js/elm.js && cp src/index.css ../symians_server/assets/css/main.css"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
