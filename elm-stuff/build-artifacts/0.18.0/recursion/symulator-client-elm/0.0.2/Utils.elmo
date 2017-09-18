@@ -1,5 +1,0 @@
-var _recursion$symulator_client_elm$Utils_ops = _recursion$symulator_client_elm$Utils_ops || {};
-_recursion$symulator_client_elm$Utils_ops['=>'] = F2(
-	function (v0, v1) {
-		return {ctor: '_Tuple2', _0: v0, _1: v1};
-	});
