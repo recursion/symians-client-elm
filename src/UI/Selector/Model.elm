@@ -13,7 +13,7 @@ type alias Model =
 
 type Msg
     = ChangeMode Mode
-    | Select Coordinates
+    | StartSelection Coordinates
     | MouseOver Coordinates
     | Enable
     | Disable
@@ -21,7 +21,6 @@ type Msg
 type Mode
     = Designate
     | Undesignate
-    | SelectRect
 
 
 init =

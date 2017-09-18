@@ -12,7 +12,6 @@ render model =
         []
         [ hudButton "Designate" (ChangeMode Designate)
         , hudButton "Undesignate" (ChangeMode Undesignate)
-        , hudButton "Zone" (ChangeMode SelectRect)
         ]
 
 hudButton : String -> Msg -> Element Styles variation Msg

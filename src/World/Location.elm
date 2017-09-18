@@ -47,8 +47,15 @@ configure coordinates loc ui =
         ( screenX, screenY ) =
             Camera.translate coords ui.camera
 
+        selectedLocations =
+            case ui.selector.mode of
+                Selector.Designate ->
+                    (ui.selector.selected ++ ui.selector.buffer)
+
+                Selector.Undesignate ->
+                    List.filter (\loc -> not (List.member loc ui.selector.buffer)) ui.selector.selected
         color =
-            if List.member coords (ui.selector.selected ++ ui.selector.buffer) then
+            if List.member coords selectedLocations then
                 "#383"
             else
                 "green"
@@ -61,5 +68,5 @@ configure coordinates loc ui =
         , width <| toString <| ui.camera.tileSize
         , height <| toString <| ui.camera.tileSize
         , onMouseOver (UI.MouseOver coords loc)
-        , onMouseDown (UI.SelectorMsg (Selector.Select coords))
+        , onMouseDown (UI.SelectorMsg (Selector.StartSelection coords))
         ]

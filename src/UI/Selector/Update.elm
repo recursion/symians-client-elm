@@ -6,8 +6,8 @@ import UI.Selector.Model exposing (Model, Mode(..), Msg(..))
 
 update msg model =
     case msg of
-        Select coords ->
-            updateSelection coords { model | start = Just coords }
+        StartSelection coords ->
+            { model | start = Just coords, buffer = [ coords ] }
 
         MouseOver coords ->
             if model.enabled then
@@ -22,31 +22,38 @@ update msg model =
             { model | enabled = True }
 
         Disable ->
-            { model | enabled = False, selected = (model.buffer ++ model.selected), buffer = [] }
+            case model.mode of
+                Designate ->
+                    { model
+                        | start = Nothing
+                        , enabled = False
+                        , selected = (model.buffer ++ model.selected)
+                        , buffer = []
+                    }
+
+                Undesignate ->
+                    { model
+                        | start = Nothing
+                        , enabled = False
+                        , selected = removeSelection model.buffer model.selected
+                        , buffer = []
+                    }
 
 
 updateSelection coords model =
     case model.mode of
         Designate ->
-            add coords model
+            { model | buffer = generateSelection coords model }
 
         Undesignate ->
-            remove coords model
-
-        SelectRect ->
-            let
-                selected =
-                    createSelection coords model
-            in
-                case model.selected of
-                    [] ->
-                        { model | start = Just coords, buffer = selected }
-
-                    _ ->
-                        { model | buffer = selected }
+            { model | buffer = generateSelection coords model }
 
 
-createSelection coords model =
+removeSelection selection selected =
+    List.filter (\loc -> not (List.member loc selection)) selected
+
+
+generateSelection coords model =
     let
         start =
             case model.start of
@@ -56,53 +63,34 @@ createSelection coords model =
                 Just coords_ ->
                     coords_
 
-        width =
-            if start.x > coords.x then
-                start.x - coords.x
+        subtractor a b =
+            if a > b then
+                a - b
             else
-                coords.x - start.x
+                b - a
+
+        width =
+            subtractor start.x coords.x
 
         height =
+            subtractor start.y coords.y
+
+        yRange =
             if start.y > coords.y then
-                start.y - coords.y
+                List.range (start.y - height) start.y
             else
-                coords.y - start.y
+                List.range start.y (start.y + height)
+
+        xRange =
+            if start.x > coords.x then
+                List.range (start.x - width) start.x
+            else
+                List.range start.x (width + start.x)
 
         generateCoords x =
-            let
-                range =
-                    if start.y > coords.y then
-                        (List.range (start.y - height) start.y)
-                    else
-                        (List.range start.y (start.y + height))
-            in
-                List.map (wrapCoords x) range
+            List.map (wrapCoords x) yRange
 
         wrapCoords x y =
             (Coordinates x y coords.z)
     in
-        let
-            range =
-                if start.x > coords.x then
-                    List.range (start.x - width) start.x
-                else
-                    List.range start.x (width + start.x)
-        in
-            List.concatMap generateCoords range
-
-
-remove : Coordinates -> Model -> Model
-remove coords model =
-    let
-        notCoords =
-            (\n -> n /= coords)
-
-        nextSelected =
-            List.filter notCoords model.selected
-    in
-        { model | selected = nextSelected }
-
-
-add : Coordinates -> Model -> Model
-add coords model =
-    { model | selected = model.selected ++ [ coords ] }
+        List.concatMap generateCoords xRange
