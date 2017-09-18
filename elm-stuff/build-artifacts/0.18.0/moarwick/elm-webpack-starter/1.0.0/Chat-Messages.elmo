@@ -1,0 +1,38 @@
+var _moarwick$elm_webpack_starter$Chat_Messages$update = F2(
+	function (nextMessages, model) {
+		return _elm_lang$core$Native_Utils.update(
+			model,
+			{messages: nextMessages});
+	});
+var _moarwick$elm_webpack_starter$Chat_Messages$add = F2(
+	function (msg, model) {
+		var nextMessages = {ctor: '::', _0: msg, _1: model.messages};
+		return A2(_moarwick$elm_webpack_starter$Chat_Messages$update, nextMessages, model);
+	});
+var _moarwick$elm_webpack_starter$Chat_Messages$showJoined = function (model) {
+	return A2(
+		_moarwick$elm_webpack_starter$Chat_Messages$add,
+		A2(_elm_lang$core$Basics_ops['++'], 'Joined channel ', model.name),
+		model);
+};
+var _moarwick$elm_webpack_starter$Chat_Messages$showLeft = function (model) {
+	return A2(
+		_moarwick$elm_webpack_starter$Chat_Messages$add,
+		A2(_elm_lang$core$Basics_ops['++'], 'Left channel ', model.name),
+		model);
+};
+var _moarwick$elm_webpack_starter$Chat_Messages$process = F2(
+	function (raw, model) {
+		var _p0 = _moarwick$elm_webpack_starter$Chat_Decoders$decodeChatMessage(raw);
+		if (_p0.ctor === 'Ok') {
+			var _p1 = _p0._0;
+			var msg = A2(
+				_elm_lang$core$Basics_ops['++'],
+				_p1.user,
+				A2(_elm_lang$core$Basics_ops['++'], ': ', _p1.body));
+			return A2(_moarwick$elm_webpack_starter$Chat_Messages$add, msg, model);
+		} else {
+			var _p2 = A2(_elm_lang$core$Debug$log, 'Error processing chat message.', _p0._0);
+			return model;
+		}
+	});

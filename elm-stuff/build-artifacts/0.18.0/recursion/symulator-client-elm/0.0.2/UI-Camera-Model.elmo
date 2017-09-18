@@ -1,0 +1,11 @@
+var _recursion$symulator_client_elm$UI_Camera_Model$init = {
+	position: A3(_recursion$symulator_client_elm$World_Models$Coordinates, 0, 0, 0),
+	worldDimensions: A3(_recursion$symulator_client_elm$World_Models$Dimensions, 0, 0, 0),
+	width: 0,
+	height: 0,
+	tileSize: 32
+};
+var _recursion$symulator_client_elm$UI_Camera_Model$Model = F5(
+	function (a, b, c, d, e) {
+		return {position: a, worldDimensions: b, width: c, height: d, tileSize: e};
+	});

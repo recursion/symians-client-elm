@@ -1,0 +1,121 @@
+var _moarwick$elm_webpack_starter$UI_Views_Hud$loadingScreen = A2(
+	_elm_lang$html$Html$div,
+	{
+		ctor: '::',
+		_0: _elm_lang$html$Html_Attributes$class('fullscreen loadscreen'),
+		_1: {ctor: '[]'}
+	},
+	{
+		ctor: '::',
+		_0: A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('centered'),
+				_1: {ctor: '[]'}
+			},
+			{
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$h1,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$class(''),
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text('Loading'),
+						_1: {ctor: '[]'}
+					}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$img,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$src('img/loading.gif'),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$class('loading'),
+								_1: {ctor: '[]'}
+							}
+						},
+						{ctor: '[]'}),
+					_1: {ctor: '[]'}
+				}
+			}),
+		_1: {ctor: '[]'}
+	});
+var _moarwick$elm_webpack_starter$UI_Views_Hud$hudButton = F3(
+	function (name, action, class_) {
+		return A2(
+			_elm_lang$html$Html$button,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class(
+					A2(_elm_lang$core$Basics_ops['++'], 'button is-small hud toggle ', class_)),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$html$Html_Events$onClick(action),
+					_1: {ctor: '[]'}
+				}
+			},
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html$text(name),
+				_1: {ctor: '[]'}
+			});
+	});
+var _moarwick$elm_webpack_starter$UI_Views_Hud$isActive = function (setting) {
+	return setting ? 'hud-btn-is-active' : 'hud-btn';
+};
+var _moarwick$elm_webpack_starter$UI_Views_Hud$controls = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('controls'),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: A3(
+				_moarwick$elm_webpack_starter$UI_Views_Hud$hudButton,
+				'Console',
+				_moarwick$elm_webpack_starter$UI_Model$ToggleConsole,
+				_moarwick$elm_webpack_starter$UI_Views_Hud$isActive(model.viewConsole)),
+			_1: {
+				ctor: '::',
+				_0: A3(
+					_moarwick$elm_webpack_starter$UI_Views_Hud$hudButton,
+					'Inspector',
+					_moarwick$elm_webpack_starter$UI_Model$ToggleInspector,
+					_moarwick$elm_webpack_starter$UI_Views_Hud$isActive(model.viewInspector)),
+				_1: {ctor: '[]'}
+			}
+		});
+};
+var _moarwick$elm_webpack_starter$UI_Views_Hud$view = F2(
+	function (chatModel, model) {
+		return A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('hud'),
+				_1: {ctor: '[]'}
+			},
+			{
+				ctor: '::',
+				_0: _moarwick$elm_webpack_starter$UI_Views_Hud$controls(model),
+				_1: {
+					ctor: '::',
+					_0: _moarwick$elm_webpack_starter$UI_Views_Inspector$view(model),
+					_1: {
+						ctor: '::',
+						_0: A2(_moarwick$elm_webpack_starter$UI_Views_Console$render, chatModel, model),
+						_1: {ctor: '[]'}
+					}
+				}
+			});
+	});

@@ -1,0 +1,67 @@
+var _recursion$symulator_client_elm$UI_Model$initWindow = {width: 0, height: 0};
+var _recursion$symulator_client_elm$UI_Model$Model = F6(
+	function (a, b, c, d, e, f) {
+		return {window: a, inspector: b, camera: c, selector: d, console: e, images: f};
+	});
+var _recursion$symulator_client_elm$UI_Model$initModel = A6(
+	_recursion$symulator_client_elm$UI_Model$Model,
+	_recursion$symulator_client_elm$UI_Model$initWindow,
+	_recursion$symulator_client_elm$UI_Inspector_Model$init,
+	_recursion$symulator_client_elm$UI_Camera_Model$init,
+	_recursion$symulator_client_elm$UI_Selector_Model$init,
+	_recursion$symulator_client_elm$UI_Console_Model$init,
+	{loading: ''});
+var _recursion$symulator_client_elm$UI_Model$Window = F2(
+	function (a, b) {
+		return {width: a, height: b};
+	});
+var _recursion$symulator_client_elm$UI_Model$MouseOver = F2(
+	function (a, b) {
+		return {ctor: 'MouseOver', _0: a, _1: b};
+	});
+var _recursion$symulator_client_elm$UI_Model$MouseUp = function (a) {
+	return {ctor: 'MouseUp', _0: a};
+};
+var _recursion$symulator_client_elm$UI_Model$MouseDown = function (a) {
+	return {ctor: 'MouseDown', _0: a};
+};
+var _recursion$symulator_client_elm$UI_Model$InspectorMsg = function (a) {
+	return {ctor: 'InspectorMsg', _0: a};
+};
+var _recursion$symulator_client_elm$UI_Model$ConsoleMsg = function (a) {
+	return {ctor: 'ConsoleMsg', _0: a};
+};
+var _recursion$symulator_client_elm$UI_Model$KeyMsg = function (a) {
+	return {ctor: 'KeyMsg', _0: a};
+};
+var _recursion$symulator_client_elm$UI_Model$WindowResized = function (a) {
+	return {ctor: 'WindowResized', _0: a};
+};
+var _recursion$symulator_client_elm$UI_Model$init = {
+	ctor: '_Tuple2',
+	_0: _recursion$symulator_client_elm$UI_Model$initModel,
+	_1: A2(_elm_lang$core$Task$perform, _recursion$symulator_client_elm$UI_Model$WindowResized, _elm_lang$window$Window$size)
+};
+var _recursion$symulator_client_elm$UI_Model$subscriptions = function (model) {
+	return _elm_lang$core$Platform_Sub$batch(
+		{
+			ctor: '::',
+			_0: _elm_lang$keyboard$Keyboard$downs(_recursion$symulator_client_elm$UI_Model$KeyMsg),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$window$Window$resizes(_recursion$symulator_client_elm$UI_Model$WindowResized),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$mouse$Mouse$downs(_recursion$symulator_client_elm$UI_Model$MouseDown),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$mouse$Mouse$ups(_recursion$symulator_client_elm$UI_Model$MouseUp),
+						_1: {ctor: '[]'}
+					}
+				}
+			}
+		});
+};
+var _recursion$symulator_client_elm$UI_Model$SelectorMsg = function (a) {
+	return {ctor: 'SelectorMsg', _0: a};
+};

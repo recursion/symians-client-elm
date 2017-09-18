@@ -1,0 +1,28 @@
+var _moarwick$elm_webpack_starter$World_View$render = F2(
+	function (world, ui) {
+		return A2(
+			_elm_lang$svg$Svg$svg,
+			{
+				ctor: '::',
+				_0: _elm_lang$svg$Svg_Attributes$class('fullscreen world'),
+				_1: {ctor: '[]'}
+			},
+			A2(
+				_elm_lang$core$List$map,
+				function (loc) {
+					return A2(_moarwick$elm_webpack_starter$World_Location$render, loc, ui);
+				},
+				A2(
+					_elm_lang$core$List$map,
+					_moarwick$elm_webpack_starter$World_Location$get(world.locations),
+					A2(
+						_elm_lang$core$List$map,
+						_moarwick$elm_webpack_starter$World_Coordinates$hash,
+						A2(
+							_elm_lang$core$List$map,
+							function (_p0) {
+								var _p1 = _p0;
+								return A3(_moarwick$elm_webpack_starter$World_Models$Coordinates, _p1._0, _p1._1, ui.camera.position.z);
+							},
+							_moarwick$elm_webpack_starter$UI_Camera$getScreenLocations(ui.camera))))));
+	});

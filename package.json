@@ -1,0 +1,17 @@
+{
+  "name": "symians",
+  "description": "lean mean monkey simulator",
+  "private": true,
+  "author": "Mike Symmes(a.k.a. recursion)",
+  "version": "0.0.1",
+  "repository": "",
+  "scripts": {
+    "start": "ELM_DEBUGGER=false elm-app start",
+    "start-debug": "elm-app start",
+    "css-watch": "nodemon --exec 'elm-css' src/Stylesheets.elm",
+    "build-css": "elm-css src/Stylesheets.elm"
+  },
+  "dependencies": {},
+  "devDependencies": {
+  }
+}

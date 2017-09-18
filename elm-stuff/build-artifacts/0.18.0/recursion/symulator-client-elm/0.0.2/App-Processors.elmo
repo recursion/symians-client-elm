@@ -1,0 +1,113 @@
+var _recursion$symulator_client_elm$App_Processors$externalMsg = F2(
+	function (msg, model) {
+		var _p0 = msg;
+		switch (_p0.ctor) {
+			case 'Send':
+				return A4(_recursion$symulator_client_elm$App_Socket$send, _p0._0, model.chat.name, _p0._1, model);
+			case 'Join':
+				return A2(_recursion$symulator_client_elm$App_Socket$join, _p0._0, model);
+			case 'JoinWithHandlers':
+				return A4(
+					_recursion$symulator_client_elm$App_Socket$joinWithHandlers,
+					_p0._0,
+					_elm_lang$core$Basics$always(
+						_recursion$symulator_client_elm$App_Model$ChatMsg(_p0._1)),
+					_elm_lang$core$Basics$always(
+						_recursion$symulator_client_elm$App_Model$ChatMsg(_p0._2)),
+					model);
+			case 'Leave':
+				return A2(_recursion$symulator_client_elm$App_Socket$leave, _p0._0, model);
+			default:
+				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+		}
+	});
+var _recursion$symulator_client_elm$App_Processors$chat = F2(
+	function (message, model) {
+		var _p1 = A2(_recursion$symulator_client_elm$Chat_Update$update, message, model.chat);
+		var chatModel = _p1._0._0;
+		var chatCommand = _p1._0._1;
+		var msg = _p1._1;
+		var _p2 = A2(_recursion$symulator_client_elm$App_Processors$externalMsg, msg, model);
+		var nextModel = _p2._0;
+		var cmd = _p2._1;
+		return {
+			ctor: '_Tuple2',
+			_0: _elm_lang$core$Native_Utils.update(
+				nextModel,
+				{chat: chatModel}),
+			_1: _elm_lang$core$Platform_Cmd$batch(
+				{
+					ctor: '::',
+					_0: A2(_elm_lang$core$Platform_Cmd$map, _recursion$symulator_client_elm$App_Model$ChatMsg, chatCommand),
+					_1: {
+						ctor: '::',
+						_0: cmd,
+						_1: {ctor: '[]'}
+					}
+				})
+		};
+	});
+var _recursion$symulator_client_elm$App_Processors$token = F2(
+	function (raw, model) {
+		var _p3 = _recursion$symulator_client_elm$App_Auth$decodeTokenMessage(raw);
+		if (_p3.ctor === 'Ok') {
+			return {
+				ctor: '_Tuple2',
+				_0: _elm_lang$core$Native_Utils.update(
+					model,
+					{auth: _p3._0}),
+				_1: _elm_lang$core$Platform_Cmd$none
+			};
+		} else {
+			return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+		}
+	});
+var _recursion$symulator_client_elm$App_Processors$insertWorldData = F2(
+	function (world, model) {
+		var nextCamera = A2(_recursion$symulator_client_elm$Camera_Utils$updateDimensions, world.dimensions, model.ui.camera);
+		var nextWorld = {locations: world.locations, dimensions: world.dimensions};
+		return _elm_lang$core$Native_Utils.update(
+			model,
+			{
+				world: _recursion$symulator_client_elm$App_Model$Loaded(nextWorld),
+				ui: A2(_recursion$symulator_client_elm$UI_Update$camera, nextCamera, model.ui)
+			});
+	});
+var _recursion$symulator_client_elm$App_Processors$world = F2(
+	function (raw, model) {
+		var _p4 = _recursion$symulator_client_elm$World_Decoders$decodeWorldData(raw);
+		if (_p4.ctor === 'Ok') {
+			return A2(
+				_elm_lang$core$Platform_Cmd_ops['!'],
+				A2(_recursion$symulator_client_elm$App_Processors$insertWorldData, _p4._0, model),
+				{ctor: '[]'});
+		} else {
+			return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+		}
+	});
+var _recursion$symulator_client_elm$App_Processors$ui = F2(
+	function (message, model) {
+		var _p5 = A2(_recursion$symulator_client_elm$UI_Update$update, message, model.ui);
+		var uiModel = _p5._0._0;
+		var uiCmd = _p5._0._1;
+		var action = _p5._1;
+		var _p6 = A2(_recursion$symulator_client_elm$App_Processors$externalMsg, action, model);
+		var nextModel = _p6._0;
+		var cmd = _p6._1;
+		return {
+			ctor: '_Tuple2',
+			_0: _elm_lang$core$Native_Utils.update(
+				nextModel,
+				{ui: uiModel}),
+			_1: _elm_lang$core$Platform_Cmd$batch(
+				{
+					ctor: '::',
+					_0: A2(_elm_lang$core$Platform_Cmd$map, _recursion$symulator_client_elm$App_Model$UIMsg, uiCmd),
+					_1: {
+						ctor: '::',
+						_0: cmd,
+						_1: {ctor: '[]'}
+					}
+				})
+		};
+	});

@@ -1,0 +1,58 @@
+var _recursion$symulator_client_elm$Model_Move$right = function (model) {
+	var pos = model.position;
+	var tilesPos = (model.width / model.tileSize) | 0;
+	var nextX = model.position.x + 1;
+	var nextPos = _elm_lang$core$Native_Utils.update(
+		pos,
+		{x: nextX});
+	return (_elm_lang$core$Native_Utils.cmp(nextX, (model.worldDimensions.width - tilesPos) + 1) > 0) ? model : _elm_lang$core$Native_Utils.update(
+		model,
+		{position: nextPos});
+};
+var _recursion$symulator_client_elm$Model_Move$left = function (model) {
+	if (_elm_lang$core$Native_Utils.cmp(model.position.x - 1, -1) < 0) {
+		return model;
+	} else {
+		var pos = model.position;
+		var nextPos = _elm_lang$core$Native_Utils.update(
+			pos,
+			{x: model.position.x - 1});
+		return _elm_lang$core$Native_Utils.update(
+			model,
+			{position: nextPos});
+	}
+};
+var _recursion$symulator_client_elm$Model_Move$up = function (model) {
+	if (_elm_lang$core$Native_Utils.cmp(model.position.y - 1, -1) < 0) {
+		return model;
+	} else {
+		var pos = model.position;
+		var nextPos = _elm_lang$core$Native_Utils.update(
+			pos,
+			{y: model.position.y - 1});
+		return _elm_lang$core$Native_Utils.update(
+			model,
+			{position: nextPos});
+	}
+};
+var _recursion$symulator_client_elm$Model_Move$down = function (model) {
+	var pos = model.position;
+	var tilesPos = (model.height / model.tileSize) | 0;
+	var nextY = model.position.y + 1;
+	var nextPos = _elm_lang$core$Native_Utils.update(
+		pos,
+		{y: nextY});
+	return (_elm_lang$core$Native_Utils.cmp(nextY, (model.worldDimensions.height - tilesPos) + 1) > 0) ? model : _elm_lang$core$Native_Utils.update(
+		model,
+		{position: nextPos});
+};
+var _recursion$symulator_client_elm$Model_Move$zLevelDown = function (model) {
+	var pos = model.position;
+	var nextZ = model.position.z - 1;
+	var nextPos = _elm_lang$core$Native_Utils.update(
+		pos,
+		{z: nextZ});
+	return (_elm_lang$core$Native_Utils.cmp(nextZ, 0) < 0) ? model : _elm_lang$core$Native_Utils.update(
+		model,
+		{position: nextPos});
+};

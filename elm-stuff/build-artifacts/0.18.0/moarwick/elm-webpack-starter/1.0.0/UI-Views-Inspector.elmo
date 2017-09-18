@@ -1,0 +1,118 @@
+var _moarwick$elm_webpack_starter$UI_Views_Inspector$renderEntity = function (entity) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('entity-data'),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html$text(entity),
+			_1: {ctor: '[]'}
+		});
+};
+var _moarwick$elm_webpack_starter$UI_Views_Inspector$renderIData = F2(
+	function (key, value) {
+		return A2(
+			_elm_lang$html$Html$tr,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('tiledata'),
+				_1: {ctor: '[]'}
+			},
+			{
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$td,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$class('tiledata-label'),
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text(key),
+						_1: {ctor: '[]'}
+					}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$td,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$class('tiledata-value'),
+							_1: {ctor: '[]'}
+						},
+						value),
+					_1: {ctor: '[]'}
+				}
+			});
+	});
+var _moarwick$elm_webpack_starter$UI_Views_Inspector$renderInspector = function (model) {
+	return A2(
+		_elm_lang$html$Html$table,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('hud hud-tiledata'),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_moarwick$elm_webpack_starter$UI_Views_Inspector$renderIData,
+				'type: ',
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text(model.loc.type_),
+					_1: {ctor: '[]'}
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_moarwick$elm_webpack_starter$UI_Views_Inspector$renderIData,
+					'x: ',
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text(
+							_elm_lang$core$Basics$toString(model.position.x)),
+						_1: {ctor: '[]'}
+					}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_moarwick$elm_webpack_starter$UI_Views_Inspector$renderIData,
+						'y: ',
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text(
+								_elm_lang$core$Basics$toString(model.position.y)),
+							_1: {ctor: '[]'}
+						}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_moarwick$elm_webpack_starter$UI_Views_Inspector$renderIData,
+							'z: ',
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text(
+									_elm_lang$core$Basics$toString(model.position.z)),
+								_1: {ctor: '[]'}
+							}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_moarwick$elm_webpack_starter$UI_Views_Inspector$renderIData,
+								'entities:',
+								A2(_elm_lang$core$List$map, _moarwick$elm_webpack_starter$UI_Views_Inspector$renderEntity, model.loc.entities)),
+							_1: {ctor: '[]'}
+						}
+					}
+				}
+			}
+		});
+};
+var _moarwick$elm_webpack_starter$UI_Views_Inspector$view = function (model) {
+	return model.viewInspector ? _moarwick$elm_webpack_starter$UI_Views_Inspector$renderInspector(model.inspector) : _elm_lang$html$Html$text('');
+};

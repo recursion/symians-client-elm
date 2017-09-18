@@ -1,0 +1,48 @@
+var _user$project$Chat_Update$update = F2(
+	function (msg, model) {
+		var _p0 = msg;
+		switch (_p0.ctor) {
+			case 'JoinChannel':
+				return {
+					ctor: '_Tuple2',
+					_0: {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none},
+					_1: _user$project$App_Model$Join(model.name)
+				};
+			case 'LeaveChannel':
+				return {
+					ctor: '_Tuple2',
+					_0: {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none},
+					_1: _user$project$App_Model$Leave(model.name)
+				};
+			case 'ReceiveChatMessage':
+				return {
+					ctor: '_Tuple2',
+					_0: {
+						ctor: '_Tuple2',
+						_0: A2(_user$project$Chat_Messages$process, _p0._0, model),
+						_1: _elm_lang$core$Platform_Cmd$none
+					},
+					_1: _user$project$App_Model$NoAction
+				};
+			case 'ShowJoinedMessage':
+				return {
+					ctor: '_Tuple2',
+					_0: {
+						ctor: '_Tuple2',
+						_0: _user$project$Chat_Messages$showJoined(model),
+						_1: _elm_lang$core$Platform_Cmd$none
+					},
+					_1: _user$project$App_Model$NoAction
+				};
+			default:
+				return {
+					ctor: '_Tuple2',
+					_0: {
+						ctor: '_Tuple2',
+						_0: _user$project$Chat_Messages$showLeft(model),
+						_1: _elm_lang$core$Platform_Cmd$none
+					},
+					_1: _user$project$App_Model$NoAction
+				};
+		}
+	});

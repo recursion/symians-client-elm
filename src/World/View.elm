@@ -4,6 +4,7 @@ module World.View exposing (render)
 -}
 
 import Html exposing (Html)
+import Html.CssHelpers
 import Svg.Attributes exposing (id, height, width)
 import Svg exposing (svg)
 
@@ -12,14 +13,17 @@ import World.Coordinates exposing (hash)
 import World.Location as Location
 import UI.Camera.Utils as Camera
 import UI.Model as UI
+import App.Styles as Styles
 
+{ id, class, classList } =
+    Html.CssHelpers.withNamespace "symians"
 
 {-| looks up the locations currently in the cameras view and renders them
 -}
 render : World.Model -> UI.Model -> Html UI.Msg
 render world ui =
     svg
-        [ height "100%", width "100%", id "world"]
+        [ height "100%", width "100%", id Styles.WorldRenderer ]
         (Camera.getScreenLocations ui.camera
             |> List.map (\(x, y) -> Coordinates x y ui.camera.position.z)
             |> List.map hash

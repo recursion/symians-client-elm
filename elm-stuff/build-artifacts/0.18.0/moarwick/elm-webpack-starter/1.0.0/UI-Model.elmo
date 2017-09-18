@@ -1,0 +1,76 @@
+var _moarwick$elm_webpack_starter$UI_Model$initInspector = {
+	position: A3(_moarwick$elm_webpack_starter$World_Models$Coordinates, 0, 0, 0),
+	loc: _moarwick$elm_webpack_starter$World_Models$initLocation
+};
+var _moarwick$elm_webpack_starter$UI_Model$initCamera = {
+	position: A3(_moarwick$elm_webpack_starter$World_Models$Coordinates, 0, 0, 0),
+	worldDimensions: A3(_moarwick$elm_webpack_starter$World_Models$Dimensions, 0, 0, 0),
+	width: 0,
+	height: 0
+};
+var _moarwick$elm_webpack_starter$UI_Model$Model = F7(
+	function (a, b, c, d, e, f, g) {
+		return {viewConsole: a, viewInspector: b, inspector: c, camera: d, selected: e, consoleInput: f, consoleHasFocus: g};
+	});
+var _moarwick$elm_webpack_starter$UI_Model$initModel = A7(
+	_moarwick$elm_webpack_starter$UI_Model$Model,
+	false,
+	false,
+	_moarwick$elm_webpack_starter$UI_Model$initInspector,
+	_moarwick$elm_webpack_starter$UI_Model$initCamera,
+	{ctor: '[]'},
+	'',
+	false);
+var _moarwick$elm_webpack_starter$UI_Model$Inspection = F2(
+	function (a, b) {
+		return {position: a, loc: b};
+	});
+var _moarwick$elm_webpack_starter$UI_Model$Camera = F4(
+	function (a, b, c, d) {
+		return {position: a, worldDimensions: b, width: c, height: d};
+	});
+var _moarwick$elm_webpack_starter$UI_Model$ToggleConsoleFocus = {ctor: 'ToggleConsoleFocus'};
+var _moarwick$elm_webpack_starter$UI_Model$SetConsoleInput = function (a) {
+	return {ctor: 'SetConsoleInput', _0: a};
+};
+var _moarwick$elm_webpack_starter$UI_Model$SubmitConsoleInput = {ctor: 'SubmitConsoleInput'};
+var _moarwick$elm_webpack_starter$UI_Model$ToggleInspector = {ctor: 'ToggleInspector'};
+var _moarwick$elm_webpack_starter$UI_Model$ToggleConsole = {ctor: 'ToggleConsole'};
+var _moarwick$elm_webpack_starter$UI_Model$KeyMsg = function (a) {
+	return {ctor: 'KeyMsg', _0: a};
+};
+var _moarwick$elm_webpack_starter$UI_Model$WindowResized = function (a) {
+	return {ctor: 'WindowResized', _0: a};
+};
+var _moarwick$elm_webpack_starter$UI_Model$init = {
+	ctor: '_Tuple2',
+	_0: {
+		viewConsole: false,
+		viewInspector: true,
+		inspector: _moarwick$elm_webpack_starter$UI_Model$initInspector,
+		camera: _moarwick$elm_webpack_starter$UI_Model$initCamera,
+		selected: {ctor: '[]'},
+		consoleInput: '',
+		consoleHasFocus: false
+	},
+	_1: A2(_elm_lang$core$Task$perform, _moarwick$elm_webpack_starter$UI_Model$WindowResized, _elm_lang$window$Window$size)
+};
+var _moarwick$elm_webpack_starter$UI_Model$subscriptions = function (model) {
+	return _elm_lang$core$Platform_Sub$batch(
+		{
+			ctor: '::',
+			_0: _elm_lang$keyboard$Keyboard$downs(_moarwick$elm_webpack_starter$UI_Model$KeyMsg),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$window$Window$resizes(_moarwick$elm_webpack_starter$UI_Model$WindowResized),
+				_1: {ctor: '[]'}
+			}
+		});
+};
+var _moarwick$elm_webpack_starter$UI_Model$ToggleSelected = function (a) {
+	return {ctor: 'ToggleSelected', _0: a};
+};
+var _moarwick$elm_webpack_starter$UI_Model$SetInspected = F2(
+	function (a, b) {
+		return {ctor: 'SetInspected', _0: a, _1: b};
+	});

@@ -1,0 +1,18 @@
+var _recursion$symulator_client_elm$UI_Selector$add = F2(
+	function (coords, model) {
+		return _elm_lang$core$Native_Utils.update(
+			model,
+			{
+				selected: {ctor: '::', _0: coords, _1: model.selected}
+			});
+	});
+var _recursion$symulator_client_elm$UI_Selector$remove = F2(
+	function (coords, model) {
+		var notCoords = function (n) {
+			return !_elm_lang$core$Native_Utils.eq(n, coords);
+		};
+		var nextSelected = A2(_elm_lang$core$List$filter, notCoords, model.selected);
+		return _elm_lang$core$Native_Utils.update(
+			model,
+			{selected: nextSelected});
+	});

@@ -1,0 +1,49 @@
+var _user$project$App_Styles$colors = {
+	hudBackground: A4(_elm_lang$core$Color$rgba, 80, 80, 80, 0.5)
+};
+var _user$project$App_Styles$Test = {ctor: 'Test'};
+var _user$project$App_Styles$Hud = {ctor: 'Hud'};
+var _user$project$App_Styles$None = {ctor: 'None'};
+var _user$project$App_Styles$stylesheet = _mdgriffith$style_elements$Style$styleSheet(
+	{
+		ctor: '::',
+		_0: A2(
+			_mdgriffith$style_elements$Style$style,
+			_user$project$App_Styles$None,
+			{ctor: '[]'}),
+		_1: {
+			ctor: '::',
+			_0: A2(
+				_mdgriffith$style_elements$Style$style,
+				_user$project$App_Styles$Hud,
+				{
+					ctor: '::',
+					_0: _mdgriffith$style_elements$Style_Color$background(_user$project$App_Styles$colors.hudBackground),
+					_1: {
+						ctor: '::',
+						_0: _mdgriffith$style_elements$Style_Border$all(1),
+						_1: {
+							ctor: '::',
+							_0: _mdgriffith$style_elements$Style_Border$solid,
+							_1: {
+								ctor: '::',
+								_0: _mdgriffith$style_elements$Style_Color$border(_elm_lang$core$Color$black),
+								_1: {ctor: '[]'}
+							}
+						}
+					}
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_mdgriffith$style_elements$Style$style,
+					_user$project$App_Styles$Test,
+					{
+						ctor: '::',
+						_0: _mdgriffith$style_elements$Style_Color$border(_elm_lang$core$Color$red),
+						_1: {ctor: '[]'}
+					}),
+				_1: {ctor: '[]'}
+			}
+		}
+	});

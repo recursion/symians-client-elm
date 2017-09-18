@@ -1,0 +1,12 @@
+var _recursion$symulator_client_elm$Console_Model$init = {visible: true, input: '', hasFocus: false, scroll: false};
+var _recursion$symulator_client_elm$Console_Model$Model = F4(
+	function (a, b, c, d) {
+		return {visible: a, input: b, hasFocus: c, scroll: d};
+	});
+var _recursion$symulator_client_elm$Console_Model$ToggleScrollBar = {ctor: 'ToggleScrollBar'};
+var _recursion$symulator_client_elm$Console_Model$ToggleInputFocus = {ctor: 'ToggleInputFocus'};
+var _recursion$symulator_client_elm$Console_Model$SetInput = function (a) {
+	return {ctor: 'SetInput', _0: a};
+};
+var _recursion$symulator_client_elm$Console_Model$SubmitInput = {ctor: 'SubmitInput'};
+var _recursion$symulator_client_elm$Console_Model$ToggleVisible = {ctor: 'ToggleVisible'};

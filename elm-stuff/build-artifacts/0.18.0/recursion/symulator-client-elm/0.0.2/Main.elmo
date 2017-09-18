@@ -1,0 +1,33 @@
+var _recursion$symulator_client_elm$Main$subscriptions = function (model) {
+	return _elm_lang$core$Platform_Sub$batch(
+		{
+			ctor: '::',
+			_0: _recursion$symulator_client_elm$App_Socket$listen(model),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$core$Platform_Sub$map,
+					_recursion$symulator_client_elm$App_Model$UIMsg,
+					_recursion$symulator_client_elm$UI_Model$subscriptions(model.ui)),
+				_1: {ctor: '[]'}
+			}
+		});
+};
+var _recursion$symulator_client_elm$Main$main = _elm_lang$html$Html$programWithFlags(
+	{init: _recursion$symulator_client_elm$App_Init$init, view: _recursion$symulator_client_elm$App_View$root, update: _recursion$symulator_client_elm$App_Update$update, subscriptions: _recursion$symulator_client_elm$Main$subscriptions})(
+	A2(
+		_elm_lang$core$Json_Decode$andThen,
+		function (images) {
+			return _elm_lang$core$Json_Decode$succeed(
+				{images: images});
+		},
+		A2(
+			_elm_lang$core$Json_Decode$field,
+			'images',
+			A2(
+				_elm_lang$core$Json_Decode$andThen,
+				function (loading) {
+					return _elm_lang$core$Json_Decode$succeed(
+						{loading: loading});
+				},
+				A2(_elm_lang$core$Json_Decode$field, 'loading', _elm_lang$core$Json_Decode$string)))));

@@ -1,0 +1,43 @@
+var _recursion$symulator_client_elm$UI_Selector_View$hudButton = F2(
+	function (name, action) {
+		return A2(
+			_elm_lang$html$Html$button,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Events$onClick(action),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$class('hud selector-button'),
+					_1: {ctor: '[]'}
+				}
+			},
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html$text(name),
+				_1: {ctor: '[]'}
+			});
+	});
+var _recursion$symulator_client_elm$UI_Selector_View$render = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$id('selector'),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_recursion$symulator_client_elm$UI_Selector_View$hudButton,
+				'Designate',
+				_recursion$symulator_client_elm$UI_Selector_Model$ChangeMode(_recursion$symulator_client_elm$UI_Selector_Model$Designate)),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_recursion$symulator_client_elm$UI_Selector_View$hudButton,
+					'Undesignate',
+					_recursion$symulator_client_elm$UI_Selector_Model$ChangeMode(_recursion$symulator_client_elm$UI_Selector_Model$Undesignate)),
+				_1: {ctor: '[]'}
+			}
+		});
+};

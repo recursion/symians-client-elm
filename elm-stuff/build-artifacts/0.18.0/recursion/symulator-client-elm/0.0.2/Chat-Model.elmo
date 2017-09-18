@@ -1,0 +1,29 @@
+var _recursion$symulator_client_elm$Chat_Model$defaultChannel = 'system:chat';
+var _recursion$symulator_client_elm$Chat_Model$newMsgEvent = 'new:msg';
+var _recursion$symulator_client_elm$Chat_Model$Model = F2(
+	function (a, b) {
+		return {name: a, messages: b};
+	});
+var _recursion$symulator_client_elm$Chat_Model$initModel = function (channelName) {
+	return A2(
+		_recursion$symulator_client_elm$Chat_Model$Model,
+		channelName,
+		{ctor: '[]'});
+};
+var _recursion$symulator_client_elm$Chat_Model$ChatMessage = F2(
+	function (a, b) {
+		return {user: a, body: b};
+	});
+var _recursion$symulator_client_elm$Chat_Model$ShowLeftMessage = {ctor: 'ShowLeftMessage'};
+var _recursion$symulator_client_elm$Chat_Model$ShowJoinedMessage = {ctor: 'ShowJoinedMessage'};
+var _recursion$symulator_client_elm$Chat_Model$LeaveChannel = {ctor: 'LeaveChannel'};
+var _recursion$symulator_client_elm$Chat_Model$JoinChannel = {ctor: 'JoinChannel'};
+var _recursion$symulator_client_elm$Chat_Model$ReceiveChatMessage = function (a) {
+	return {ctor: 'ReceiveChatMessage', _0: a};
+};
+var _recursion$symulator_client_elm$Chat_Model$initData = {
+	ctor: '_Tuple3',
+	_0: _recursion$symulator_client_elm$Chat_Model$ShowJoinedMessage,
+	_1: _recursion$symulator_client_elm$Chat_Model$ShowLeftMessage,
+	_2: {ctor: '_Tuple2', _0: _recursion$symulator_client_elm$Chat_Model$newMsgEvent, _1: _recursion$symulator_client_elm$Chat_Model$ReceiveChatMessage}
+};

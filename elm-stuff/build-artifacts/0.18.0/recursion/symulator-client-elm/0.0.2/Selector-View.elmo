@@ -1,0 +1,44 @@
+var _recursion$symulator_client_elm$Selector_View$hudButton = F2(
+	function (name, action) {
+		return A3(
+			_mdgriffith$style_elements$Element$button,
+			_recursion$symulator_client_elm$App_Styles$Hud,
+			{
+				ctor: '::',
+				_0: _mdgriffith$style_elements$Element_Events$onClick(action),
+				_1: {
+					ctor: '::',
+					_0: _mdgriffith$style_elements$Element_Attributes$width(_mdgriffith$style_elements$Element_Attributes$fill),
+					_1: {ctor: '[]'}
+				}
+			},
+			_mdgriffith$style_elements$Element$text(name));
+	});
+var _recursion$symulator_client_elm$Selector_View$render = function (model) {
+	return A3(
+		_mdgriffith$style_elements$Element$row,
+		_recursion$symulator_client_elm$App_Styles$None,
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: A2(
+				_recursion$symulator_client_elm$Selector_View$hudButton,
+				'Designate',
+				_recursion$symulator_client_elm$Selector_Model$ChangeMode(_recursion$symulator_client_elm$Selector_Model$Designate)),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_recursion$symulator_client_elm$Selector_View$hudButton,
+					'Undesignate',
+					_recursion$symulator_client_elm$Selector_Model$ChangeMode(_recursion$symulator_client_elm$Selector_Model$Undesignate)),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_recursion$symulator_client_elm$Selector_View$hudButton,
+						'Zone',
+						_recursion$symulator_client_elm$Selector_Model$ChangeMode(_recursion$symulator_client_elm$Selector_Model$SelectRect)),
+					_1: {ctor: '[]'}
+				}
+			}
+		});
+};

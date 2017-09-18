@@ -1,0 +1,80 @@
+var _mdgriffith$style_elements$Style_Filter$sepia = function (x) {
+	return _mdgriffith$style_elements$Style_Internal_Model$Filters(
+		{
+			ctor: '::',
+			_0: _mdgriffith$style_elements$Style_Internal_Model$Sepia(x),
+			_1: {ctor: '[]'}
+		});
+};
+var _mdgriffith$style_elements$Style_Filter$saturate = function (x) {
+	return _mdgriffith$style_elements$Style_Internal_Model$Filters(
+		{
+			ctor: '::',
+			_0: _mdgriffith$style_elements$Style_Internal_Model$Saturate(x),
+			_1: {ctor: '[]'}
+		});
+};
+var _mdgriffith$style_elements$Style_Filter$opacity = function (x) {
+	return _mdgriffith$style_elements$Style_Internal_Model$Filters(
+		{
+			ctor: '::',
+			_0: _mdgriffith$style_elements$Style_Internal_Model$OpacityFilter(x),
+			_1: {ctor: '[]'}
+		});
+};
+var _mdgriffith$style_elements$Style_Filter$invert = function (x) {
+	return _mdgriffith$style_elements$Style_Internal_Model$Filters(
+		{
+			ctor: '::',
+			_0: _mdgriffith$style_elements$Style_Internal_Model$Invert(x),
+			_1: {ctor: '[]'}
+		});
+};
+var _mdgriffith$style_elements$Style_Filter$hueRotate = function (x) {
+	return _mdgriffith$style_elements$Style_Internal_Model$Filters(
+		{
+			ctor: '::',
+			_0: _mdgriffith$style_elements$Style_Internal_Model$HueRotate(x),
+			_1: {ctor: '[]'}
+		});
+};
+var _mdgriffith$style_elements$Style_Filter$grayscale = function (x) {
+	return _mdgriffith$style_elements$Style_Internal_Model$Filters(
+		{
+			ctor: '::',
+			_0: _mdgriffith$style_elements$Style_Internal_Model$Grayscale(x),
+			_1: {ctor: '[]'}
+		});
+};
+var _mdgriffith$style_elements$Style_Filter$contrast = function (x) {
+	return _mdgriffith$style_elements$Style_Internal_Model$Filters(
+		{
+			ctor: '::',
+			_0: _mdgriffith$style_elements$Style_Internal_Model$Contrast(x),
+			_1: {ctor: '[]'}
+		});
+};
+var _mdgriffith$style_elements$Style_Filter$brightness = function (x) {
+	return _mdgriffith$style_elements$Style_Internal_Model$Filters(
+		{
+			ctor: '::',
+			_0: _mdgriffith$style_elements$Style_Internal_Model$Brightness(x),
+			_1: {ctor: '[]'}
+		});
+};
+var _mdgriffith$style_elements$Style_Filter$blur = function (x) {
+	return _mdgriffith$style_elements$Style_Internal_Model$Filters(
+		{
+			ctor: '::',
+			_0: _mdgriffith$style_elements$Style_Internal_Model$Blur(x),
+			_1: {ctor: '[]'}
+		});
+};
+var _mdgriffith$style_elements$Style_Filter$url = function (s) {
+	return _mdgriffith$style_elements$Style_Internal_Model$Filters(
+		{
+			ctor: '::',
+			_0: _mdgriffith$style_elements$Style_Internal_Model$FilterUrl(s),
+			_1: {ctor: '[]'}
+		});
+};

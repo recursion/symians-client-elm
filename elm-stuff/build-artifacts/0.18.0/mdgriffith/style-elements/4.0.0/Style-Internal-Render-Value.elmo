@@ -1,0 +1,259 @@
+var _mdgriffith$style_elements$Style_Internal_Render_Value$typeface = function (families) {
+	var renderFont = function (font) {
+		var _p0 = font;
+		switch (_p0.ctor) {
+			case 'Serif':
+				return 'serif';
+			case 'SansSerif':
+				return 'sans-serif';
+			case 'Cursive':
+				return 'cursive';
+			case 'Fantasy':
+				return 'fantasy';
+			case 'Monospace':
+				return 'monospace';
+			case 'FontName':
+				return A2(
+					_elm_lang$core$Basics_ops['++'],
+					'\"',
+					A2(_elm_lang$core$Basics_ops['++'], _p0._0, '\"'));
+			default:
+				return A2(
+					_elm_lang$core$Basics_ops['++'],
+					'\"',
+					A2(_elm_lang$core$Basics_ops['++'], _p0._0, '\"'));
+		}
+	};
+	return A2(
+		_elm_lang$core$String$join,
+		', ',
+		A2(_elm_lang$core$List$map, renderFont, families));
+};
+var _mdgriffith$style_elements$Style_Internal_Render_Value$gridPosition = function (_p1) {
+	var _p2 = _p1;
+	var _p7 = _p2._0.width;
+	var _p6 = _p2._0.height;
+	var _p3 = _p2._0.start;
+	var x = _p3._0;
+	var y = _p3._1;
+	var _p4 = {ctor: '_Tuple2', _0: y + 1, _1: (y + 1) + _p6};
+	var rowStart = _p4._0;
+	var rowEnd = _p4._1;
+	var _p5 = {ctor: '_Tuple2', _0: x + 1, _1: (x + 1) + _p7};
+	var colStart = _p5._0;
+	var colEnd = _p5._1;
+	return (_elm_lang$core$Native_Utils.eq(_p7, 0) || _elm_lang$core$Native_Utils.eq(_p6, 0)) ? _elm_lang$core$Maybe$Nothing : _elm_lang$core$Maybe$Just(
+		A2(
+			_elm_lang$core$String$join,
+			' / ',
+			{
+				ctor: '::',
+				_0: _elm_lang$core$Basics$toString(rowStart),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$core$Basics$toString(colStart),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$core$Basics$toString(rowEnd),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$core$Basics$toString(colEnd),
+							_1: {ctor: '[]'}
+						}
+					}
+				}
+			}));
+};
+var _mdgriffith$style_elements$Style_Internal_Render_Value$color = function (color) {
+	var _p8 = _elm_lang$core$Color$toRgb(color);
+	var red = _p8.red;
+	var green = _p8.green;
+	var blue = _p8.blue;
+	var alpha = _p8.alpha;
+	return A2(
+		_elm_lang$core$Basics_ops['++'],
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			'rgba(',
+			_elm_lang$core$Basics$toString(red)),
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				',',
+				_elm_lang$core$Basics$toString(green)),
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					',',
+					_elm_lang$core$Basics$toString(blue)),
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					',',
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						_elm_lang$core$Basics$toString(alpha),
+						')')))));
+};
+var _mdgriffith$style_elements$Style_Internal_Render_Value$shadow = function (_p9) {
+	var _p10 = _p9;
+	var _p11 = _p10._0;
+	return A2(
+		_elm_lang$core$String$join,
+		' ',
+		A2(
+			_elm_lang$core$List$filterMap,
+			_elm_lang$core$Basics$identity,
+			{
+				ctor: '::',
+				_0: _elm_lang$core$Native_Utils.eq(_p11.kind, 'inset') ? _elm_lang$core$Maybe$Just('inset') : _elm_lang$core$Maybe$Nothing,
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$core$Maybe$Just(
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							_elm_lang$core$Basics$toString(
+								_elm_lang$core$Tuple$first(_p11.offset)),
+							'px')),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$core$Maybe$Just(
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								_elm_lang$core$Basics$toString(
+									_elm_lang$core$Tuple$second(_p11.offset)),
+								'px')),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$core$Maybe$Just(
+								A2(
+									_elm_lang$core$Basics_ops['++'],
+									_elm_lang$core$Basics$toString(_p11.blur),
+									'px')),
+							_1: {
+								ctor: '::',
+								_0: (_elm_lang$core$Native_Utils.eq(_p11.kind, 'text') || _elm_lang$core$Native_Utils.eq(_p11.kind, 'drop')) ? _elm_lang$core$Maybe$Nothing : _elm_lang$core$Maybe$Just(
+									A2(
+										_elm_lang$core$Basics_ops['++'],
+										_elm_lang$core$Basics$toString(_p11.size),
+										'px')),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$core$Maybe$Just(
+										_mdgriffith$style_elements$Style_Internal_Render_Value$color(_p11.color)),
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					}
+				}
+			}));
+};
+var _mdgriffith$style_elements$Style_Internal_Render_Value$parentAdjustedLength = F2(
+	function (len, adjustment) {
+		var _p12 = len;
+		switch (_p12.ctor) {
+			case 'Px':
+				return A2(
+					_elm_lang$core$Basics_ops['++'],
+					_elm_lang$core$Basics$toString(_p12._0),
+					'px');
+			case 'Percent':
+				return A2(
+					_elm_lang$core$Basics_ops['++'],
+					'calc(',
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						_elm_lang$core$Basics$toString(_p12._0),
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							'% - ',
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								_elm_lang$core$Basics$toString(adjustment),
+								'px)'))));
+			case 'Auto':
+				return 'auto';
+			case 'Fill':
+				return A2(
+					_elm_lang$core$Basics_ops['++'],
+					'calc(100% - ',
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						_elm_lang$core$Basics$toString(adjustment),
+						'px)'));
+			default:
+				return A2(
+					_elm_lang$core$Basics_ops['++'],
+					'calc(',
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						_elm_lang$core$Basics$toString(_p12._0),
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							'% + ',
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								_elm_lang$core$Basics$toString(_p12._1),
+								'px)'))));
+		}
+	});
+var _mdgriffith$style_elements$Style_Internal_Render_Value$length = function (l) {
+	var _p13 = l;
+	switch (_p13.ctor) {
+		case 'Px':
+			return A2(
+				_elm_lang$core$Basics_ops['++'],
+				_elm_lang$core$Basics$toString(_p13._0),
+				'px');
+		case 'Percent':
+			return A2(
+				_elm_lang$core$Basics_ops['++'],
+				_elm_lang$core$Basics$toString(_p13._0),
+				'%');
+		case 'Auto':
+			return 'auto';
+		case 'Fill':
+			return '100%';
+		default:
+			return A2(
+				_elm_lang$core$Basics_ops['++'],
+				'calc(',
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					_elm_lang$core$Basics$toString(_p13._0),
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						'% + ',
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							_elm_lang$core$Basics$toString(_p13._1),
+							'px)'))));
+	}
+};
+var _mdgriffith$style_elements$Style_Internal_Render_Value$box = function (_p14) {
+	var _p15 = _p14;
+	return A2(
+		_elm_lang$core$Basics_ops['++'],
+		_elm_lang$core$Basics$toString(_p15._0),
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			'px ',
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				_elm_lang$core$Basics$toString(_p15._1),
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					'px ',
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						_elm_lang$core$Basics$toString(_p15._2),
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							'px ',
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								_elm_lang$core$Basics$toString(_p15._3),
+								'px')))))));
+};

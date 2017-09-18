@@ -1,0 +1,40 @@
+var _recursion$symulator_client_elm$World_View$_p0 = _rtfeldman$elm_css_helpers$Html_CssHelpers$withNamespace('symians');
+var _recursion$symulator_client_elm$World_View$id = _recursion$symulator_client_elm$World_View$_p0.id;
+var _recursion$symulator_client_elm$World_View$class = _recursion$symulator_client_elm$World_View$_p0.$class;
+var _recursion$symulator_client_elm$World_View$classList = _recursion$symulator_client_elm$World_View$_p0.classList;
+var _recursion$symulator_client_elm$World_View$render = F2(
+	function (world, ui) {
+		return A2(
+			_elm_lang$svg$Svg$svg,
+			{
+				ctor: '::',
+				_0: _elm_lang$svg$Svg_Attributes$height('100%'),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$svg$Svg_Attributes$width('100%'),
+					_1: {
+						ctor: '::',
+						_0: _recursion$symulator_client_elm$World_View$id(_recursion$symulator_client_elm$App_Styles$WorldRenderer),
+						_1: {ctor: '[]'}
+					}
+				}
+			},
+			A2(
+				_elm_lang$core$List$map,
+				function (loc) {
+					return A2(_recursion$symulator_client_elm$World_Location$render, loc, ui);
+				},
+				A2(
+					_elm_lang$core$List$map,
+					_recursion$symulator_client_elm$World_Location$get(world.locations),
+					A2(
+						_elm_lang$core$List$map,
+						_recursion$symulator_client_elm$World_Coordinates$hash,
+						A2(
+							_elm_lang$core$List$map,
+							function (_p1) {
+								var _p2 = _p1;
+								return A3(_recursion$symulator_client_elm$World_Models$Coordinates, _p2._0, _p2._1, ui.camera.position.z);
+							},
+							_recursion$symulator_client_elm$UI_Camera_Utils$getScreenLocations(ui.camera))))));
+	});

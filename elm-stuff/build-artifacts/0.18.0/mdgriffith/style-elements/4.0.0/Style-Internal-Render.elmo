@@ -1,0 +1,783 @@
+var _mdgriffith$style_elements$Style_Internal_Render$renderVariationProp = F2(
+	function (parentClass, prop) {
+		var _p0 = prop;
+		switch (_p0.ctor) {
+			case 'Child':
+				return _elm_lang$core$Maybe$Nothing;
+			case 'Variation':
+				return _elm_lang$core$Maybe$Nothing;
+			case 'PseudoElement':
+				return function (_p1) {
+					return _elm_lang$core$Maybe$Just(
+						_mdgriffith$style_elements$Style_Internal_Intermediate$SubClass(
+							_mdgriffith$style_elements$Style_Internal_Intermediate$Class(_p1)));
+				}(
+					{
+						selector: A2(
+							_elm_lang$core$Debug$log,
+							'rendering variation pseudo',
+							A2(_mdgriffith$style_elements$Style_Internal_Selector$pseudo, _p0._0, parentClass)),
+						props: A2(
+							_elm_lang$core$List$filterMap,
+							_mdgriffith$style_elements$Style_Internal_Render$renderVariationProp(parentClass),
+							_p0._1)
+					});
+			case 'MediaQuery':
+				var _p3 = _p0._0;
+				return function (_p2) {
+					return _elm_lang$core$Maybe$Just(
+						_mdgriffith$style_elements$Style_Internal_Intermediate$SubClass(
+							_mdgriffith$style_elements$Style_Internal_Intermediate$Media(_p2)));
+				}(
+					{
+						query: A2(_elm_lang$core$Basics_ops['++'], '@media ', _p3),
+						selector: parentClass,
+						props: A2(
+							_elm_lang$core$List$map,
+							_mdgriffith$style_elements$Style_Internal_Intermediate$asMediaQuery(_p3),
+							A2(
+								_elm_lang$core$List$filterMap,
+								_mdgriffith$style_elements$Style_Internal_Render$renderVariationProp(parentClass),
+								_p0._1))
+					});
+			case 'Exact':
+				return function (_p4) {
+					return _elm_lang$core$Maybe$Just(
+						_mdgriffith$style_elements$Style_Internal_Intermediate$props(_p4));
+				}(
+					{
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: _p0._0, _1: _p0._1},
+						_1: {ctor: '[]'}
+					});
+			case 'Visibility':
+				return function (_p5) {
+					return _elm_lang$core$Maybe$Just(
+						_mdgriffith$style_elements$Style_Internal_Intermediate$props(_p5));
+				}(
+					_mdgriffith$style_elements$Style_Internal_Render_Property$visibility(_p0._0));
+			case 'Position':
+				return function (_p6) {
+					return _elm_lang$core$Maybe$Just(
+						_mdgriffith$style_elements$Style_Internal_Intermediate$props(_p6));
+				}(
+					_mdgriffith$style_elements$Style_Internal_Render_Property$position(_p0._0));
+			case 'Font':
+				return function (_p7) {
+					return _elm_lang$core$Maybe$Just(
+						_mdgriffith$style_elements$Style_Internal_Intermediate$props(_p7));
+				}(
+					{
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: _p0._0, _1: _p0._1},
+						_1: {ctor: '[]'}
+					});
+			case 'FontFamily':
+				return function (_p8) {
+					return _elm_lang$core$Maybe$Just(
+						_mdgriffith$style_elements$Style_Internal_Intermediate$props(_p8));
+				}(
+					{
+						ctor: '::',
+						_0: {
+							ctor: '_Tuple2',
+							_0: 'font-family',
+							_1: _mdgriffith$style_elements$Style_Internal_Render_Value$typeface(_p0._0)
+						},
+						_1: {ctor: '[]'}
+					});
+			case 'Layout':
+				return function (_p9) {
+					return _elm_lang$core$Maybe$Just(
+						_mdgriffith$style_elements$Style_Internal_Intermediate$props(_p9));
+				}(
+					A2(_mdgriffith$style_elements$Style_Internal_Render_Property$layout, false, _p0._0));
+			case 'Background':
+				return function (_p10) {
+					return _elm_lang$core$Maybe$Just(
+						_mdgriffith$style_elements$Style_Internal_Intermediate$props(_p10));
+				}(
+					_mdgriffith$style_elements$Style_Internal_Render_Property$background(_p0._0));
+			case 'Shadows':
+				return function (_p11) {
+					return _elm_lang$core$Maybe$Just(
+						_mdgriffith$style_elements$Style_Internal_Intermediate$props(_p11));
+				}(
+					_mdgriffith$style_elements$Style_Internal_Render_Property$shadow(_p0._0));
+			case 'Transform':
+				return function (_p12) {
+					return _elm_lang$core$Maybe$Just(
+						_mdgriffith$style_elements$Style_Internal_Intermediate$props(_p12));
+				}(
+					_mdgriffith$style_elements$Style_Internal_Render_Property$transformations(_p0._0));
+			case 'Filters':
+				return function (_p13) {
+					return _elm_lang$core$Maybe$Just(
+						_mdgriffith$style_elements$Style_Internal_Intermediate$props(_p13));
+				}(
+					_mdgriffith$style_elements$Style_Internal_Render_Property$filters(_p0._0));
+			case 'TextColor':
+				return function (_p14) {
+					return _elm_lang$core$Maybe$Just(
+						_mdgriffith$style_elements$Style_Internal_Intermediate$props(_p14));
+				}(
+					{
+						ctor: '::',
+						_0: {
+							ctor: '_Tuple2',
+							_0: 'color',
+							_1: _mdgriffith$style_elements$Style_Internal_Render_Value$color(_p0._0)
+						},
+						_1: {ctor: '[]'}
+					});
+			case 'SelectionColor':
+				return function (_p15) {
+					return _elm_lang$core$Maybe$Just(
+						_mdgriffith$style_elements$Style_Internal_Intermediate$SubClass(
+							_mdgriffith$style_elements$Style_Internal_Intermediate$Class(_p15)));
+				}(
+					{
+						selector: A2(_mdgriffith$style_elements$Style_Internal_Selector$pseudo, '::selection', parentClass),
+						props: {
+							ctor: '::',
+							_0: _mdgriffith$style_elements$Style_Internal_Intermediate$props(
+								{
+									ctor: '::',
+									_0: {
+										ctor: '_Tuple2',
+										_0: 'background-color',
+										_1: _mdgriffith$style_elements$Style_Internal_Render_Value$color(_p0._0)
+									},
+									_1: {ctor: '[]'}
+								}),
+							_1: {ctor: '[]'}
+						}
+					});
+			default:
+				return _elm_lang$core$Maybe$Just(
+					_mdgriffith$style_elements$Style_Internal_Intermediate$props(
+						{
+							ctor: '::',
+							_0: {
+								ctor: '_Tuple2',
+								_0: 'transition',
+								_1: A2(
+									_elm_lang$core$String$join,
+									', ',
+									A2(_elm_lang$core$List$map, _mdgriffith$style_elements$Style_Internal_Render_Property$transition, _p0._0))
+							},
+							_1: {ctor: '[]'}
+						}));
+		}
+	});
+var _mdgriffith$style_elements$Style_Internal_Render$renderProp = F2(
+	function (parentClass, prop) {
+		var _p16 = prop;
+		switch (_p16.ctor) {
+			case 'Child':
+				return function (_p17) {
+					return _mdgriffith$style_elements$Style_Internal_Intermediate$SubClass(
+						_mdgriffith$style_elements$Style_Internal_Intermediate$Class(_p17));
+				}(
+					{
+						selector: A2(
+							_mdgriffith$style_elements$Style_Internal_Selector$child,
+							parentClass,
+							_mdgriffith$style_elements$Style_Internal_Selector$select(_p16._0)),
+						props: A2(
+							_elm_lang$core$List$map,
+							_mdgriffith$style_elements$Style_Internal_Render$renderProp(parentClass),
+							_p16._1)
+					});
+			case 'Variation':
+				var selectVariation = A2(_mdgriffith$style_elements$Style_Internal_Selector$variant, parentClass, _p16._0);
+				return function (_p18) {
+					return _mdgriffith$style_elements$Style_Internal_Intermediate$SubClass(
+						_mdgriffith$style_elements$Style_Internal_Intermediate$Class(_p18));
+				}(
+					{
+						selector: selectVariation,
+						props: A2(
+							_elm_lang$core$List$filterMap,
+							_mdgriffith$style_elements$Style_Internal_Render$renderVariationProp(selectVariation),
+							_p16._1)
+					});
+			case 'PseudoElement':
+				return function (_p19) {
+					return _mdgriffith$style_elements$Style_Internal_Intermediate$SubClass(
+						_mdgriffith$style_elements$Style_Internal_Intermediate$Class(_p19));
+				}(
+					{
+						selector: A2(_mdgriffith$style_elements$Style_Internal_Selector$pseudo, _p16._0, parentClass),
+						props: A2(
+							_elm_lang$core$List$map,
+							_mdgriffith$style_elements$Style_Internal_Render$renderProp(parentClass),
+							_p16._1)
+					});
+			case 'MediaQuery':
+				var _p21 = _p16._0;
+				return function (_p20) {
+					return _mdgriffith$style_elements$Style_Internal_Intermediate$SubClass(
+						_mdgriffith$style_elements$Style_Internal_Intermediate$Media(_p20));
+				}(
+					{
+						query: A2(_elm_lang$core$Basics_ops['++'], '@media ', _p21),
+						selector: parentClass,
+						props: A2(
+							_elm_lang$core$List$map,
+							_mdgriffith$style_elements$Style_Internal_Intermediate$asMediaQuery(_p21),
+							A2(
+								_elm_lang$core$List$map,
+								_mdgriffith$style_elements$Style_Internal_Render$renderProp(parentClass),
+								_p16._1))
+					});
+			case 'Exact':
+				return _mdgriffith$style_elements$Style_Internal_Intermediate$props(
+					{
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: _p16._0, _1: _p16._1},
+						_1: {ctor: '[]'}
+					});
+			case 'Visibility':
+				return _mdgriffith$style_elements$Style_Internal_Intermediate$props(
+					_mdgriffith$style_elements$Style_Internal_Render_Property$visibility(_p16._0));
+			case 'Position':
+				return _mdgriffith$style_elements$Style_Internal_Intermediate$props(
+					_mdgriffith$style_elements$Style_Internal_Render_Property$position(_p16._0));
+			case 'Font':
+				return _mdgriffith$style_elements$Style_Internal_Intermediate$props(
+					{
+						ctor: '::',
+						_0: {ctor: '_Tuple2', _0: _p16._0, _1: _p16._1},
+						_1: {ctor: '[]'}
+					});
+			case 'Layout':
+				return _mdgriffith$style_elements$Style_Internal_Intermediate$props(
+					A2(_mdgriffith$style_elements$Style_Internal_Render_Property$layout, false, _p16._0));
+			case 'Background':
+				return _mdgriffith$style_elements$Style_Internal_Intermediate$props(
+					_mdgriffith$style_elements$Style_Internal_Render_Property$background(_p16._0));
+			case 'Shadows':
+				return _mdgriffith$style_elements$Style_Internal_Intermediate$props(
+					_mdgriffith$style_elements$Style_Internal_Render_Property$shadow(_p16._0));
+			case 'Transform':
+				return _mdgriffith$style_elements$Style_Internal_Intermediate$props(
+					_mdgriffith$style_elements$Style_Internal_Render_Property$transformations(_p16._0));
+			case 'Filters':
+				return _mdgriffith$style_elements$Style_Internal_Intermediate$props(
+					_mdgriffith$style_elements$Style_Internal_Render_Property$filters(_p16._0));
+			case 'SelectionColor':
+				return function (_p22) {
+					return _mdgriffith$style_elements$Style_Internal_Intermediate$SubClass(
+						_mdgriffith$style_elements$Style_Internal_Intermediate$Class(_p22));
+				}(
+					{
+						selector: A2(_mdgriffith$style_elements$Style_Internal_Selector$pseudo, '::selection', parentClass),
+						props: {
+							ctor: '::',
+							_0: _mdgriffith$style_elements$Style_Internal_Intermediate$props(
+								{
+									ctor: '::',
+									_0: {
+										ctor: '_Tuple2',
+										_0: 'background-color',
+										_1: _mdgriffith$style_elements$Style_Internal_Render_Value$color(_p16._0)
+									},
+									_1: {ctor: '[]'}
+								}),
+							_1: {ctor: '[]'}
+						}
+					});
+			case 'TextColor':
+				return _mdgriffith$style_elements$Style_Internal_Intermediate$props(
+					{
+						ctor: '::',
+						_0: {
+							ctor: '_Tuple2',
+							_0: 'color',
+							_1: _mdgriffith$style_elements$Style_Internal_Render_Value$color(_p16._0)
+						},
+						_1: {ctor: '[]'}
+					});
+			case 'Transitions':
+				return _mdgriffith$style_elements$Style_Internal_Intermediate$props(
+					{
+						ctor: '::',
+						_0: {
+							ctor: '_Tuple2',
+							_0: 'transition',
+							_1: A2(
+								_elm_lang$core$String$join,
+								', ',
+								A2(_elm_lang$core$List$map, _mdgriffith$style_elements$Style_Internal_Render_Property$transition, _p16._0))
+						},
+						_1: {ctor: '[]'}
+					});
+			default:
+				return _mdgriffith$style_elements$Style_Internal_Intermediate$props(
+					{
+						ctor: '::',
+						_0: {
+							ctor: '_Tuple2',
+							_0: 'font-family',
+							_1: _mdgriffith$style_elements$Style_Internal_Render_Value$typeface(_p16._0)
+						},
+						_1: {ctor: '[]'}
+					});
+		}
+	});
+var _mdgriffith$style_elements$Style_Internal_Render$preprocess = function (style) {
+	var _p23 = style;
+	if (_p23.ctor === 'Style') {
+		var mergeShadowsAndFilters = function (props) {
+			var combine = function (_p24) {
+				var _p25 = _p24;
+				return {
+					ctor: '::',
+					_0: _mdgriffith$style_elements$Style_Internal_Model$Filters(_p25.filters),
+					_1: {
+						ctor: '::',
+						_0: _mdgriffith$style_elements$Style_Internal_Model$Shadows(_p25.shadows),
+						_1: _p25.others
+					}
+				};
+			};
+			var gather = F2(
+				function (prop, existing) {
+					var _p26 = prop;
+					switch (_p26.ctor) {
+						case 'Filters':
+							return _elm_lang$core$Native_Utils.update(
+								existing,
+								{
+									filters: A2(_elm_lang$core$Basics_ops['++'], _p26._0, existing.filters)
+								});
+						case 'Shadows':
+							return _elm_lang$core$Native_Utils.update(
+								existing,
+								{
+									shadows: A2(_elm_lang$core$Basics_ops['++'], _p26._0, existing.shadows)
+								});
+						default:
+							return _elm_lang$core$Native_Utils.update(
+								existing,
+								{
+									others: {ctor: '::', _0: prop, _1: existing.others}
+								});
+					}
+				});
+			return combine(
+				A3(
+					_elm_lang$core$List$foldr,
+					gather,
+					{
+						filters: {ctor: '[]'},
+						shadows: {ctor: '[]'},
+						others: {ctor: '[]'}
+					},
+					props));
+		};
+		var mergeTransforms = function (props) {
+			var applyTransforms = function (_p27) {
+				var _p28 = _p27;
+				var _p29 = _p28._1;
+				var transformations = A2(
+					_elm_lang$core$List$filterMap,
+					_elm_lang$core$Basics$identity,
+					{
+						ctor: '::',
+						_0: _p28._0.translate,
+						_1: {
+							ctor: '::',
+							_0: _p28._0.rotate,
+							_1: {
+								ctor: '::',
+								_0: _p28._0.scale,
+								_1: {ctor: '[]'}
+							}
+						}
+					});
+				return _elm_lang$core$List$isEmpty(transformations) ? _p29 : {
+					ctor: '::',
+					_0: _mdgriffith$style_elements$Style_Internal_Model$Transform(transformations),
+					_1: _p29
+				};
+			};
+			var setIfNothing = F2(
+				function (x, maybeX) {
+					var _p30 = maybeX;
+					if (_p30.ctor === 'Nothing') {
+						return _elm_lang$core$Maybe$Just(x);
+					} else {
+						return _p30;
+					}
+				});
+			var gatherTransformStack = F2(
+				function (transformation, gathered) {
+					var _p31 = transformation;
+					switch (_p31.ctor) {
+						case 'Translate':
+							return _elm_lang$core$Native_Utils.update(
+								gathered,
+								{
+									translate: A2(
+										setIfNothing,
+										A3(_mdgriffith$style_elements$Style_Internal_Model$Translate, _p31._0, _p31._1, _p31._2),
+										gathered.translate)
+								});
+						case 'Rotate':
+							return _elm_lang$core$Native_Utils.update(
+								gathered,
+								{
+									rotate: A2(
+										setIfNothing,
+										_mdgriffith$style_elements$Style_Internal_Model$Rotate(_p31._0),
+										gathered.rotate)
+								});
+						case 'RotateAround':
+							return _elm_lang$core$Native_Utils.update(
+								gathered,
+								{
+									rotate: A2(
+										setIfNothing,
+										A4(_mdgriffith$style_elements$Style_Internal_Model$RotateAround, _p31._0, _p31._1, _p31._2, _p31._3),
+										gathered.rotate)
+								});
+						default:
+							return _elm_lang$core$Native_Utils.update(
+								gathered,
+								{
+									scale: A2(
+										setIfNothing,
+										A3(_mdgriffith$style_elements$Style_Internal_Model$Scale, _p31._0, _p31._1, _p31._2),
+										gathered.scale)
+								});
+					}
+				});
+			var gatherTransforms = F2(
+				function (prop, _p32) {
+					var _p33 = _p32;
+					var _p36 = _p33._0;
+					var _p35 = _p33._1;
+					var _p34 = prop;
+					if (_p34.ctor === 'Transform') {
+						return {
+							ctor: '_Tuple2',
+							_0: A3(_elm_lang$core$List$foldr, gatherTransformStack, _p36, _p34._0),
+							_1: _p35
+						};
+					} else {
+						return {
+							ctor: '_Tuple2',
+							_0: _p36,
+							_1: {ctor: '::', _0: prop, _1: _p35}
+						};
+					}
+				});
+			return applyTransforms(
+				A3(
+					_elm_lang$core$List$foldr,
+					gatherTransforms,
+					{
+						ctor: '_Tuple2',
+						_0: {rotate: _elm_lang$core$Maybe$Nothing, scale: _elm_lang$core$Maybe$Nothing, translate: _elm_lang$core$Maybe$Nothing},
+						_1: {ctor: '[]'}
+					},
+					props));
+		};
+		var dropShadow = function (_p37) {
+			var _p38 = _p37;
+			return _elm_lang$core$Native_Utils.eq(_p38._0.kind, 'drop');
+		};
+		var overridePrevious = F2(
+			function (overridable, props) {
+				var eliminatePrevious = F2(
+					function (prop, _p39) {
+						var _p40 = _p39;
+						var _p42 = _p40._1;
+						var _p41 = _p40._0;
+						return (overridable(prop) && _p42) ? {ctor: '_Tuple2', _0: _p41, _1: _p42} : ((overridable(prop) && (!_p42)) ? {
+							ctor: '_Tuple2',
+							_0: {ctor: '::', _0: prop, _1: _p41},
+							_1: true
+						} : {
+							ctor: '_Tuple2',
+							_0: {ctor: '::', _0: prop, _1: _p41},
+							_1: _p42
+						});
+					});
+				return _elm_lang$core$Tuple$first(
+					A3(
+						_elm_lang$core$List$foldr,
+						eliminatePrevious,
+						{
+							ctor: '_Tuple2',
+							_0: {ctor: '[]'},
+							_1: false
+						},
+						props));
+			});
+		var prioritize = F2(
+			function (isPriority, props) {
+				var _p43 = A2(_elm_lang$core$List$partition, isPriority, props);
+				var high = _p43._0;
+				var low = _p43._1;
+				return A2(_elm_lang$core$Basics_ops['++'], low, high);
+			});
+		var shadows = function (prop) {
+			var _p44 = prop;
+			if (_p44.ctor === 'Shadows') {
+				return true;
+			} else {
+				return false;
+			}
+		};
+		var visible = function (prop) {
+			var _p45 = prop;
+			if (_p45.ctor === 'Visibility') {
+				return true;
+			} else {
+				return false;
+			}
+		};
+		var processed = mergeTransforms(
+			mergeShadowsAndFilters(
+				A2(
+					overridePrevious,
+					shadows,
+					A2(
+						prioritize,
+						shadows,
+						A2(
+							overridePrevious,
+							visible,
+							A2(prioritize, visible, _p23._1))))));
+		return A2(_mdgriffith$style_elements$Style_Internal_Model$Style, _p23._0, processed);
+	} else {
+		return style;
+	}
+};
+var _mdgriffith$style_elements$Style_Internal_Render$reorderImportAddReset = F2(
+	function (reset, styles) {
+		var reorder = F2(
+			function (style, _p46) {
+				var _p47 = _p46;
+				var _p50 = _p47._1;
+				var _p49 = _p47._0;
+				var _p48 = style;
+				if (_p48.ctor === 'Import') {
+					return {
+						ctor: '_Tuple2',
+						_0: {ctor: '::', _0: style, _1: _p49},
+						_1: _p50
+					};
+				} else {
+					return {
+						ctor: '_Tuple2',
+						_0: _p49,
+						_1: {ctor: '::', _0: style, _1: _p50}
+					};
+				}
+			});
+		var _p51 = A3(
+			_elm_lang$core$List$foldr,
+			reorder,
+			{
+				ctor: '_Tuple2',
+				_0: {ctor: '[]'},
+				_1: {ctor: '[]'}
+			},
+			styles);
+		var imports = _p51._0;
+		var allStyles = _p51._1;
+		var getFontStyle = function (style) {
+			var _p52 = style;
+			if (_p52.ctor === 'Style') {
+				var forFont = function (prop) {
+					var _p53 = prop;
+					if (_p53.ctor === 'FontFamily') {
+						var forImport = function (font) {
+							var _p54 = font;
+							if (_p54.ctor === 'ImportFont') {
+								return _elm_lang$core$Maybe$Just(_p54._1);
+							} else {
+								return _elm_lang$core$Maybe$Nothing;
+							}
+						};
+						return A2(_elm_lang$core$List$filterMap, forImport, _p53._0);
+					} else {
+						return {ctor: '[]'};
+					}
+				};
+				return A2(_elm_lang$core$List$concatMap, forFont, _p52._1);
+			} else {
+				return {ctor: '[]'};
+			}
+		};
+		var importedFonts = A2(
+			_elm_lang$core$List$map,
+			function (uri) {
+				return _mdgriffith$style_elements$Style_Internal_Model$Import(
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						'url(\'',
+						A2(_elm_lang$core$Basics_ops['++'], uri, '\')')));
+			},
+			function (_p55) {
+				return _elm_lang$core$Set$toList(
+					_elm_lang$core$Set$fromList(_p55));
+			}(
+				A2(_elm_lang$core$List$concatMap, getFontStyle, styles)));
+		return A2(
+			_elm_lang$core$Basics_ops['++'],
+			imports,
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				importedFonts,
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					{
+						ctor: '::',
+						_0: _mdgriffith$style_elements$Style_Internal_Model$Reset(reset),
+						_1: {ctor: '[]'}
+					},
+					allStyles)));
+	});
+var _mdgriffith$style_elements$Style_Internal_Render$spacing = function (box) {
+	var name = function () {
+		var _p56 = box;
+		return A2(
+			_elm_lang$core$Basics_ops['++'],
+			'spacing-',
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				_elm_lang$core$Basics$toString(_p56._0),
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					'-',
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						_elm_lang$core$Basics$toString(_p56._1),
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							'-',
+							A2(
+								_elm_lang$core$Basics_ops['++'],
+								_elm_lang$core$Basics$toString(_p56._2),
+								A2(
+									_elm_lang$core$Basics_ops['++'],
+									'-',
+									A2(
+										_elm_lang$core$Basics_ops['++'],
+										_elm_lang$core$Basics$toString(_p56._3),
+										' > *:not(.nospacing)'))))))));
+	}();
+	return function (cls) {
+		return {
+			ctor: '_Tuple2',
+			_0: name,
+			_1: A2(
+				_elm_lang$core$Basics_ops['++'],
+				'.',
+				A2(_elm_lang$core$Basics_ops['++'], name, cls))
+		};
+	}(
+		A2(
+			_mdgriffith$style_elements$Style_Internal_Render_Css$brace,
+			0,
+			A2(
+				_mdgriffith$style_elements$Style_Internal_Render_Css$prop,
+				2,
+				{
+					ctor: '_Tuple2',
+					_0: 'margin',
+					_1: _mdgriffith$style_elements$Style_Internal_Render_Value$box(box)
+				})));
+};
+var _mdgriffith$style_elements$Style_Internal_Render$class = F2(
+	function (name, props) {
+		var renderedProps = A2(
+			_elm_lang$core$String$join,
+			'\n',
+			A2(
+				_elm_lang$core$List$map,
+				_mdgriffith$style_elements$Style_Internal_Render_Css$prop(2),
+				props));
+		return A2(
+			_elm_lang$core$Basics_ops['++'],
+			'.',
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				name,
+				A2(_mdgriffith$style_elements$Style_Internal_Render_Css$brace, 0, renderedProps)));
+	});
+var _mdgriffith$style_elements$Style_Internal_Render$renderStyle = F2(
+	function (guarded, style) {
+		var _p57 = style;
+		switch (_p57.ctor) {
+			case 'Reset':
+				return _mdgriffith$style_elements$Style_Internal_Intermediate$Free(_p57._0);
+			case 'Import':
+				return _mdgriffith$style_elements$Style_Internal_Intermediate$Free(
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						'@import ',
+						A2(_elm_lang$core$Basics_ops['++'], _p57._0, ';')));
+			case 'RawStyle':
+				return _mdgriffith$style_elements$Style_Internal_Intermediate$Free(
+					A2(_mdgriffith$style_elements$Style_Internal_Render$class, _p57._0, _p57._1));
+			default:
+				var guard = function (i) {
+					return guarded ? _mdgriffith$style_elements$Style_Internal_Intermediate$guard(i) : i;
+				};
+				var selector = _mdgriffith$style_elements$Style_Internal_Selector$select(_p57._0);
+				var inter = _mdgriffith$style_elements$Style_Internal_Intermediate$Class(
+					{
+						selector: selector,
+						props: A2(
+							_elm_lang$core$List$map,
+							_mdgriffith$style_elements$Style_Internal_Render$renderProp(selector),
+							_p57._1)
+					});
+				return guard(inter);
+		}
+	});
+var _mdgriffith$style_elements$Style_Internal_Render$stylesheet = F3(
+	function (reset, guard, batched) {
+		return _mdgriffith$style_elements$Style_Internal_Intermediate$finalize(
+			A2(
+				_elm_lang$core$List$map,
+				function (_p58) {
+					return A2(
+						_mdgriffith$style_elements$Style_Internal_Render$renderStyle,
+						guard,
+						_mdgriffith$style_elements$Style_Internal_Render$preprocess(_p58));
+				},
+				A2(
+					_mdgriffith$style_elements$Style_Internal_Render$reorderImportAddReset,
+					reset,
+					_mdgriffith$style_elements$Style_Internal_Batchable$toList(batched))));
+	});
+var _mdgriffith$style_elements$Style_Internal_Render$unbatchedStylesheet = F2(
+	function (guard, styles) {
+		return _mdgriffith$style_elements$Style_Internal_Intermediate$finalize(
+			A2(
+				_elm_lang$core$List$map,
+				function (_p59) {
+					return A2(
+						_mdgriffith$style_elements$Style_Internal_Render$renderStyle,
+						guard,
+						_mdgriffith$style_elements$Style_Internal_Render$preprocess(_p59));
+				},
+				styles));
+	});
+var _mdgriffith$style_elements$Style_Internal_Render$single = F2(
+	function (guard, style) {
+		return function (_p60) {
+			return _mdgriffith$style_elements$Style_Internal_Intermediate$raw(
+				A2(
+					_mdgriffith$style_elements$Style_Internal_Render$renderStyle,
+					guard,
+					_mdgriffith$style_elements$Style_Internal_Render$preprocess(_p60)));
+		}(style);
+	});

@@ -1,0 +1,18 @@
+var _recursion$symulator_client_elm$UI_Inspector_Model$initInspection = {
+	position: A3(_recursion$symulator_client_elm$World_Models$Coordinates, 0, 0, 0),
+	loc: _recursion$symulator_client_elm$World_Models$initLocation
+};
+var _recursion$symulator_client_elm$UI_Inspector_Model$init = {visible: true, inspection: _recursion$symulator_client_elm$UI_Inspector_Model$initInspection};
+var _recursion$symulator_client_elm$UI_Inspector_Model$Model = F2(
+	function (a, b) {
+		return {visible: a, inspection: b};
+	});
+var _recursion$symulator_client_elm$UI_Inspector_Model$Inspection = F2(
+	function (a, b) {
+		return {position: a, loc: b};
+	});
+var _recursion$symulator_client_elm$UI_Inspector_Model$ToggleVisible = {ctor: 'ToggleVisible'};
+var _recursion$symulator_client_elm$UI_Inspector_Model$SetInspected = F2(
+	function (a, b) {
+		return {ctor: 'SetInspected', _0: a, _1: b};
+	});

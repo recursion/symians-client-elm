@@ -1,0 +1,59 @@
+var _user$project$App_Model$Model = F5(
+	function (a, b, c, d, e) {
+		return {socket: a, chat: b, auth: c, ui: d, world: e};
+	});
+var _user$project$App_Model$Flags = function (a) {
+	return {images: a};
+};
+var _user$project$App_Model$Loaded = function (a) {
+	return {ctor: 'Loaded', _0: a};
+};
+var _user$project$App_Model$Loading = {ctor: 'Loading'};
+var _user$project$App_Model$initModel = F2(
+	function (socket, chatModel) {
+		return A5(_user$project$App_Model$Model, socket, chatModel, _user$project$App_Auth$init, _user$project$UI_Model$initModel, _user$project$App_Model$Loading);
+	});
+var _user$project$App_Model$NoAction = {ctor: 'NoAction'};
+var _user$project$App_Model$Send = F3(
+	function (a, b, c) {
+		return {ctor: 'Send', _0: a, _1: b, _2: c};
+	});
+var _user$project$App_Model$Leave = function (a) {
+	return {ctor: 'Leave', _0: a};
+};
+var _user$project$App_Model$JoinWithHandlers = F3(
+	function (a, b, c) {
+		return {ctor: 'JoinWithHandlers', _0: a, _1: b, _2: c};
+	});
+var _user$project$App_Model$Join = function (a) {
+	return {ctor: 'Join', _0: a};
+};
+var _user$project$App_Model$NoOp = {ctor: 'NoOp'};
+var _user$project$App_Model$Disconnected = {ctor: 'Disconnected'};
+var _user$project$App_Model$Connected = {ctor: 'Connected'};
+var _user$project$App_Model$ReceiveWorldData = function (a) {
+	return {ctor: 'ReceiveWorldData', _0: a};
+};
+var _user$project$App_Model$ReceiveToken = function (a) {
+	return {ctor: 'ReceiveToken', _0: a};
+};
+var _user$project$App_Model$PhoenixMsg = function (a) {
+	return {ctor: 'PhoenixMsg', _0: a};
+};
+var _user$project$App_Model$UIMsg = function (a) {
+	return {ctor: 'UIMsg', _0: a};
+};
+var _user$project$App_Model$init = F2(
+	function (socket, chatModel) {
+		var _p0 = _user$project$UI_Model$init;
+		var uiModel = _p0._0;
+		var uiCmd = _p0._1;
+		return {
+			ctor: '_Tuple2',
+			_0: A5(_user$project$App_Model$Model, socket, chatModel, _user$project$App_Auth$init, uiModel, _user$project$App_Model$Loading),
+			_1: A2(_elm_lang$core$Platform_Cmd$map, _user$project$App_Model$UIMsg, uiCmd)
+		};
+	});
+var _user$project$App_Model$ChatMsg = function (a) {
+	return {ctor: 'ChatMsg', _0: a};
+};

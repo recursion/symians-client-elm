@@ -1,0 +1,247 @@
+var _recursion$symulator_client_elm$UI_Console$consoleInput = function (model) {
+	return A3(
+		_mdgriffith$style_elements$Element$el,
+		_recursion$symulator_client_elm$App_Styles$None,
+		{
+			ctor: '::',
+			_0: _mdgriffith$style_elements$Element_Attributes$width(_mdgriffith$style_elements$Element_Attributes$fill),
+			_1: {ctor: '[]'}
+		},
+		A3(
+			_mdgriffith$style_elements$Element_Input$text,
+			_recursion$symulator_client_elm$App_Styles$Hud,
+			{
+				ctor: '::',
+				_0: _mdgriffith$style_elements$Element_Events$onFocus(_recursion$symulator_client_elm$UI_Model$ToggleConsoleFocus),
+				_1: {
+					ctor: '::',
+					_0: _mdgriffith$style_elements$Element_Events$onBlur(_recursion$symulator_client_elm$UI_Model$ToggleConsoleFocus),
+					_1: {
+						ctor: '::',
+						_0: _mdgriffith$style_elements$Element_Attributes$width(_mdgriffith$style_elements$Element_Attributes$fill),
+						_1: {
+							ctor: '::',
+							_0: _mdgriffith$style_elements$Element_Attributes$padding(3),
+							_1: {ctor: '[]'}
+						}
+					}
+				}
+			},
+			{
+				value: model.console.input,
+				onChange: _recursion$symulator_client_elm$UI_Model$SetConsoleInput,
+				label: _mdgriffith$style_elements$Element_Input$placeholder(
+					{
+						label: _mdgriffith$style_elements$Element_Input$labelLeft(_mdgriffith$style_elements$Element$empty),
+						text: 'Enter \\help for help.'
+					}),
+				options: {ctor: '[]'}
+			}));
+};
+var _recursion$symulator_client_elm$UI_Console$console = function (model) {
+	return A3(
+		_mdgriffith$style_elements$Element$row,
+		_recursion$symulator_client_elm$App_Styles$None,
+		{
+			ctor: '::',
+			_0: _mdgriffith$style_elements$Element_Attributes$width(_mdgriffith$style_elements$Element_Attributes$fill),
+			_1: {
+				ctor: '::',
+				_0: _mdgriffith$style_elements$Element_Attributes$padding(2),
+				_1: {
+					ctor: '::',
+					_0: _mdgriffith$style_elements$Element_Attributes$spacing(3),
+					_1: {ctor: '[]'}
+				}
+			}
+		},
+		{
+			ctor: '::',
+			_0: A3(
+				_mdgriffith$style_elements$Element$button,
+				_recursion$symulator_client_elm$App_Styles$Hud,
+				{
+					ctor: '::',
+					_0: _mdgriffith$style_elements$Element_Events$onClick(_recursion$symulator_client_elm$UI_Model$SubmitConsoleInput),
+					_1: {ctor: '[]'}
+				},
+				_mdgriffith$style_elements$Element$text('send')),
+			_1: {
+				ctor: '::',
+				_0: _recursion$symulator_client_elm$UI_Console$consoleInput(model),
+				_1: {ctor: '[]'}
+			}
+		});
+};
+var _recursion$symulator_client_elm$UI_Console$renderMessage = function (msg) {
+	return A3(
+		_mdgriffith$style_elements$Element$el,
+		_recursion$symulator_client_elm$App_Styles$None,
+		{
+			ctor: '::',
+			_0: _mdgriffith$style_elements$Element_Attributes$padding(3),
+			_1: {ctor: '[]'}
+		},
+		_mdgriffith$style_elements$Element$text(msg));
+};
+var _recursion$symulator_client_elm$UI_Console$renderMessages = F2(
+	function (chatModel, model) {
+		return model.console.scroll ? A3(
+			_mdgriffith$style_elements$Element$column,
+			_recursion$symulator_client_elm$App_Styles$None,
+			{
+				ctor: '::',
+				_0: _mdgriffith$style_elements$Element_Attributes$padding(2),
+				_1: {
+					ctor: '::',
+					_0: _mdgriffith$style_elements$Element_Attributes$height(
+						_mdgriffith$style_elements$Element_Attributes$px(100)),
+					_1: {
+						ctor: '::',
+						_0: _mdgriffith$style_elements$Element_Attributes$width(_mdgriffith$style_elements$Element_Attributes$fill),
+						_1: {
+							ctor: '::',
+							_0: _mdgriffith$style_elements$Element_Attributes$yScrollbar,
+							_1: {
+								ctor: '::',
+								_0: _mdgriffith$style_elements$Element_Events$onMouseOver(_recursion$symulator_client_elm$UI_Model$ToggleConsoleScrollBar),
+								_1: {
+									ctor: '::',
+									_0: _mdgriffith$style_elements$Element_Events$onMouseOut(_recursion$symulator_client_elm$UI_Model$ToggleConsoleScrollBar),
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					}
+				}
+			},
+			A2(
+				_elm_lang$core$List$map,
+				_recursion$symulator_client_elm$UI_Console$renderMessage,
+				_elm_lang$core$List$reverse(chatModel.messages))) : A3(
+			_mdgriffith$style_elements$Element$column,
+			_recursion$symulator_client_elm$App_Styles$None,
+			{
+				ctor: '::',
+				_0: _mdgriffith$style_elements$Element_Attributes$padding(2),
+				_1: {
+					ctor: '::',
+					_0: _mdgriffith$style_elements$Element_Attributes$alignBottom,
+					_1: {
+						ctor: '::',
+						_0: _mdgriffith$style_elements$Element_Attributes$height(
+							_mdgriffith$style_elements$Element_Attributes$px(100)),
+						_1: {
+							ctor: '::',
+							_0: _mdgriffith$style_elements$Element_Attributes$width(_mdgriffith$style_elements$Element_Attributes$fill),
+							_1: {
+								ctor: '::',
+								_0: _mdgriffith$style_elements$Element_Events$onMouseOver(_recursion$symulator_client_elm$UI_Model$ToggleConsoleScrollBar),
+								_1: {
+									ctor: '::',
+									_0: _mdgriffith$style_elements$Element_Events$onMouseOut(_recursion$symulator_client_elm$UI_Model$ToggleConsoleScrollBar),
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					}
+				}
+			},
+			A2(
+				_elm_lang$core$List$map,
+				_recursion$symulator_client_elm$UI_Console$renderMessage,
+				_elm_lang$core$List$reverse(chatModel.messages)));
+	});
+var _recursion$symulator_client_elm$UI_Console$render = F2(
+	function (chatModel, model) {
+		return model.console.visible ? A3(
+			_mdgriffith$style_elements$Element$modal,
+			_recursion$symulator_client_elm$App_Styles$None,
+			{
+				ctor: '::',
+				_0: _mdgriffith$style_elements$Element_Attributes$alignBottom,
+				_1: {
+					ctor: '::',
+					_0: _mdgriffith$style_elements$Element_Attributes$alignLeft,
+					_1: {
+						ctor: '::',
+						_0: _mdgriffith$style_elements$Element_Attributes$width(
+							_mdgriffith$style_elements$Element_Attributes$percent(60)),
+						_1: {ctor: '[]'}
+					}
+				}
+			},
+			A3(
+				_mdgriffith$style_elements$Element$column,
+				_recursion$symulator_client_elm$App_Styles$Hud,
+				{
+					ctor: '::',
+					_0: _mdgriffith$style_elements$Element_Attributes$width(_mdgriffith$style_elements$Element_Attributes$fill),
+					_1: {
+						ctor: '::',
+						_0: _mdgriffith$style_elements$Element_Attributes$padding(1),
+						_1: {
+							ctor: '::',
+							_0: _mdgriffith$style_elements$Element_Attributes$clip,
+							_1: {ctor: '[]'}
+						}
+					}
+				},
+				{
+					ctor: '::',
+					_0: A2(_recursion$symulator_client_elm$UI_Console$renderMessages, chatModel, model),
+					_1: {
+						ctor: '::',
+						_0: _recursion$symulator_client_elm$UI_Console$console(model),
+						_1: {ctor: '[]'}
+					}
+				})) : _mdgriffith$style_elements$Element$empty;
+	});
+var _recursion$symulator_client_elm$UI_Console_ops = _recursion$symulator_client_elm$UI_Console_ops || {};
+_recursion$symulator_client_elm$UI_Console_ops['=>'] = F2(
+	function (v0, v1) {
+		return {ctor: '_Tuple2', _0: v0, _1: v1};
+	});
+var _recursion$symulator_client_elm$UI_Console$process = function (model) {
+	var console = model.console;
+	var processInput = _elm_lang$core$Native_Utils.eq(
+		A2(_elm_lang$core$String$left, 1, model.console.input),
+		'\\') ? A2(
+		_elm_lang$core$Debug$log,
+		A2(_elm_lang$core$Basics_ops['++'], 'Got console input: ', model.console.input),
+		_recursion$symulator_client_elm$App_Model$NoAction) : A2(
+		_recursion$symulator_client_elm$App_Model$Send,
+		_recursion$symulator_client_elm$Chat_Model$newMsgEvent,
+		_recursion$symulator_client_elm$Chat_Decoders$encodeChatMessage(model.console.input));
+	var _p0 = A2(
+		_elm_lang$core$Debug$log,
+		'---> ',
+		{ctor: '_Tuple0'});
+	return _elm_lang$core$Native_Utils.eq(model.console.input, '') ? A2(
+		_recursion$symulator_client_elm$UI_Console_ops['=>'],
+		{
+			ctor: '_Tuple2',
+			_0: _elm_lang$core$Native_Utils.update(
+				model,
+				{
+					console: _elm_lang$core$Native_Utils.update(
+						console,
+						{input: ''})
+				}),
+			_1: _elm_lang$core$Platform_Cmd$none
+		},
+		_recursion$symulator_client_elm$App_Model$NoAction) : A2(
+		_recursion$symulator_client_elm$UI_Console_ops['=>'],
+		{
+			ctor: '_Tuple2',
+			_0: _elm_lang$core$Native_Utils.update(
+				model,
+				{
+					console: _elm_lang$core$Native_Utils.update(
+						console,
+						{input: ''})
+				}),
+			_1: _elm_lang$core$Platform_Cmd$none
+		},
+		processInput);
+};

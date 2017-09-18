@@ -1,0 +1,158 @@
+var _recursion$symulator_client_elm$Console_View$renderMessage = function (msg) {
+	return A3(
+		_mdgriffith$style_elements$Element$el,
+		_recursion$symulator_client_elm$App_Styles$None,
+		{
+			ctor: '::',
+			_0: _mdgriffith$style_elements$Element_Attributes$padding(3),
+			_1: {ctor: '[]'}
+		},
+		_mdgriffith$style_elements$Element$text(msg));
+};
+var _recursion$symulator_client_elm$Console_View$renderMessages = F2(
+	function (chatModel, model) {
+		var props = model.scroll ? {
+			ctor: '::',
+			_0: _mdgriffith$style_elements$Element_Attributes$yScrollbar,
+			_1: {ctor: '[]'}
+		} : {
+			ctor: '::',
+			_0: _mdgriffith$style_elements$Element_Attributes$alignBottom,
+			_1: {ctor: '[]'}
+		};
+		return A3(
+			_mdgriffith$style_elements$Element$column,
+			_recursion$symulator_client_elm$App_Styles$None,
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				props,
+				{
+					ctor: '::',
+					_0: _mdgriffith$style_elements$Element_Attributes$padding(2),
+					_1: {
+						ctor: '::',
+						_0: _mdgriffith$style_elements$Element_Attributes$height(
+							_mdgriffith$style_elements$Element_Attributes$px(100)),
+						_1: {
+							ctor: '::',
+							_0: _mdgriffith$style_elements$Element_Attributes$width(_mdgriffith$style_elements$Element_Attributes$fill),
+							_1: {
+								ctor: '::',
+								_0: _mdgriffith$style_elements$Element_Events$onMouseOver(_recursion$symulator_client_elm$Console_Model$ToggleScrollBar),
+								_1: {
+									ctor: '::',
+									_0: _mdgriffith$style_elements$Element_Events$onMouseOut(_recursion$symulator_client_elm$Console_Model$ToggleScrollBar),
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					}
+				}),
+			A2(
+				_elm_lang$core$List$map,
+				_recursion$symulator_client_elm$Console_View$renderMessage,
+				_elm_lang$core$List$reverse(chatModel.messages)));
+	});
+var _recursion$symulator_client_elm$Console_View$consoleInput = function (model) {
+	return A3(
+		_mdgriffith$style_elements$Element$el,
+		_recursion$symulator_client_elm$App_Styles$None,
+		{
+			ctor: '::',
+			_0: _mdgriffith$style_elements$Element_Attributes$width(_mdgriffith$style_elements$Element_Attributes$fill),
+			_1: {ctor: '[]'}
+		},
+		A3(
+			_mdgriffith$style_elements$Element_Input$text,
+			_recursion$symulator_client_elm$App_Styles$Hud,
+			{
+				ctor: '::',
+				_0: _mdgriffith$style_elements$Element_Events$onFocus(_recursion$symulator_client_elm$Console_Model$ToggleInputFocus),
+				_1: {
+					ctor: '::',
+					_0: _mdgriffith$style_elements$Element_Events$onBlur(_recursion$symulator_client_elm$Console_Model$ToggleInputFocus),
+					_1: {
+						ctor: '::',
+						_0: _mdgriffith$style_elements$Element_Attributes$width(_mdgriffith$style_elements$Element_Attributes$fill),
+						_1: {
+							ctor: '::',
+							_0: _mdgriffith$style_elements$Element_Attributes$padding(3),
+							_1: {ctor: '[]'}
+						}
+					}
+				}
+			},
+			{
+				value: model.input,
+				onChange: _recursion$symulator_client_elm$Console_Model$SetInput,
+				label: _mdgriffith$style_elements$Element_Input$placeholder(
+					{
+						label: _mdgriffith$style_elements$Element_Input$labelLeft(_mdgriffith$style_elements$Element$empty),
+						text: '\\h for help.'
+					}),
+				options: {ctor: '[]'}
+			}));
+};
+var _recursion$symulator_client_elm$Console_View$console = function (model) {
+	return A3(
+		_mdgriffith$style_elements$Element$row,
+		_recursion$symulator_client_elm$App_Styles$None,
+		{
+			ctor: '::',
+			_0: _mdgriffith$style_elements$Element_Attributes$width(_mdgriffith$style_elements$Element_Attributes$fill),
+			_1: {
+				ctor: '::',
+				_0: _mdgriffith$style_elements$Element_Attributes$padding(1),
+				_1: {
+					ctor: '::',
+					_0: _mdgriffith$style_elements$Element_Attributes$spacing(1),
+					_1: {ctor: '[]'}
+				}
+			}
+		},
+		{
+			ctor: '::',
+			_0: A3(
+				_mdgriffith$style_elements$Element$button,
+				_recursion$symulator_client_elm$App_Styles$Hud,
+				{
+					ctor: '::',
+					_0: _mdgriffith$style_elements$Element_Events$onClick(_recursion$symulator_client_elm$Console_Model$SubmitInput),
+					_1: {ctor: '[]'}
+				},
+				_mdgriffith$style_elements$Element$text('send')),
+			_1: {
+				ctor: '::',
+				_0: _recursion$symulator_client_elm$Console_View$consoleInput(model),
+				_1: {ctor: '[]'}
+			}
+		});
+};
+var _recursion$symulator_client_elm$Console_View$render = F2(
+	function (chatModel, model) {
+		return model.visible ? A3(
+			_mdgriffith$style_elements$Element$column,
+			_recursion$symulator_client_elm$App_Styles$Hud,
+			{
+				ctor: '::',
+				_0: _mdgriffith$style_elements$Element_Attributes$width(_mdgriffith$style_elements$Element_Attributes$fill),
+				_1: {
+					ctor: '::',
+					_0: _mdgriffith$style_elements$Element_Attributes$padding(1),
+					_1: {
+						ctor: '::',
+						_0: _mdgriffith$style_elements$Element_Attributes$clip,
+						_1: {ctor: '[]'}
+					}
+				}
+			},
+			{
+				ctor: '::',
+				_0: A2(_recursion$symulator_client_elm$Console_View$renderMessages, chatModel, model),
+				_1: {
+					ctor: '::',
+					_0: _recursion$symulator_client_elm$Console_View$console(model),
+					_1: {ctor: '[]'}
+				}
+			}) : _mdgriffith$style_elements$Element$empty;
+	});

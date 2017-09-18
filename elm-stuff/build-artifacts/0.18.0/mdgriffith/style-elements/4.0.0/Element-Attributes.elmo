@@ -1,0 +1,265 @@
+var _mdgriffith$style_elements$Element_Attributes$toAttr = _mdgriffith$style_elements$Element_Internal_Model$Attr;
+var _mdgriffith$style_elements$Element_Attributes$language = function (str) {
+	return _mdgriffith$style_elements$Element_Internal_Model$Attr(
+		_elm_lang$html$Html_Attributes$lang(str));
+};
+var _mdgriffith$style_elements$Element_Attributes$id = function (str) {
+	return _mdgriffith$style_elements$Element_Internal_Model$Attr(
+		_elm_lang$html$Html_Attributes$id(str));
+};
+var _mdgriffith$style_elements$Element_Attributes$class = function (cls) {
+	return _mdgriffith$style_elements$Element_Internal_Model$Attr(
+		_elm_lang$html$Html_Attributes$class(cls));
+};
+var _mdgriffith$style_elements$Element_Attributes$map = F2(
+	function (fn, attr) {
+		var _p0 = attr;
+		switch (_p0.ctor) {
+			case 'Attr':
+				return _mdgriffith$style_elements$Element_Internal_Model$Attr(
+					A2(_elm_lang$html$Html_Attributes$map, fn, _p0._0));
+			case 'Vary':
+				return A2(_mdgriffith$style_elements$Element_Internal_Model$Vary, _p0._0, _p0._1);
+			case 'Height':
+				return _mdgriffith$style_elements$Element_Internal_Model$Height(_p0._0);
+			case 'Width':
+				return _mdgriffith$style_elements$Element_Internal_Model$Width(_p0._0);
+			case 'Inline':
+				return _mdgriffith$style_elements$Element_Internal_Model$Inline;
+			case 'Hidden':
+				return _mdgriffith$style_elements$Element_Internal_Model$Hidden;
+			case 'PositionFrame':
+				return _mdgriffith$style_elements$Element_Internal_Model$PositionFrame(_p0._0);
+			case 'Opacity':
+				return _mdgriffith$style_elements$Element_Internal_Model$Opacity(_p0._0);
+			case 'Expand':
+				return _mdgriffith$style_elements$Element_Internal_Model$Expand;
+			case 'Padding':
+				return A4(_mdgriffith$style_elements$Element_Internal_Model$Padding, _p0._0, _p0._1, _p0._2, _p0._3);
+			case 'PhantomPadding':
+				return _mdgriffith$style_elements$Element_Internal_Model$PhantomPadding(_p0._0);
+			case 'Margin':
+				return _mdgriffith$style_elements$Element_Internal_Model$Margin(_p0._0);
+			case 'GridArea':
+				return _mdgriffith$style_elements$Element_Internal_Model$GridArea(_p0._0);
+			case 'GridCoords':
+				return _mdgriffith$style_elements$Element_Internal_Model$GridCoords(_p0._0);
+			case 'PointerEvents':
+				return _mdgriffith$style_elements$Element_Internal_Model$PointerEvents(_p0._0);
+			case 'Event':
+				return _mdgriffith$style_elements$Element_Internal_Model$Event(
+					A2(_elm_lang$html$Html_Attributes$map, fn, _p0._0));
+			case 'InputEvent':
+				return _mdgriffith$style_elements$Element_Internal_Model$InputEvent(
+					A2(_elm_lang$html$Html_Attributes$map, fn, _p0._0));
+			case 'Position':
+				return A3(_mdgriffith$style_elements$Element_Internal_Model$Position, _p0._0, _p0._1, _p0._2);
+			case 'Spacing':
+				return A2(_mdgriffith$style_elements$Element_Internal_Model$Spacing, _p0._0, _p0._1);
+			case 'VAlign':
+				return _mdgriffith$style_elements$Element_Internal_Model$VAlign(_p0._0);
+			case 'HAlign':
+				return _mdgriffith$style_elements$Element_Internal_Model$HAlign(_p0._0);
+			case 'Shrink':
+				return _mdgriffith$style_elements$Element_Internal_Model$Shrink(_p0._0);
+			default:
+				return _mdgriffith$style_elements$Element_Internal_Model$Overflow(_p0._0);
+		}
+	});
+var _mdgriffith$style_elements$Element_Attributes$attribute = F2(
+	function (name, val) {
+		return _mdgriffith$style_elements$Element_Internal_Model$Attr(
+			A2(_elm_lang$html$Html_Attributes$attribute, name, val));
+	});
+var _mdgriffith$style_elements$Element_Attributes$property = F2(
+	function (str, val) {
+		return _mdgriffith$style_elements$Element_Internal_Model$Attr(
+			A2(_elm_lang$html$Html_Attributes$property, str, val));
+	});
+var _mdgriffith$style_elements$Element_Attributes$inlineStyle = function (_p1) {
+	return _mdgriffith$style_elements$Element_Internal_Model$Attr(
+		_elm_lang$virtual_dom$VirtualDom$style(_p1));
+};
+var _mdgriffith$style_elements$Element_Attributes$classList = function (_p2) {
+	return _mdgriffith$style_elements$Element_Internal_Model$Attr(
+		_elm_lang$html$Html_Attributes$classList(_p2));
+};
+var _mdgriffith$style_elements$Element_Attributes$clipY = _mdgriffith$style_elements$Element_Internal_Model$Attr(
+	_elm_lang$virtual_dom$VirtualDom$style(
+		{
+			ctor: '::',
+			_0: {ctor: '_Tuple2', _0: 'overflow-y', _1: 'hidden'},
+			_1: {ctor: '[]'}
+		}));
+var _mdgriffith$style_elements$Element_Attributes$clipX = _mdgriffith$style_elements$Element_Internal_Model$Attr(
+	_elm_lang$virtual_dom$VirtualDom$style(
+		{
+			ctor: '::',
+			_0: {ctor: '_Tuple2', _0: 'overflow-x', _1: 'hidden'},
+			_1: {ctor: '[]'}
+		}));
+var _mdgriffith$style_elements$Element_Attributes$clip = _mdgriffith$style_elements$Element_Internal_Model$Attr(
+	_elm_lang$virtual_dom$VirtualDom$style(
+		{
+			ctor: '::',
+			_0: {ctor: '_Tuple2', _0: 'overflow', _1: 'hidden'},
+			_1: {ctor: '[]'}
+		}));
+var _mdgriffith$style_elements$Element_Attributes$xScrollbar = _mdgriffith$style_elements$Element_Internal_Model$Overflow(_mdgriffith$style_elements$Element_Internal_Model$XAxis);
+var _mdgriffith$style_elements$Element_Attributes$yScrollbar = _mdgriffith$style_elements$Element_Internal_Model$Overflow(_mdgriffith$style_elements$Element_Internal_Model$YAxis);
+var _mdgriffith$style_elements$Element_Attributes$scrollbars = _mdgriffith$style_elements$Element_Internal_Model$Overflow(_mdgriffith$style_elements$Element_Internal_Model$AllAxis);
+var _mdgriffith$style_elements$Element_Attributes$hidden = _mdgriffith$style_elements$Element_Internal_Model$Hidden;
+var _mdgriffith$style_elements$Element_Attributes$paddingBottom = function (x) {
+	return A4(
+		_mdgriffith$style_elements$Element_Internal_Model$Padding,
+		_elm_lang$core$Maybe$Nothing,
+		_elm_lang$core$Maybe$Nothing,
+		_elm_lang$core$Maybe$Just(x),
+		_elm_lang$core$Maybe$Nothing);
+};
+var _mdgriffith$style_elements$Element_Attributes$paddingTop = function (x) {
+	return A4(
+		_mdgriffith$style_elements$Element_Internal_Model$Padding,
+		_elm_lang$core$Maybe$Just(x),
+		_elm_lang$core$Maybe$Nothing,
+		_elm_lang$core$Maybe$Nothing,
+		_elm_lang$core$Maybe$Nothing);
+};
+var _mdgriffith$style_elements$Element_Attributes$paddingRight = function (x) {
+	return A4(
+		_mdgriffith$style_elements$Element_Internal_Model$Padding,
+		_elm_lang$core$Maybe$Nothing,
+		_elm_lang$core$Maybe$Just(x),
+		_elm_lang$core$Maybe$Nothing,
+		_elm_lang$core$Maybe$Nothing);
+};
+var _mdgriffith$style_elements$Element_Attributes$paddingLeft = function (x) {
+	return A4(
+		_mdgriffith$style_elements$Element_Internal_Model$Padding,
+		_elm_lang$core$Maybe$Nothing,
+		_elm_lang$core$Maybe$Nothing,
+		_elm_lang$core$Maybe$Nothing,
+		_elm_lang$core$Maybe$Just(x));
+};
+var _mdgriffith$style_elements$Element_Attributes$paddingXY = F2(
+	function (x, y) {
+		return A4(
+			_mdgriffith$style_elements$Element_Internal_Model$Padding,
+			_elm_lang$core$Maybe$Just(y),
+			_elm_lang$core$Maybe$Just(x),
+			_elm_lang$core$Maybe$Just(y),
+			_elm_lang$core$Maybe$Just(x));
+	});
+var _mdgriffith$style_elements$Element_Attributes$padding = function (x) {
+	return A4(
+		_mdgriffith$style_elements$Element_Internal_Model$Padding,
+		_elm_lang$core$Maybe$Just(x),
+		_elm_lang$core$Maybe$Just(x),
+		_elm_lang$core$Maybe$Just(x),
+		_elm_lang$core$Maybe$Just(x));
+};
+var _mdgriffith$style_elements$Element_Attributes$spacingXY = _mdgriffith$style_elements$Element_Internal_Model$Spacing;
+var _mdgriffith$style_elements$Element_Attributes$spacing = function (x) {
+	return A2(_mdgriffith$style_elements$Element_Internal_Model$Spacing, x, x);
+};
+var _mdgriffith$style_elements$Element_Attributes$vary = _mdgriffith$style_elements$Element_Internal_Model$Vary;
+var _mdgriffith$style_elements$Element_Attributes$percent = _mdgriffith$style_elements$Style_Internal_Model$Percent;
+var _mdgriffith$style_elements$Element_Attributes$fillPortion = function (_p3) {
+	return _mdgriffith$style_elements$Style_Internal_Model$Fill(
+		_elm_lang$core$Basics$toFloat(_p3));
+};
+var _mdgriffith$style_elements$Element_Attributes$fill = _mdgriffith$style_elements$Style_Internal_Model$Fill(1);
+var _mdgriffith$style_elements$Element_Attributes$content = _mdgriffith$style_elements$Style_Internal_Model$Auto;
+var _mdgriffith$style_elements$Element_Attributes$px = _mdgriffith$style_elements$Style_Internal_Model$Px;
+var _mdgriffith$style_elements$Element_Attributes$height = _mdgriffith$style_elements$Element_Internal_Model$Height;
+var _mdgriffith$style_elements$Element_Attributes$maxHeight = function (len) {
+	return _mdgriffith$style_elements$Element_Internal_Model$Attr(
+		_elm_lang$html$Html_Attributes$style(
+			{
+				ctor: '::',
+				_0: {
+					ctor: '_Tuple2',
+					_0: 'max-height',
+					_1: _mdgriffith$style_elements$Style_Internal_Render_Value$length(len)
+				},
+				_1: {ctor: '[]'}
+			}));
+};
+var _mdgriffith$style_elements$Element_Attributes$minHeight = function (len) {
+	return _mdgriffith$style_elements$Element_Internal_Model$Attr(
+		_elm_lang$html$Html_Attributes$style(
+			{
+				ctor: '::',
+				_0: {
+					ctor: '_Tuple2',
+					_0: 'min-height',
+					_1: _mdgriffith$style_elements$Style_Internal_Render_Value$length(len)
+				},
+				_1: {ctor: '[]'}
+			}));
+};
+var _mdgriffith$style_elements$Element_Attributes$maxWidth = function (len) {
+	return _mdgriffith$style_elements$Element_Internal_Model$Attr(
+		_elm_lang$html$Html_Attributes$style(
+			{
+				ctor: '::',
+				_0: {
+					ctor: '_Tuple2',
+					_0: 'max-width',
+					_1: _mdgriffith$style_elements$Style_Internal_Render_Value$length(len)
+				},
+				_1: {ctor: '[]'}
+			}));
+};
+var _mdgriffith$style_elements$Element_Attributes$minWidth = function (len) {
+	return _mdgriffith$style_elements$Element_Internal_Model$Attr(
+		_elm_lang$html$Html_Attributes$style(
+			{
+				ctor: '::',
+				_0: {
+					ctor: '_Tuple2',
+					_0: 'min-width',
+					_1: _mdgriffith$style_elements$Style_Internal_Render_Value$length(len)
+				},
+				_1: {ctor: '[]'}
+			}));
+};
+var _mdgriffith$style_elements$Element_Attributes$width = _mdgriffith$style_elements$Element_Internal_Model$Width;
+var _mdgriffith$style_elements$Element_Attributes$moveLeft = function (x) {
+	return A3(
+		_mdgriffith$style_elements$Element_Internal_Model$Position,
+		_elm_lang$core$Maybe$Just(
+			_elm_lang$core$Basics$negate(x)),
+		_elm_lang$core$Maybe$Nothing,
+		_elm_lang$core$Maybe$Nothing);
+};
+var _mdgriffith$style_elements$Element_Attributes$moveRight = function (x) {
+	return A3(
+		_mdgriffith$style_elements$Element_Internal_Model$Position,
+		_elm_lang$core$Maybe$Just(x),
+		_elm_lang$core$Maybe$Nothing,
+		_elm_lang$core$Maybe$Nothing);
+};
+var _mdgriffith$style_elements$Element_Attributes$moveDown = function (y) {
+	return A3(
+		_mdgriffith$style_elements$Element_Internal_Model$Position,
+		_elm_lang$core$Maybe$Nothing,
+		_elm_lang$core$Maybe$Just(y),
+		_elm_lang$core$Maybe$Nothing);
+};
+var _mdgriffith$style_elements$Element_Attributes$moveUp = function (y) {
+	return A3(
+		_mdgriffith$style_elements$Element_Internal_Model$Position,
+		_elm_lang$core$Maybe$Nothing,
+		_elm_lang$core$Maybe$Just(
+			_elm_lang$core$Basics$negate(y)),
+		_elm_lang$core$Maybe$Nothing);
+};
+var _mdgriffith$style_elements$Element_Attributes$alignRight = _mdgriffith$style_elements$Element_Internal_Model$HAlign(_mdgriffith$style_elements$Element_Internal_Model$Right);
+var _mdgriffith$style_elements$Element_Attributes$alignLeft = _mdgriffith$style_elements$Element_Internal_Model$HAlign(_mdgriffith$style_elements$Element_Internal_Model$Left);
+var _mdgriffith$style_elements$Element_Attributes$alignBottom = _mdgriffith$style_elements$Element_Internal_Model$VAlign(_mdgriffith$style_elements$Element_Internal_Model$Bottom);
+var _mdgriffith$style_elements$Element_Attributes$alignTop = _mdgriffith$style_elements$Element_Internal_Model$VAlign(_mdgriffith$style_elements$Element_Internal_Model$Top);
+var _mdgriffith$style_elements$Element_Attributes$spread = _mdgriffith$style_elements$Element_Internal_Model$HAlign(_mdgriffith$style_elements$Element_Internal_Model$Justify);
+var _mdgriffith$style_elements$Element_Attributes$verticalSpread = _mdgriffith$style_elements$Element_Internal_Model$VAlign(_mdgriffith$style_elements$Element_Internal_Model$VerticalJustify);
+var _mdgriffith$style_elements$Element_Attributes$verticalCenter = _mdgriffith$style_elements$Element_Internal_Model$VAlign(_mdgriffith$style_elements$Element_Internal_Model$VerticalCenter);
+var _mdgriffith$style_elements$Element_Attributes$center = _mdgriffith$style_elements$Element_Internal_Model$HAlign(_mdgriffith$style_elements$Element_Internal_Model$Center);

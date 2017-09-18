@@ -10,9 +10,6 @@
 *~
 *.sass-cache
 
-# live reload
-index.html
-
 # OS or Editor folders
 .DS_Store
 .cache
@@ -33,7 +30,3 @@ public/
 
 # Bower stuff.
 bower_components/
-
-elm-stuff
-
-build

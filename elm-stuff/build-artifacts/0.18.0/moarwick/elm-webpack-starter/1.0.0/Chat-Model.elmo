@@ -1,0 +1,29 @@
+var _moarwick$elm_webpack_starter$Chat_Model$defaultChannel = 'system:chat';
+var _moarwick$elm_webpack_starter$Chat_Model$newChatMsgEvent = 'new:msg';
+var _moarwick$elm_webpack_starter$Chat_Model$Model = F2(
+	function (a, b) {
+		return {name: a, messages: b};
+	});
+var _moarwick$elm_webpack_starter$Chat_Model$initModel = function (channelName) {
+	return A2(
+		_moarwick$elm_webpack_starter$Chat_Model$Model,
+		channelName,
+		{ctor: '[]'});
+};
+var _moarwick$elm_webpack_starter$Chat_Model$ChatMessage = F2(
+	function (a, b) {
+		return {user: a, body: b};
+	});
+var _moarwick$elm_webpack_starter$Chat_Model$ShowLeftMessage = {ctor: 'ShowLeftMessage'};
+var _moarwick$elm_webpack_starter$Chat_Model$ShowJoinedMessage = {ctor: 'ShowJoinedMessage'};
+var _moarwick$elm_webpack_starter$Chat_Model$LeaveChannel = {ctor: 'LeaveChannel'};
+var _moarwick$elm_webpack_starter$Chat_Model$JoinChannel = {ctor: 'JoinChannel'};
+var _moarwick$elm_webpack_starter$Chat_Model$ReceiveChatMessage = function (a) {
+	return {ctor: 'ReceiveChatMessage', _0: a};
+};
+var _moarwick$elm_webpack_starter$Chat_Model$initData = {
+	ctor: '_Tuple3',
+	_0: _moarwick$elm_webpack_starter$Chat_Model$ShowJoinedMessage,
+	_1: _moarwick$elm_webpack_starter$Chat_Model$ShowLeftMessage,
+	_2: {ctor: '_Tuple2', _0: _moarwick$elm_webpack_starter$Chat_Model$newChatMsgEvent, _1: _moarwick$elm_webpack_starter$Chat_Model$ReceiveChatMessage}
+};

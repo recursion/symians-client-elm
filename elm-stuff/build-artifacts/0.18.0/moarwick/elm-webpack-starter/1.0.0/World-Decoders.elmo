@@ -1,0 +1,33 @@
+var _moarwick$elm_webpack_starter$World_Decoders$locationDecoder = A4(
+	_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$optional,
+	'selected',
+	_elm_lang$core$Json_Decode$bool,
+	false,
+	A3(
+		_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+		'type_',
+		_elm_lang$core$Json_Decode$string,
+		A3(
+			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$required,
+			'entities',
+			_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$string),
+			_NoRedInk$elm_decode_pipeline$Json_Decode_Pipeline$decode(_moarwick$elm_webpack_starter$World_Models$Location))));
+var _moarwick$elm_webpack_starter$World_Decoders$locationsDecoder = _elm_lang$core$Json_Decode$dict(_moarwick$elm_webpack_starter$World_Decoders$locationDecoder);
+var _moarwick$elm_webpack_starter$World_Decoders$dimensionsDecoder = A4(
+	_elm_lang$core$Json_Decode$map3,
+	_moarwick$elm_webpack_starter$World_Models$Dimensions,
+	A2(_elm_lang$core$Json_Decode$field, 'length', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'width', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'height', _elm_lang$core$Json_Decode$int));
+var _moarwick$elm_webpack_starter$World_Decoders$worldDataDecoder = A3(
+	_elm_lang$core$Json_Decode$map2,
+	_moarwick$elm_webpack_starter$World_Models$Model,
+	A2(_elm_lang$core$Json_Decode$field, 'locations', _moarwick$elm_webpack_starter$World_Decoders$locationsDecoder),
+	A2(_elm_lang$core$Json_Decode$field, 'dimensions', _moarwick$elm_webpack_starter$World_Decoders$dimensionsDecoder));
+var _moarwick$elm_webpack_starter$World_Decoders$decodeWorldData = _elm_lang$core$Json_Decode$decodeValue(_moarwick$elm_webpack_starter$World_Decoders$worldDataDecoder);
+var _moarwick$elm_webpack_starter$World_Decoders$coordinatesDecoder = A4(
+	_elm_lang$core$Json_Decode$map3,
+	_moarwick$elm_webpack_starter$World_Models$Coordinates,
+	A2(_elm_lang$core$Json_Decode$field, 'x', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'y', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'z', _elm_lang$core$Json_Decode$int));
