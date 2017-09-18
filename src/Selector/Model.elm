@@ -7,12 +7,16 @@ type alias Model =
     { enabled : Bool
     , mode : Mode
     , selected : List Coordinates
+    , buffer : List Coordinates
+    , start : Maybe Coordinates
     }
 
 type Msg
     = ChangeMode Mode
     | Select Coordinates
     | MouseOver Coordinates
+    | Enable
+    | Disable
 
 type Mode
     = Designate
@@ -21,4 +25,9 @@ type Mode
 
 
 init =
-    { enabled = False, mode = Designate, selected = [] }
+    { enabled = False
+    , mode = Designate
+    , selected = []
+    , buffer = []
+    , start = Nothing
+    }

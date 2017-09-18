@@ -48,7 +48,7 @@ configure coordinates loc ui =
             Camera.translate coords ui.camera
 
         color =
-            if List.member coords ui.selector.selected then
+            if List.member coords (ui.selector.selected ++ ui.selector.buffer) then
                 "#383"
             else
                 "green"

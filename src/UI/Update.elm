@@ -19,23 +19,27 @@ update msg model =
             Input.keypress code model
 
         MouseDown pos ->
-            let
-                sel =
-                    model.selector
-            in
-                ( { model | selector = { sel | enabled = True } }, Cmd.none ) => NoAction
+            ( { model
+                | selector =
+                    (Selector.update Selector.Model.Enable) model.selector
+              }
+            , Cmd.none
+            )
+                => NoAction
 
         MouseUp pos ->
-            let
-                sel =
-                    model.selector
-            in
-                ( { model | selector = { sel | enabled = False } }, Cmd.none ) => NoAction
+            ( { model
+                | selector =
+                    Selector.update (Selector.Model.Disable) model.selector
+              }
+            , Cmd.none
+            )
+                => NoAction
 
         MouseOver coords loc ->
             let
                 selectorModel =
-                      Selector.update (Selector.Model.MouseOver coords) model.selector
+                    Selector.update (Selector.Model.MouseOver coords) model.selector
 
                 ( inspectorModel, cmd ) =
                     Inspector.update
@@ -65,7 +69,6 @@ update msg model =
                     Selector.update message model.selector
             in
                 ( { model | selector = selectorModel }, Cmd.none ) => NoAction
-
 
         InspectorMsg message ->
             let

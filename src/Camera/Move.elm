@@ -38,7 +38,7 @@ zLevelDown model =
         nextPos =
             { pos | z = nextZ }
     in
-        if nextZ < -borderBounds then
+        if nextZ < 0  then
             model
         else
             { model | position = nextPos }
