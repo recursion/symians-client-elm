@@ -1,0 +1,34 @@
+* {
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+#WorldRenderer {
+    position: absolute;
+}
+
+.hudBlock {
+    background-color: rgba(50, 100, 50, 0.25);
+}
+
+.hudButton {
+    flex-grow: 1;
+    padding: 2px;
+}
+
+.hudButton:hover {
+    background-color: rgba(75, 200, 75, 0.25);
+}
+
+.hudButton__Selected {
+    background-color: rgba(100, 150, 100, 0.8);
+}
+
+#Controls {
+    position: fixed;
+    left: 1px;
+    top: 25%;
+    flex-direction: column;
+    display: flex;
+}
