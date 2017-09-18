@@ -1,7 +1,7 @@
-module Selector.Update exposing (update)
+module UI.Selector.Update exposing (update)
 
 import World.Models exposing (Coordinates)
-import Selector.Model exposing (Model, Mode(..), Msg(..))
+import UI.Selector.Model exposing (Model, Mode(..), Msg(..))
 
 
 update msg model =

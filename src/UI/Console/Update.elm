@@ -1,8 +1,8 @@
-module Console.Update exposing (..)
+module UI.Console.Update exposing (..)
 
 import App.Model exposing (SocketAction(..))
-import Console.Model exposing (..)
-import Console.Input exposing (process)
+import UI.Console.Model exposing (..)
+import UI.Console.Input exposing (process)
 
 
 (=>) =

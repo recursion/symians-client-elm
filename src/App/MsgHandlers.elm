@@ -6,7 +6,7 @@ import World.Models as World
 import App.Socket as Socket
 import App.Auth exposing (decodeTokenMessage)
 import App.Model exposing (..)
-import Camera.Utils as Camera
+import UI.Camera.Utils as Camera
 import UI.Update
 import Chat.Update
 import Chat.Model

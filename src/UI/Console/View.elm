@@ -1,10 +1,10 @@
-module Console.View exposing (render)
+module UI.Console.View exposing (render)
 
 import Element exposing (..)
 import Element.Events exposing (..)
 import Element.Attributes exposing (..)
 import Element.Input as Input
-import Console.Model exposing (..)
+import UI.Console.Model exposing (..)
 import App.Styles exposing (Styles(..), stylesheet)
 import Chat.Model as Chat
 

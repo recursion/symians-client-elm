@@ -1,9 +1,9 @@
-module Inspector.View exposing (render)
+module UI.Inspector.View exposing (render)
 
 import Element exposing (..)
 import Element.Attributes exposing (..)
 
-import Inspector.Model exposing (Model, Msg, Inspection)
+import UI.Inspector.Model exposing (Model, Msg, Inspection)
 import App.Styles exposing (Styles(..), stylesheet)
 
 

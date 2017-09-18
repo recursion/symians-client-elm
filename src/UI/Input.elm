@@ -2,8 +2,8 @@ module UI.Input exposing (keypress)
 
 import UI.Model exposing (Model, Msg(..))
 import App.Model exposing (SocketAction(..))
-import Camera.Move 
-import Console.Input as Console
+import UI.Camera.Move as Camera
+import UI.Console.Input as Console
 import Utils exposing ((=>))
 import Keyboard
 
@@ -38,32 +38,32 @@ keypress code model =
 
         MoveCameraUp ->
             ifNotIgnoringInput
-            (({ model | camera = Camera.Move.up model.camera }, Cmd.none) => NoAction)
+            (({ model | camera = Camera.up model.camera }, Cmd.none) => NoAction)
             model
 
         MoveCameraDown ->
             ifNotIgnoringInput
-            ({ model | camera = Camera.Move.down model.camera } => Cmd.none => NoAction)
+            ({ model | camera = Camera.down model.camera } => Cmd.none => NoAction)
             model
 
         MoveCameraLeft ->
             ifNotIgnoringInput
-            ({ model | camera = Camera.Move.left model.camera } => Cmd.none => NoAction)
+            ({ model | camera = Camera.left model.camera } => Cmd.none => NoAction)
             model
 
         MoveCameraRight ->
             ifNotIgnoringInput
-            ({ model | camera = Camera.Move.right model.camera } => Cmd.none => NoAction)
+            ({ model | camera = Camera.right model.camera } => Cmd.none => NoAction)
             model
 
         MoveCameraZLevelUp ->
             ifNotIgnoringInput
-            ({ model | camera = Camera.Move.zLevelUp model.camera } => Cmd.none => NoAction)
+            ({ model | camera = Camera.zLevelUp model.camera } => Cmd.none => NoAction)
             model
 
         MoveCameraZLevelDown ->
             ifNotIgnoringInput
-            ({ model | camera = Camera.Move.zLevelDown model.camera } => Cmd.none => NoAction)
+            ({ model | camera = Camera.zLevelDown model.camera } => Cmd.none => NoAction)
             model
 
 ifNotIgnoringInput work model =

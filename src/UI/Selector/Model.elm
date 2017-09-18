@@ -1,4 +1,4 @@
-module Selector.Model exposing (..)
+module UI.Selector.Model exposing (..)
 
 import World.Models exposing (Coordinates)
 

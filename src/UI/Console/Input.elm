@@ -1,6 +1,6 @@
-module Console.Input exposing (..)
+module UI.Console.Input exposing (..)
 
-import Console.Model exposing (..)
+import UI.Console.Model exposing (..)
 import Chat.Model as Chat
 import App.Model exposing (SocketAction(..))
 import Chat.Decoders exposing (encodeChatMessage)

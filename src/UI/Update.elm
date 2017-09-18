@@ -2,14 +2,14 @@ module UI.Update exposing (update)
 
 import UI.Model exposing (..)
 import UI.Input as Input
-import Camera.Utils as Camera
+import UI.Camera.Utils as Camera
 import App.Model exposing (SocketAction(..))
-import Console.Update as Console
-import Inspector.Update as Inspector
-import Inspector.Model
+import UI.Console.Update as Console
+import UI.Inspector.Update as Inspector
+import UI.Inspector.Model
 import Utils exposing ((=>))
-import Selector.Update as Selector
-import Selector.Model
+import UI.Selector.Update as Selector
+import UI.Selector.Model
 
 
 update : Msg -> Model -> ( ( Model, Cmd Msg ), SocketAction )
@@ -21,7 +21,7 @@ update msg model =
         MouseDown pos ->
             ( { model
                 | selector =
-                    (Selector.update Selector.Model.Enable) model.selector
+                    (Selector.update UI.Selector.Model.Enable) model.selector
               }
             , Cmd.none
             )
@@ -30,7 +30,7 @@ update msg model =
         MouseUp pos ->
             ( { model
                 | selector =
-                    Selector.update (Selector.Model.Disable) model.selector
+                    Selector.update (UI.Selector.Model.Disable) model.selector
               }
             , Cmd.none
             )
@@ -39,11 +39,11 @@ update msg model =
         MouseOver coords loc ->
             let
                 selectorModel =
-                    Selector.update (Selector.Model.MouseOver coords) model.selector
+                    Selector.update (UI.Selector.Model.MouseOver coords) model.selector
 
                 ( inspectorModel, cmd ) =
                     Inspector.update
-                        (Inspector.Model.SetInspected coords loc)
+                        (UI.Inspector.Model.SetInspected coords loc)
                         model.inspector
             in
                 ( { model

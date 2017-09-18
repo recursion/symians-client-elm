@@ -5,13 +5,13 @@ import Svg.Attributes exposing (width, height, fill, stroke, x, y, class)
 import Svg.Events exposing (onMouseOver, onClick, onMouseDown)
 import Svg exposing (rect, text)
 import Dict exposing (Dict)
-import Selector.Model as Selector
+import UI.Selector.Model as Selector
 
 
 import World.Models exposing (Locations, Location, Coordinates, CoordHash)
 import World.Coordinates as Coordinates
 import UI.Model as UI
-import Camera.Utils as Camera
+import UI.Camera.Utils as Camera
 
 
 {-| looks up a location by a coordinates hash

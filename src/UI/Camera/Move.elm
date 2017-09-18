@@ -1,6 +1,6 @@
-module Camera.Move exposing (..)
+module UI.Camera.Move exposing (..)
 
-import Camera.Model exposing (..)
+import UI.Camera.Model exposing (..)
 
 currentZLimit = 2
 borderBounds = 5

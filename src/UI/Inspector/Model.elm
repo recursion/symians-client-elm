@@ -1,4 +1,4 @@
-module Inspector.Model exposing (..)
+module UI.Inspector.Model exposing (..)
 
 import World.Models exposing (Coordinates, Location, initLocation)
 

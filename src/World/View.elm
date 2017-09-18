@@ -10,7 +10,7 @@ import Svg exposing (svg)
 import World.Models as World exposing (Coordinates)
 import World.Coordinates exposing (hash)
 import World.Location as Location
-import Camera.Utils as Camera
+import UI.Camera.Utils as Camera
 import UI.Model as UI
 
 

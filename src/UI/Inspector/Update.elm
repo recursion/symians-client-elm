@@ -1,6 +1,6 @@
-module Inspector.Update exposing (..)
+module UI.Inspector.Update exposing (..)
 
-import Inspector.Model exposing (..)
+import UI.Inspector.Model exposing (..)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )

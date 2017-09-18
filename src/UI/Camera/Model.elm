@@ -1,4 +1,4 @@
-module Camera.Model exposing (..)
+module UI.Camera.Model exposing (..)
 
 import World.Models exposing (Coordinates, Dimensions)
 

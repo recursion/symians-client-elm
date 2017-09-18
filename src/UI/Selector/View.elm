@@ -1,11 +1,11 @@
-module Selector.View exposing (render)
+module UI.Selector.View exposing (render)
 
 import Element exposing (..)
 import Element.Attributes exposing (..)
 import Element.Events exposing (..)
 import App.Styles exposing (Styles(..), stylesheet)
 
-import Selector.Model exposing (..)
+import UI.Selector.Model exposing (..)
 
 render model =
     row None

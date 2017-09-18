@@ -1,4 +1,4 @@
-module Console.Model exposing (..)
+module UI.Console.Model exposing (..)
 
 
 type Msg

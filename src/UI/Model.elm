@@ -1,10 +1,10 @@
 module UI.Model exposing (..)
 
 import World.Models exposing (Location, initLocation, Dimensions, Coordinates)
-import Inspector.Model as Inspector
-import Console.Model as Console
-import Camera.Model as Camera
-import Selector.Model as Selector
+import UI.Inspector.Model as Inspector
+import UI.Console.Model as Console
+import UI.Camera.Model as Camera
+import UI.Selector.Model as Selector
 import Window
 import Keyboard
 import Task

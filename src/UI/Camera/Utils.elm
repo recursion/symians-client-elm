@@ -1,7 +1,7 @@
-module Camera.Utils exposing (updateDimensions, translate, resize, getScreenLocations)
+module UI.Camera.Utils exposing (updateDimensions, translate, resize, getScreenLocations)
 
 import World.Models exposing (Dimensions, Coordinates)
-import Camera.Model exposing (Model)
+import UI.Camera.Model exposing (Model)
 import Window
 
 
