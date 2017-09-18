@@ -46,19 +46,21 @@ configure coordinates loc ui =
 
         ( screenX, screenY ) =
             Camera.translate coords ui.camera
-
-        selectedLocations =
+        color =
             case ui.selector.mode of
                 Selector.Designate ->
-                    (ui.selector.selected ++ ui.selector.buffer)
+                    if List.member coords (ui.selector.selected ++ ui.selector.buffer) then
+                        "#383"
+                    else
+                        "green"
 
                 Selector.Undesignate ->
-                    List.filter (\loc -> not (List.member loc ui.selector.buffer)) ui.selector.selected
-        color =
-            if List.member coords selectedLocations then
-                "#383"
-            else
-                "green"
+                    if List.member coords (ui.selector.buffer) then
+                        "green"
+                    else if List.member coords (ui.selector.selected) then
+                        "#383"
+                    else
+                        "green"
 
     in
         [ x <| toString screenX

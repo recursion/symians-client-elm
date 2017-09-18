@@ -1,0 +1,52 @@
+/******************************/
+/*          Layout            */
+/******************************/
+.console {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 40%;
+}
+.console-button {
+    width: 9%;
+}
+.console-input {
+    width: 89%;
+    margin-left: 1px;
+}
+#console-messages {
+    height: 145px;
+    overflow: hidden;
+    flex-direction: column-reverse;
+    display: flex;
+}
+#console-messages:hover {
+    overflow-y: scroll;
+}
+
+
+/******************************/
+/*          Style             */
+/******************************/
+
+
+/*     Console Scrollbar              */
+#console-messages::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: $primary-background;
+}
+
+#console-messages::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: green;
+}
+
+#console-messages::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: $primary-background;
+}

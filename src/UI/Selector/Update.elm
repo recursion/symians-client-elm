@@ -63,17 +63,17 @@ generateSelection coords model =
                 Just coords_ ->
                     coords_
 
-        subtractor a b =
+        difference a b =
             if a > b then
                 a - b
             else
                 b - a
 
         width =
-            subtractor start.x coords.x
+            difference start.x coords.x
 
         height =
-            subtractor start.y coords.y
+            difference start.y coords.y
 
         yRange =
             if start.y > coords.y then
