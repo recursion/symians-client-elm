@@ -31,7 +31,6 @@
 }
 .hud-button{
     flex-grow: 1;
-    margin-right: 3px;
     padding: 2px;
 }
 #inspector {
@@ -110,7 +109,7 @@
     background-color: rgba(75, 200, 75, 0.25);
 }
 .hud-button__selected {
-    background-color: rgba(75, 200, 75, 0.35);
+    background-color: rgba(100, 150, 100, 0.8);
 }
 
 /*     Console Scrollbar              */

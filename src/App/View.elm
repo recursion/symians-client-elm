@@ -1,7 +1,7 @@
 module App.View exposing (root)
 
 import Html exposing (Html, div, h1, img, text)
-import Html.Attributes exposing (src)
+import Html.Attributes exposing (src, class)
 
 import App.Model exposing (Model, Msg(..), State(..))
 import UI.Hud as Hud
@@ -22,7 +22,7 @@ root model =
 
 symView : World.Model -> Model -> Html Msg
 symView world model =
-    div []
+    div [ class "app" ]
         [ (Html.map UIMsg (World.View.render world model.ui))
         , (Html.map UIMsg (Hud.view model.chat model.ui))
         ]
@@ -34,7 +34,7 @@ symView world model =
 
 loadingScreen : UI.Model -> Html Msg
 loadingScreen model =
-    div []
+    div [ class "app" ]
       [ h1 [ ] [text "Loading"]
       , img [ src model.images.loading ] []
       ]
