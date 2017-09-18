@@ -1,81 +1,48 @@
 module UI.Console.View exposing (render)
 
-import Element exposing (..)
-import Element.Events exposing (..)
-import Element.Attributes exposing (..)
-import Element.Input as Input
+import Html exposing (Html, div, text, ul, li, button, input)
+import Html.Attributes exposing (placeholder)
+import Html.Events exposing (onFocus, onBlur, onInput, onClick)
 import UI.Console.Model exposing (..)
-import App.Styles exposing (Styles(..), stylesheet)
 import Chat.Model as Chat
 
 
-render : Chat.Model -> Model -> Element Styles variation Msg
+render : Chat.Model -> Model -> Html Msg
 render chatModel model =
     if model.visible then
-        (column Hud
-            [ width fill, padding 1, clip ]
+        div []
             [ (renderMessages chatModel model)
             , (console model)
             ]
-        )
     else
-        empty
+        text ""
 
 
-console : Model -> Element Styles variation Msg
+console : Model -> Html Msg
 console model =
-    row None
-        [ width fill, padding 1, spacing 1 ]
-        ([ button Hud [ onClick SubmitInput ] (text "send")
-         , consoleInput model
-         ]
-        )
+    div []
+        [ button [ onClick SubmitInput ] [text "send"]
+        , consoleInput model
+        ]
 
 
-consoleInput : Model -> Element Styles variation Msg
+consoleInput : Model -> Html Msg
 consoleInput model =
-    el None
-        [ width fill ]
-        (Input.text Hud
-            [ onFocus ToggleInputFocus
-            , onBlur ToggleInputFocus
-            , width fill
-            , padding 3
-            ]
-            { value = model.input
-            , onChange = SetInput
-            , label =
-                Input.placeholder
-                    { label = Input.labelLeft empty
-                    , text = "\\h for help."
-                    }
-            , options =
-                []
-            }
-        )
+    input
+        [ onFocus ToggleInputFocus
+        , onBlur ToggleInputFocus
+        , onInput SetInput
+        , placeholder "\\h for help."
+        ]
+        []
 
 
-renderMessages : Chat.Model -> Model -> Element Styles variation Msg
+renderMessages : Chat.Model -> Model -> Html Msg
 renderMessages chatModel model =
-    let
-        props =
-            if model.scroll then
-                [ yScrollbar ]
-            else
-                [ alignBottom ]
-    in
-        column None
-            (props
-                ++ [ padding 2
-                   , height (px 100)
-                   , width fill
-                   , onMouseOver ToggleScrollBar
-                   , onMouseOut ToggleScrollBar
-                   ]
-            )
-            ((List.map renderMessage) (List.reverse chatModel.messages))
+    ul []
+        ((List.map renderMessage) (List.reverse chatModel.messages))
 
 
-renderMessage : String -> Element Styles variation Msg
+renderMessage : String -> Html Msg
 renderMessage msg =
-    el None [ padding 3 ] (text msg)
+    li [] [ text msg ]

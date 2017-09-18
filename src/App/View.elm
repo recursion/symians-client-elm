@@ -1,9 +1,8 @@
 module App.View exposing (root)
 
-import Element exposing (..)
-import Html exposing (Html)
-import Element.Attributes exposing (..)
-import App.Styles exposing (Styles(..), stylesheet)
+import Html exposing (Html, div, h1, img, text)
+import Html.Attributes exposing (src)
+
 import App.Model exposing (Model, Msg(..), State(..))
 import UI.Hud as Hud
 import UI.Model as UI
@@ -13,25 +12,19 @@ import World.View
 
 root : Model -> Html Msg
 root model =
-    Element.viewport stylesheet <|
-        case model.world of
-            Loading ->
-                loadingScreen model.ui
+    case model.world of
+        Loading ->
+            loadingScreen model.ui
 
-            Loaded world ->
-                symView world model
+        Loaded world ->
+            symView world model
 
 
-symView : World.Model -> Model -> Element Styles variation Msg
+symView : World.Model -> Model -> Html Msg
 symView world model =
-    column WorldView
-        [ clip, height fill, width fill ]
-        [ full None
-            [ width fill, height fill ]
-            (html (Html.map UIMsg (World.View.render world model.ui)))
-        , el None
-            []
-            (Element.map UIMsg (Hud.view model.chat model.ui))
+    div []
+        [ (Html.map UIMsg (World.View.render world model.ui))
+        , (Html.map UIMsg (Hud.view model.chat model.ui))
         ]
 
 
@@ -39,13 +32,9 @@ symView world model =
 -- Loading screen
 
 
-loadingScreen : UI.Model -> Element Styles variation Msg
+loadingScreen : UI.Model -> Html Msg
 loadingScreen model =
-    modal None
-        [ verticalCenter, width fill, height fill, center ]
-        (column None
-            [ width fill, height fill, center ]
-            [ h1 Load [ center ] (text "Loading")
-            , image None [ center ] { src = model.images.loading, caption = "Loading" }
-            ]
-        )
+    div []
+      [ h1 [ ] [text "Loading"]
+      , img [ src model.images.loading ] []
+      ]

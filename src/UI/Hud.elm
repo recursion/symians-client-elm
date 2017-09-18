@@ -1,9 +1,7 @@
 module UI.Hud exposing (view)
 
-import Element exposing (..)
-import Element.Attributes exposing (..)
-import Element.Events exposing (..)
-import App.Styles exposing (Styles(..), stylesheet)
+import Html exposing (Html, div, text, button)
+import Html.Events exposing (onClick)
 import UI.Model as UI exposing (Msg(..), Model)
 import UI.Inspector.Model
 import UI.Inspector.View as Inspector
@@ -14,19 +12,13 @@ import UI.Selector.View as Selector
 import Chat.Model as Chat
 
 
-view : Chat.Model -> Model -> Element Styles variation Msg
+view : Chat.Model -> Model -> Html Msg
 view chatModel model =
-    column None []
-        [ modal None
-            [ alignBottom, alignLeft, width (percent 40) ]
-            (column None
-                [padding 2, spacing 2]
-                [ Element.map SelectorMsg (Selector.render model)
-                , Element.map ConsoleMsg (ConsoleView.render chatModel model.console)
-                , (controls model)
-                ]
-            )
-        , Element.map InspectorMsg (Inspector.render model.inspector)
+    div []
+        [ Html.map SelectorMsg (Selector.render model)
+        , Html.map ConsoleMsg (ConsoleView.render chatModel model.console)
+        , (controls model)
+        , Html.map InspectorMsg (Inspector.render model.inspector)
         ]
 
 
@@ -34,16 +26,15 @@ view chatModel model =
 -- hud controls
 
 
-controls : Model -> Element Styles variation Msg
+controls : Model -> Html Msg
 controls model =
-    row None
-        [ spacing 4, width (percent 20), width fill]
+    div []
         [ hudButton "Console" (UI.ConsoleMsg ConsoleModel.ToggleVisible)
         , hudButton "Inspector" (InspectorMsg UI.Inspector.Model.ToggleVisible)
         ]
 
-hudButton : String -> Msg -> Element Styles variation Msg
+
+hudButton : String -> Msg -> Html Msg
 hudButton name action =
-    button Hud
-        [ onClick action, width fill ]
-        (text name)
+    button [ onClick action ]
+        [ text name ]

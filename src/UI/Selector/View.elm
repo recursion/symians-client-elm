@@ -1,21 +1,17 @@
 module UI.Selector.View exposing (render)
 
-import Element exposing (..)
-import Element.Attributes exposing (..)
-import Element.Events exposing (..)
-import App.Styles exposing (Styles(..), stylesheet)
-
+import Html exposing (Html, div, button, text)
+import Html.Events exposing (onClick)
 import UI.Selector.Model exposing (..)
 
 render model =
-    row None
-        []
+    div []
         [ hudButton "Designate" (ChangeMode Designate)
         , hudButton "Undesignate" (ChangeMode Undesignate)
         ]
 
-hudButton : String -> Msg -> Element Styles variation Msg
+hudButton : String -> Msg -> Html Msg
 hudButton name action =
-    button Hud
-        [ onClick action, width fill ]
-        (text name)
+    button
+        [ onClick action]
+        [text name]

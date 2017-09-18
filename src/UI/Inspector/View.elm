@@ -1,43 +1,35 @@
 module UI.Inspector.View exposing (render)
 
-import Element exposing (..)
-import Element.Attributes exposing (..)
-
+import Html exposing (Html, div, span, text)
 import UI.Inspector.Model exposing (Model, Msg, Inspection)
-import App.Styles exposing (Styles(..), stylesheet)
 
 
-render : Model -> Element Styles variation Msg
+render : Model -> Html Msg
 render model =
     if model.visible then
         renderInspector model
     else
-        empty
+        text ""
 
 
-renderInspector : Model -> Element Styles variation Msg
+renderInspector : Model -> Html Msg
 renderInspector model =
-    modal Hud
-        [ alignRight, alignTop, minWidth (px 125), moveDown 3, moveLeft 1 ]
-        (column None
-            [ padding 5, spacing 3 ]
-            [ renderIData "type: " (text model.inspection.loc.type_)
-            , renderIData "x: " (text <| toString model.inspection.position.x)
-            , renderIData "y: " (text <| toString model.inspection.position.y)
-            , renderIData "z: " (text <| toString model.inspection.position.z)
-            ]
-        )
-
-
-renderIData : String -> Element Styles variation Msg -> Element Styles variation Msg
-renderIData key value =
-    row None
-        [ width fill, center, padding 2, spacing 2 ]
-        [ el Label [ width (percent 45) ] (text key)
-        , el Value [ width (percent 55), paddingLeft 10 ] (value)
+    div []
+        [ renderIData "type: " (text model.inspection.loc.type_)
+        , renderIData "x: " (text <| toString model.inspection.position.x)
+        , renderIData "y: " (text <| toString model.inspection.position.y)
+        , renderIData "z: " (text <| toString model.inspection.position.z)
         ]
 
 
-renderEntity : String -> Element Styles variation Msg
+renderIData : String -> Html Msg -> Html Msg
+renderIData key value =
+    div []
+        [ span [] [text key]
+        , span [] [value]
+        ]
+
+
+renderEntity : String -> Html Msg
 renderEntity entity =
-    el None [] (text entity)
+    span [] [text entity]
