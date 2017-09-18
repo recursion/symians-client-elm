@@ -4,7 +4,7 @@ module World.View exposing (render)
 -}
 
 import Html exposing (Html)
-import Svg.Attributes exposing (class, height, width)
+import Svg.Attributes exposing (id, height, width)
 import Svg exposing (svg)
 
 import World.Models as World exposing (Coordinates)
@@ -19,7 +19,7 @@ import UI.Model as UI
 render : World.Model -> UI.Model -> Html UI.Msg
 render world ui =
     svg
-        [ height "100%", width "100%"]
+        [ height "100%", width "100%", id "world"]
         (Camera.getScreenLocations ui.camera
             |> List.map (\(x, y) -> Coordinates x y ui.camera.position.z)
             |> List.map hash

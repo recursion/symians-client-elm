@@ -1,6 +1,7 @@
 module UI.Inspector.View exposing (render)
 
 import Html exposing (Html, div, span, text)
+import Html.Attributes exposing (class, id)
 import UI.Inspector.Model exposing (Model, Msg, Inspection)
 
 
@@ -14,7 +15,7 @@ render model =
 
 renderInspector : Model -> Html Msg
 renderInspector model =
-    div []
+    div [ id "inspector", class "hud"]
         [ renderIData "type: " (text model.inspection.loc.type_)
         , renderIData "x: " (text <| toString model.inspection.position.x)
         , renderIData "y: " (text <| toString model.inspection.position.y)
@@ -24,9 +25,9 @@ renderInspector model =
 
 renderIData : String -> Html Msg -> Html Msg
 renderIData key value =
-    div []
-        [ span [] [text key]
-        , span [] [value]
+    div [ class "inspector-data"]
+        [ span [ class "inspector-data-label" ] [text key]
+        , span [ class "inspector-data-value" ] [value]
         ]
 
 
