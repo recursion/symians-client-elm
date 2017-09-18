@@ -11,6 +11,9 @@ import Style.Font as Font
 type Styles
     = None
     | Hud
+    | WorldView
+    | Label
+    | Value
     | Load
     | Test
 
@@ -34,6 +37,9 @@ stylesheet =
                 , Font.font "sans-serif"
                 ]
             ]
+        , style WorldView
+            [ Color.background Color.darkGrey
+            ]
         , style Hud
             [ Color.background colors.hudBackground
             , Border.all 1
@@ -41,6 +47,14 @@ stylesheet =
             , Color.border Color.black
             , focus [ prop "outline" "none"
                     ]
+            ]
+        , style Label
+            [ Font.alignRight
+            , Font.bold
+            , Font.letterSpacing 0.5
+            ]
+        , style Value
+            [ Font.alignLeft
             ]
         , style Test
             [ Color.border Color.red

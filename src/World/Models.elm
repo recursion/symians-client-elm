@@ -19,7 +19,6 @@ type alias Dimensions =
 type alias Location =
     { entities : List String
     , type_ : String
-    , selected : Bool
     }
 
 
@@ -47,5 +46,4 @@ initLocation : Location
 initLocation =
     { entities = []
     , type_ = ""
-    , selected = False
     }

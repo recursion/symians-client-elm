@@ -1,4 +1,4 @@
-module App.Processors exposing (..)
+module App.MsgHandlers exposing (..)
 
 import Json.Decode as JD
 import World.Decoders exposing (decodeWorldData)
@@ -16,7 +16,7 @@ import UI.Model
 ui : UI.Model.Msg -> Model -> ( Model, Cmd Msg )
 ui message model =
     let
-        (( uiModel, uiCmd ), action) =
+        ( ( uiModel, uiCmd ), action ) =
             UI.Update.update message model.ui
 
         ( nextModel, cmd ) =
@@ -45,14 +45,17 @@ insertWorldData world model =
             , dimensions = world.dimensions
             }
 
-        nextCamera =
-            Camera.updateDimensions
-                world.dimensions
-                model.ui.camera
+        updateCamera ui =
+            { ui
+                | camera =
+                    Camera.updateDimensions
+                        world.dimensions
+                        model.ui.camera
+            }
     in
         { model
             | world = Loaded nextWorld
-            , ui = UI.Update.camera nextCamera model.ui
+            , ui = updateCamera model.ui
         }
 
 

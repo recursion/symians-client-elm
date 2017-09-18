@@ -43,45 +43,50 @@ translate coords model =
 getScreenLocations : Model -> List ( Int, Int )
 getScreenLocations model =
     let
-        ( width, height ) =
-            size model
+        ( xEdge, yEdge) =
+            getEdges model
 
-        xGen x =
-            List.map (coords x) (List.range model.position.y height)
+        generateCoords x =
+            List.map (coords x) (List.range model.position.y yEdge)
 
         coords x y =
             ( x, y )
     in
-        List.concatMap xGen (List.range model.position.x width)
+        List.concatMap generateCoords (List.range model.position.x xEdge)
 
 
-{-| return the Model view size
+{-| return current camera edge coordinates
+i.e. if a camera is currently at (x, y) position
+then this returns (x+screen-width, y+screen-height)
 -}
-size : Model -> ( Int, Int )
-size model =
-    ( width model
-    , height model
+getEdges : Model -> ( Int, Int )
+getEdges model =
+    ( xEdge model
+    , yEdge model
     )
 
-
-width : Model -> Int
-width model =
+{-| return the x camera edge
+-}
+xEdge : Model -> Int
+xEdge model =
     model.position.x + (maxX model)
 
 
-height : Model -> Int
-height model =
+{-| return the y camera edge
+-}
+yEdge : Model -> Int
+yEdge model =
     model.position.y + (maxY model)
 
 
-{-| return Model view width
+{-| return max view width
 -}
 maxX : Model -> Int
 maxX model =
     (model.width // model.tileSize) + 1
 
 
-{-| return Model view height
+{-| return max view height
 -}
 maxY : Model -> Int
 maxY model =

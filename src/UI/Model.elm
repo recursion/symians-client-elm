@@ -1,41 +1,39 @@
 module UI.Model exposing (..)
 
 import World.Models exposing (Location, initLocation, Dimensions, Coordinates)
+import Inspector.Model as Inspector
 import Console.Model as Console
 import Camera.Model as Camera
+import Selector.Model as Selector
 import Window
 import Keyboard
 import Task
+import Mouse
 
 
 type Msg
-    = SetInspected Coordinates Location
-    | ToggleSelected Coordinates
+    = SelectorMsg Selector.Msg
     | WindowResized Window.Size
     | KeyMsg Keyboard.KeyCode
-    | ToggleInspector
     | ConsoleMsg Console.Msg
+    | InspectorMsg Inspector.Msg
+    | MouseDown Mouse.Position
+    | MouseUp Mouse.Position
+    | MouseOver Coordinates Location
 
 
 type alias Model =
     { window : Window
-    , viewInspector : Bool
-    , inspector : Inspection
+    , inspector : Inspector.Model
     , camera : Camera.Model
-    , selected : List Coordinates
+    , selector : Selector.Model
     , console : Console.Model
     , images : { loading : String }
     }
 
 
-type alias Inspection =
-    { position : Coordinates
-    , loc : Location
-    }
-
 type alias Window =
     { width : Int, height : Int }
-
 
 init : ( Model, Cmd Msg )
 init =
@@ -44,19 +42,11 @@ init =
 
 initModel : Model
 initModel =
-    Model initWindow False initInspector Camera.initCamera [] Console.initConsole { loading = "" }
-
+    Model initWindow Inspector.init Camera.init Selector.init Console.init { loading = "" }
 
 initWindow : Window
 initWindow =
     { width = 0, height = 0 }
-
-
-initInspector : Inspection
-initInspector =
-    { position = Coordinates 0 0 0
-    , loc = initLocation
-    }
 
 
 subscriptions : Model -> Sub Msg
@@ -64,4 +54,6 @@ subscriptions model =
     Sub.batch
         [ Keyboard.downs KeyMsg
         , Window.resizes WindowResized
+        , Mouse.downs MouseDown
+        , Mouse.ups MouseUp
         ]

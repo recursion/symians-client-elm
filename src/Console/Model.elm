@@ -1,11 +1,13 @@
 module Console.Model exposing (..)
 
+
 type Msg
     = ToggleVisible
     | SubmitInput
     | SetInput String
     | ToggleInputFocus
     | ToggleScrollBar
+
 
 type alias Model =
     { visible : Bool
@@ -15,8 +17,8 @@ type alias Model =
     }
 
 
-initConsole : Model
-initConsole =
+init : Model
+init =
     { visible = True
     , input = ""
     , hasFocus = False

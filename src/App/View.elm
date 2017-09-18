@@ -24,7 +24,7 @@ root model =
 
 symView : World.Model -> Model -> Element Styles variation Msg
 symView world model =
-    column None
+    column WorldView
         [ clip, height fill, width fill ]
         [ full None
             [ width fill, height fill ]

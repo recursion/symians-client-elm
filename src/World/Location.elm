@@ -2,9 +2,10 @@ module World.Location exposing (get, render)
 
 import Html exposing (Html)
 import Svg.Attributes exposing (width, height, fill, stroke, x, y, class)
-import Svg.Events exposing (onMouseOver, onClick)
+import Svg.Events exposing (onMouseOver, onClick, onMouseDown)
 import Svg exposing (rect, text)
 import Dict exposing (Dict)
+import Selector.Model as Selector
 
 
 import World.Models exposing (Locations, Location, Coordinates, CoordHash)
@@ -47,7 +48,7 @@ configure coordinates loc ui =
             Camera.translate coords ui.camera
 
         color =
-            if List.member coords ui.selected then
+            if List.member coords ui.selector.selected then
                 "#383"
             else
                 "green"
@@ -59,6 +60,6 @@ configure coordinates loc ui =
         , stroke color
         , width <| toString <| ui.camera.tileSize
         , height <| toString <| ui.camera.tileSize
-        , onMouseOver (UI.SetInspected coords loc)
-        , onClick (UI.ToggleSelected coords)
+        , onMouseOver (UI.MouseOver coords loc)
+        , onMouseDown (UI.SelectorMsg (Selector.Select coords))
         ]

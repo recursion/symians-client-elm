@@ -3,6 +3,7 @@ module Camera.Move exposing (..)
 import Camera.Model exposing (..)
 
 currentZLimit = 2
+borderBounds = 5
 
 
 {-| move the camera up a z level
@@ -37,7 +38,7 @@ zLevelDown model =
         nextPos =
             { pos | z = nextZ }
     in
-        if nextZ < 0 then
+        if nextZ < -borderBounds then
             model
         else
             { model | position = nextPos }
@@ -61,7 +62,7 @@ down model =
         nextPos =
             { pos | y = nextY }
     in
-        if (nextY + screenHeightInTiles) > model.worldDimensions.height  then
+        if (nextY + screenHeightInTiles) > (model.worldDimensions.height + borderBounds)  then
             model
         else
             { model | position = nextPos }
@@ -72,7 +73,7 @@ keeps the view in bounds of the world dimensions
 -}
 up : Model -> Model
 up model =
-    if model.position.y - 1 < 0 then
+    if model.position.y - 1 < -borderBounds then
         model
     else
         let
@@ -90,7 +91,7 @@ keeps the view in bounds of the world dimensions
 -}
 left : Model -> Model
 left model =
-    if model.position.x - 1 < 0 then
+    if model.position.x - 1 < -borderBounds then
         model
     else
         let
@@ -121,7 +122,7 @@ right model =
         nextPos =
             { pos | x = nextX }
     in
-        if (nextX + screenWidthInTiles) > model.worldDimensions.width then
+        if (nextX + screenWidthInTiles) > (model.worldDimensions.width + borderBounds) then
             model
         else
             { model | position = nextPos }

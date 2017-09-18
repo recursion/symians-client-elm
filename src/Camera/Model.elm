@@ -11,8 +11,8 @@ type alias Model =
     }
 
 
-initCamera : Model
-initCamera =
+init : Model
+init =
     { position = Coordinates 0 0 0
     , worldDimensions = Dimensions 0 0 0
     , width = 0

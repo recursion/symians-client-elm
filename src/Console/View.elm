@@ -12,14 +12,12 @@ import Chat.Model as Chat
 render : Chat.Model -> Model -> Element Styles variation Msg
 render chatModel model =
     if model.visible then
-        modal None
-            [ alignBottom, alignLeft, width (percent 60) ]
-            (column Hud
-                [ width fill, padding 1, clip ]
-                [ (renderMessages chatModel model)
-                , (console model)
-                ]
-            )
+        (column Hud
+            [ width fill, padding 1, clip ]
+            [ (renderMessages chatModel model)
+            , (console model)
+            ]
+        )
     else
         empty
 
@@ -66,7 +64,7 @@ renderMessages chatModel model =
             else
                 [ alignBottom ]
     in
-        column Hud
+        column None
             (props
                 ++ [ padding 2
                    , height (px 100)
