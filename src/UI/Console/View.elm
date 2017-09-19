@@ -35,7 +35,7 @@ inputControls model =
 
 renderMessages : Chat.Model -> Model -> Html Msg
 renderMessages chatModel model =
-    ul [ id "console-messages"]
+    ul [ id "console-messages", class "hud"]
         ((List.map renderMessage) chatModel.messages)
 
 

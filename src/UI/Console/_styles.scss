@@ -6,19 +6,22 @@
     bottom: 0;
     left: 0;
     width: 40%;
+    padding: 1px;
 }
 .console-button {
     width: 9%;
 }
 .console-input {
-    width: 89%;
-    margin-left: 1px;
+    width: 90%;
+    margin-left: 4px;
 }
 #console-messages {
     height: 145px;
     overflow: hidden;
     flex-direction: column-reverse;
     display: flex;
+    padding: 3px;
+    margin-bottom: 1px;
 }
 #console-messages:hover {
     overflow-y: scroll;

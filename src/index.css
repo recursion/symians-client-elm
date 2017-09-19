@@ -19,20 +19,23 @@
   position: fixed;
   bottom: 0;
   left: 0;
-  width: 40%; }
+  width: 40%;
+  padding: 1px; }
 
 .console-button {
   width: 9%; }
 
 .console-input {
-  width: 89%;
-  margin-left: 1px; }
+  width: 90%;
+  margin-left: 4px; }
 
 #console-messages {
   height: 145px;
   overflow: hidden;
   flex-direction: column-reverse;
-  display: flex; }
+  display: flex;
+  padding: 3px;
+  margin-bottom: 1px; }
 
 #console-messages:hover {
   overflow-y: scroll; }
@@ -44,7 +47,7 @@
 #console-messages::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   border-radius: 10px;
-  background-color: rgba(50, 100, 50, 0.25); }
+  background-color: rgba(50, 100, 50, 0.75); }
 
 #console-messages::-webkit-scrollbar {
   width: 12px;
@@ -53,7 +56,7 @@
 #console-messages::-webkit-scrollbar-thumb {
   border-radius: 10px;
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  background-color: rgba(50, 100, 50, 0.25); }
+  background-color: rgba(50, 100, 50, 0.75); }
 
 #inspector {
   position: fixed;
@@ -91,6 +94,9 @@
 /******************************/
 /*          Layout            */
 /******************************/
+.hud {
+  padding: 2px; }
+
 .hud-controls {
   position: fixed;
   left: 1px;
@@ -101,17 +107,20 @@
 .hud-button {
   flex-grow: 1;
   margin-right: 3px;
-  padding: 2px; }
+  padding: 2px;
+  margin-bottom: 1px; }
 
 /******************************/
 /*          Style             */
 /******************************/
 .hud {
-  background-color: rgba(50, 100, 50, 0.25);
-  border: 1px solid black; }
+  background-color: rgba(50, 100, 50, 0.75);
+  border: 1px solid black;
+  color: rgba(225, 225, 225, 0.5);
+  text-shadow: 1px 1px 1px black; }
 
 .hud-button:hover {
   background-color: rgba(75, 200, 75, 0.25); }
 
 .hud-button__selected {
-  background-color: rgba(200, 200, 200, 0.4); }
+  background-color: rgba(50, 50, 50, 0.4); }

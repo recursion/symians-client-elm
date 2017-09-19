@@ -6,8 +6,6 @@ import Svg.Events exposing (onMouseOver, onClick, onMouseDown)
 import Svg exposing (rect, text)
 import Dict exposing (Dict)
 import UI.Selector.Model as Selector
-
-
 import World.Models exposing (Locations, Location, Coordinates, CoordHash)
 import World.Coordinates as Coordinates
 import UI.Model as UI
@@ -20,8 +18,11 @@ returns a maybe tuple (coords, location)
 get : Locations -> CoordHash -> Maybe ( CoordHash, Location )
 get locations key =
     case Dict.get key locations of
-        Nothing -> Nothing
-        Just loc -> Just (key, loc)
+        Nothing ->
+            Nothing
+
+        Just loc ->
+            Just ( key, loc )
 
 
 {-| renders an svg rect for locations or empty text for nothing
@@ -29,7 +30,7 @@ get locations key =
 render : Maybe ( CoordHash, Location ) -> UI.Model -> Html UI.Msg
 render maybeLoc ui =
     case maybeLoc of
-        Just (coords, loc)->
+        Just ( coords, loc ) ->
             rect (configure coords loc ui) []
 
         Nothing ->
@@ -38,7 +39,7 @@ render maybeLoc ui =
 
 {-| set up the properties for a tile
 -}
-configure: CoordHash -> Location -> UI.Model -> List (Svg.Attribute UI.Msg)
+configure : CoordHash -> Location -> UI.Model -> List (Svg.Attribute UI.Msg)
 configure coordinates loc ui =
     let
         coords =
@@ -46,6 +47,7 @@ configure coordinates loc ui =
 
         ( screenX, screenY ) =
             Camera.translate coords ui.camera
+
         color =
             case ui.selector.mode of
                 Selector.Designate ->
@@ -61,7 +63,6 @@ configure coordinates loc ui =
                         "#383"
                     else
                         "green"
-
     in
         [ x <| toString screenX
         , y <| toString screenY

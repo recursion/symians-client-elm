@@ -1,6 +1,9 @@
 /******************************/
 /*          Layout            */
 /******************************/
+.hud {
+    padding: 2px;
+}
 .hud-controls {
     position: fixed;
     left: 1px;
@@ -12,6 +15,7 @@
     flex-grow: 1;
     margin-right: 3px;
     padding: 2px;
+    margin-bottom: 1px;
 }
 
 
@@ -22,8 +26,9 @@
 .hud {
     background-color: $primary-background;
     border: 1px solid black;
+    color: $primary;
+    text-shadow: 1px 1px 1px black;
 }
-
 .hud-button:hover {
     background-color: $primary-accent;
 }
