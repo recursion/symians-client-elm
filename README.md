@@ -1,5 +1,6 @@
 # Symians Client
 
+
 ## Development
 This project has 2 global dependancies: 
   - (elm-create-app)[https://github.com/halfzebra/create-elm-app] - for the dev server
@@ -11,11 +12,19 @@ This project has 2 global dependancies:
 ### run dev server the debugger
 > `npm start:debug`
 
-### build project elm and scss to server assets
-> `npm run build`
+
+### Styling
+Sass for styling. The root scss file is src/index.scss. Theme colors are defined there, and any partials should be @imported there. 
 
 ### build sass assets locally
 > `npm run build:sass`
 
 ### watch sass and rebuild locally on changes
 > `npm run watch:sass`
+
+
+### Build
+Currently we dont use elm-app for the production build. Instead, we just use elm-make to compile the elm, and node-sass to compile the sass.
+
+### build project elm and scss to server assets
+> `npm run build`
