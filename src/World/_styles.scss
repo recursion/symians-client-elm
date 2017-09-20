@@ -1,0 +1,23 @@
+#world {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+.world__location:hover {
+    fill: $primary-background;
+    stroke: $primary-background;
+}
+.world__location-grass {
+    background-color: green;
+}
+.world__location-dirt {
+    background-color: brown;
+}
+.world__location-stone {
+    background-color: grey;
+}
+.world__location-selected {
+    background-color: #383;
+}

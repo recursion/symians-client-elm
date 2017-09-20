@@ -4,13 +4,19 @@
   margin: 0;
   box-sizing: border-box; }
 
-/*           world renderer */
 #world {
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0; }
+
+.world__location:hover {
+  fill: rgba(50, 100, 50, 0.75);
+  stroke: rgba(50, 100, 50, 0.75); }
+
+.world__location_grass {
+  background-color: green; }
 
 /******************************/
 /*          Layout            */

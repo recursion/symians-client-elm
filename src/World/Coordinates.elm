@@ -23,13 +23,16 @@ hash coords =
 splits it into a `Coordinates` record
 -}
 extract : CoordHash -> Coordinates
-extract asString =
+extract coordsAsString =
     let
         toNumber =
             \s -> Result.withDefault 0 (String.toInt s)
 
+        coords =
+            String.split "|" coordsAsString
+
         extract_ n =
-            String.split "|" asString
+            coords
                 |> List.drop n
                 |> List.head
                 |> Maybe.withDefault "0"
