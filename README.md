@@ -3,8 +3,8 @@
 
 ## Development
 This project has 2 global dependancies: 
-  - (elm-create-app)[https://github.com/halfzebra/create-elm-app] - for the dev server
-  - (elm-test)[https://github.com/elmt-community/elm-test] for testing
+  - [elm-create-app](https://github.com/halfzebra/create-elm-app) - for the dev server
+  - [elm-test](https://github.com/elmt-community/elm-test) for testing
 
 ### run the dev server
 > `npm start`
