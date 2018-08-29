@@ -1,4 +1,5 @@
 # Symians Client
+A simple client application prototype for the [symians simulation server](https://github.com/recursion/symians-server) written in elm. This project is no longer maintained.
 
 
 ## Development
